@@ -3,7 +3,15 @@ title: "K-Nearest Neighbors (KNN)"
 format: html
 ---
 
-# k-nearest neighbors (KNN) algorithm
+```{r setup, include=FALSE}
+install.packages("latex2exp")  # Only needed once
+library(latex2exp)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+#suppressPackageStartupMessages(library(KKNN))
+#suppressPackageStartupMessages(library(MASS))
+
+```
+
 
 In social sciences, we are often interested in studying the variations in an outcome variable, $Y$-also known as dependent variable-conditional on a set of independent variables, $X$-also known as predictors and features.This usually is written formally as:
 
@@ -13,11 +21,11 @@ $$
 One very common strategy in modeling this conditional probability is making some assumptions about the function, $f(.)$, that maps $X$ to $Y$, and then estimating its parameters. The *Ordinary Least Square (OLS)* has been one of the oldest and the most important tools of modeling association between two variables. Under Classic Assumptions of Linear Regression, an *OLS* estimator is the *Best Linear Unbiased Estimate, (BLUE)*. However, there are situations that these assumptions do not hold. We will return to addressing the violations of some of these assumptions in the following weeks. Here, we study $K$-NN algorithm as a model-free algorithm, which impose less assumption into the prediction algorithm.Although $K$-NN does not offer useful information about the quality and quantity of association between the outcome variable and the predictors, it often is an effective predicting algorithm.
 
 
-# A simple Comparison of OLS and k-NN: Boston Housing Example
+## A simple Comparison of OLS and k-NN: Boston Housing Example
 
 Boston Housing dataset contains information on housing in the Boston, Massachusetts area in the US. Assume that we want to predict the median value of a house base on the percent of lower status population in the sub-area.The below scatter plot shows how these two variables are associated:  
 
-```{r}
+```{r, warning=FALSE}
 
 library(MASS) ## a library of example datasets
 attach(Boston)
@@ -29,3 +37,690 @@ plot(lstat,medv,
 
 
 We need a function to estimate how the housing values is associated with the percent of low status population in the neighborhood. A linear function can be one of our first candidates. That is we assume that $Y_i=\alpha+\beta X+\epsilon$. After estimating the parameters of this model, i.e. $\hat{\alpha}$ and $\hat{\beta}$, the predicted values of *OLS* estimation is $\hat{Y}=\hat \alpha +\hat \beta X$. Not surprisingly, since we assumed that the association between $X$ and $Y$ is linear, the predicted line fitted to the data is linear (Blue line in the below plot).
+
+
+
+```{r, echo=TRUE, warning=FALSE}
+
+plot(lstat,medv,
+      col='grey',cex=.75,
+     xlab='Low Status Percent',ylab = 'Median Value($)', main=TeX('$Y=\\alpha + \\beta X$'))
+
+lmHousing=lm(medv~lstat)
+abline(lmHousing$coef, col="navy", lwd=2.5)
+yhat_lm25=predict(lmHousing,data.frame(lstat=c(20)))
+points(20,yhat_lm25,cex=1, col="maroon", pch=15)
+text(20,yhat_lm25,paste(round(yhat_lm25,digits = 2)),pos=3, cex=1,col="maroon")
+
+```
+
+
+To predict using *OLS*, we make several assumptions about the form of $Y=f(X)$. The same applies to non-linear models such as *Logit* and *Probit*. However, there are non-parametric approaches that impose less assumption on the form of $f(X)$. $k$-NN is one the most commonly used non-parametric predicting algorithms. Before discussing this method, take a look at how this algorithms fits function $f(.)$ to the data:
+
+
+```{r, echo=FALSE}
+library(MASS) ## a library of example datasets
+attach(Boston)
+
+library(kknn) ## knn library
+
+
+# We first need to divide the sample to train (in-sample) and test (out-sample) subsampes. 
+
+n = nrow(Boston) # Sample size
+
+#fit knn with k
+train = data.frame(lstat,medv) #data frame with variables of interest
+#test is data frame with x you want f(x) at, sort lstat to make plots nice.
+test = data.frame(lstat = sort(lstat))
+kf15 = kknn(medv~lstat,train,test,k=15,kernel = "rectangular")
+
+
+plot(lstat,medv,xlab='Low Status (%)',ylab = 'Median Value($)', col="gray45")
+
+lines(test$lstat,kf15$fitted.values,col="blue",lwd=2)
+
+
+dfp = data.frame(lstat=20)
+
+kf15_20 = kknn(medv~lstat,train,dfp,k=15,kernel = "rectangular")
+cat("kNN15: the median value of a house in a neighborhood with 20% low status residents is",round(kf15_20$fitted,digits=2),"\n")
+
+
+points(20,kf15_20$fitted,cex=1, col="maroon", pch=15)
+text(20,kf15_20$fitted,paste(round(kf15_20$fitted,digits = 2)),pos=3, cex=1,col="maroon")
+
+```
+
+
+## How does k-NN estimate f(.)?
+
+We first need to define a training dataset based on our main sample. The training set for a k-NN algorithm consist of the N pairs of the feature(x) and outcomes as follow:
+
+\begin{equation}
+
+\{(x_1,y_1), (x_2,y_2), \dots, (x_n,y_n) \}
+
+\end{equation}
+
+We start with a one feature model, but later in this handout, we will extend $k$-NN to the cases with more than one feature, i.e. $j>1$.
+
+$k$-NN calculates $f(x_i)$ by taking the average of outcome values for the $k$ nearest $x$'s to $x_i$. 
+
+
+```{r, echo=FALSE}
+library(devtools)
+library(MASS)
+attach(Boston)
+
+source_url('https://raw.githubusercontent.com/babakrezaee/DataWrangling/master/Functions/Kpoints_fun.R') ## Load a function that finds the k nearest points of a values NearestPoints_fun(vec, val, k)
+data=data.frame(lstat,medv)
+
+data=data[order(lstat),]
+
+#fit knn with k=30
+train = data.frame(lstat,medv) #data frame with variables of interest
+#test is data frame with x you want f(x) at, sort lstat to make plots nice.
+test = data.frame(lstat = sort(lstat))
+
+KF = kknn(medv~lstat,train,test,k=40,kernel = "rectangular")
+
+
+
+x1=c(2,15,20,35)
+
+for (i in  x1){
+  
+  plot(data$lstat,data$medv,
+       xlab='Low Status (%)',ylab = 'Median Value($)',
+       main = "Calculating KNN",
+       pch=19, col="gray45")
+  
+  
+  lines(test$lstat,KF$fitted.values,col="maroon",lwd=3)
+  
+  data_s=data[data$lstat %in% Kpoints(data$lstat,i,40),]
+  
+  points(data_s$lstat,data_s$medv,cex=1.5, col='red')
+  points(i,mean(data_s$medv),cex=1.5, col="blue", pch=15)
+  abline(v=i, col="blue",lty=1)
+}
+
+
+```
+
+## What is the "best" K?
+
+We learned how K-NN works, but there is an issue here: K is chosen discretionary and for any $K$, we can get (significantly) different results. 
+
+
+```{r, echo=FALSE}
+library(MASS)
+attach(Boston)
+data=data.frame(lstat,medv)
+
+data=data[order(lstat),]
+
+#fit knn with k=30
+train = data.frame(lstat,medv) #data frame with variables of interest
+#test is data frame with x you want f(x) at, sort lstat to make plots nice.
+test = data.frame(lstat = sort(lstat))
+
+K=c(3,30,100,200,400,500)
+
+plot(lstat,medv,
+     xlab='Low Status (%)',ylab = 'Median Value($)',
+     main = "Calculating KNN using different values of k",
+     pch=19, col="gray45")
+
+
+
+
+for (i in K){
+  nam <- paste("KF", i, sep = "_")
+  assign(nam,kknn(medv~lstat,train,test,k=i,kernel = "rectangular"))
+}
+
+
+
+lines(test$lstat,KF_3$fitted.values,col="darkred",lwd=3)
+lines(test$lstat,KF_30$fitted.values,col="green",lwd=3)
+lines(test$lstat,KF_100$fitted.values,col="blue" ,lwd=3)
+lines(test$lstat,KF_200$fitted.values,col= "cyan",lwd=3)
+lines(test$lstat,KF_400$fitted.values,col="violet",lwd=3)
+lines(test$lstat,KF_500$fitted.values,col="gold",lwd=3)
+
+legend("topright", legend=c("K=3","K=30","K=100","K=200","K=400","K=500"),
+       col=c("darkred","green","blue","cyan","violet","gold"), 
+       lty=1, box.lty=0, cex=0.6)
+
+
+```
+
+If we choose a large $k$, then we get a simple line such that for k=500, the like is almost the mean of Median House price. On the other hand, choosing a small $k$ gives a volatile estimation which captures the complexity of the data very well, yet it is very sensitive to any small changes in the data. Can we find a middle-way value for $k$? This is roughly the idea behind using cross-validation to overcome Bias-Variance Trade-Off. To discuss this idea more in detail, we need to learn about interpreting the prediction accuracy of an estimated function.
+
+
+## Measuring Accuracy
+
+For any given feature ($x\in X$), or the set of features, we can find the predicted value of the outcome variable, $\hat{y}$, using the estimated function $\hat{f}(x_i)$. Given this information, we can find the prediction error for each observation by $y_i-\hat{y}_i$. The prediction error of each statistical model can be calculated using different indices based on these individual errors. One of the most common one is Root Mean Square Error (*RMSE*).
+
+\begin{equation}
+
+RMSE=\sqrt{\frac{1}{n}\sum_{i=1}^n [y_i-\hat{f}(x_i)]^2}
+
+\end{equation}
+
+*RMSE* calculates the average prediction errors.
+
+
+Now, let's calculate the RMSE of predicting Median House Value in Boston Housing data when we use k-NN model, at different levels of k.
+
+
+```{r, echo=FALSE}
+attach(Boston)
+
+RMSE_fun=function(y,yhat){sqrt(mean((y-yhat)^2))}
+
+
+n=nrow(Boston)
+
+frac=.75
+nTrain=floor(n*frac)
+
+data=data.frame(lstat,medv)
+
+set.seed(7)
+
+trainID=sample(1:n,nTrain)
+
+Train=data[trainID,]
+Test=data[-trainID,]
+
+K=2:300
+
+RMSE_vec=rep(0,length(K))
+
+for (i in 1:length(K)){
+  f_hat=kknn(medv~lstat, Train, Test, k=K[i], kernel="rectangular")
+  RMSE_vec[i]=RMSE_fun(Test[,2],f_hat$fitted.values)
+}
+
+
+plot(K,RMSE_vec,xlab="K", ylab="Out of Sample RMSE", type='l', col="maroon", lwd=2)
+
+plot(log(1/K),RMSE_vec,xlab="Complexity (log(1/k))", ylab="Out of Sample RMSE", type='l', col="maroon", lwd=2)
+
+text(log(1/300),RMSE_vec[300-1],"K=300",pos=4, cex=.8,col="navy")
+
+text(log(1/150),RMSE_vec[150-1],"K=150",pos=2, cex=.8,col="navy")
+
+text(log(1/2),RMSE_vec[2-1],"K=2",pos=2, cex=.8,col="navy")
+```
+
+
+## Bias-Variance Tradeoff
+
+Below figure presents one of the core ideas of statistical learning. When the complexity of the model is low, training model has low variance but suffers high bias, which lead to a high prediction error. As the complexity of the model increases, the error of training sample decreases. However, since a model with a high level of complexity is trained to captured biases in the training sample, its prediction power for the test sample decreases, leading to a higher prediction error.
+
+We can model association between $X$ and $Y$ as follow:
+
+\begin{equation}
+
+
+Y= \underbrace{f(X)}_\text{Signal}+\underbrace{\epsilon}_{Noise}
+
+\end{equation}
+
+$\epsilon$ is the shock component, also known as noise, of the process. The goal of statistical modeling of a process is capturing the changes caused by $f(x)$, as the shock/noise component is a random process. Thus, we do not want to mistakenly capture the changes caused by the noise part of the model as the changes caused by signal. If we fit a highly complex model which captures/model all changes in the outcome, then the risk of estimating a noisy model increases.
+
+
+![Test and training error as a function of model complexity. (Copied from The Elements of Statistical Learning by Jerome, Friedman, Tibshirani, and Hastie)](https://www.dropbox.com/s/8rgk2omprkhe4nq/BiasVarianceTradeoff_ESL.png?dl=1)
+
+Estimating a simple model to explain a complex process leads to a bias function, thought this estimation has a low level of variance. On the other hand, a complex model is sensitive to every bit of changes in the data, which leads to a high variance, though the bias is low.
+
+
+## Cross-Validation
+
+Dividing the sample to a train sample and a test sample allows us to evaluate the performance of predictive model. However, there are few challenges regarding this approach:
+
+1. How can we be sure that the prediction results are independent of the train set? How can we draw the samples to address this concern?
+
+2. Leaving a part of dataset for validating the trained model means that we overlook part of information that we can get from the validation sub-sample. As we overlook this part of information to train our model, we might get a higher level of errors.
+
+The suggested in statistical learning literature solution to address the above issues is *Cross-Validation*.
+
+### Leave-One-Out Cross-Validation
+
+In this approach, we divide the sample into train and test samples. Assuming that the size of train sample is $n$, we leave one observation out, say $i^{th}$ observation, and train the model using $n-1$ remaining observations. Then, we predict the outcome of $i^{th}$ observation and compute the amount of prediction error: $RMSE_i=\sqrt{(Y_i-\hat{Y}_i)^2}$. We repeat this procedure for all observations in the test sample and compute the mean of Cross-Validation RMSE:
+
+\begin{equation}
+
+RMSE_{LOCV}=\frac{1}{n}\sum_{i=1}^n RMSE_i
+
+\end{equation}
+
+### $k$-fold Cross Validation
+
+*Leave-One-Out Cross-Validation* is computationally intensive since you need to repeat the training and evaluation $n$ times. An alternative approach is increasing the number of observations that are left out at each stage. To do so, we can divide the sample randomly to $k$ almost equal size groups; then, we will leave one of these groups out for the validation and use the remaining $k-1$ groups to train the model. Using this training model, we can predict the outcome for the observations in the validation subsample and then calculate the prediction for each of thoes observations. We will iterate the training and validation steps for each group ($k$ times). Below figure shows a schematic view of $k$-fold Cross-Validation (KCV). 
+
+![The photo is borrowed from: https://www.researchgate.net/figure/K-fold-cross-validation-E-is-the-overall-error-estimate_fig3_320270458](https://www.dropbox.com/s/assm8rmbub0frz0/K-fold-cross-validation-E-is-the-overall-error-estimate.png?dl=1)
+
+
+Considering the calculated error terms for each observation, we can compute the mean of $RMSE^{KCV}$ as follow:
+
+\begin{equation}
+
+RMSE^{KCV}=\sqrt{\frac{1}{n}\sum_{i=1}^n(Y_i-\hat{Y}_i)^2}
+
+\end{equation}
+
+
+```{r, echo=FALSE, fig.height = 7, fig.width = 7}
+
+source_url('https://raw.githubusercontent.com/babakrezaee/DataWrangling/master/Functions/docv_fun.R') ## Cross validation function
+
+library(MASS)
+
+library(kknn)
+
+
+attach(Boston)
+
+set.seed(7) #Always set the seed, so that your "random" results can be replicated
+
+
+Kvalues=2:100 # Set the k values that you want to check in k-nearest neighbors methods (these are K's in the KNN method)
+
+#docvknn(matrxi(x), vector y, vector k, nfolds) does the cross validation for trainign data (x,y)
+
+
+KNN_CV_5=docvknn(matrix(lstat,ncol=1),medv,Kvalues,nfold=5,verbose = FALSE)
+KNN_CV_10=docvknn(matrix(lstat,ncol=1),medv,Kvalues,nfold=10,verbose = FALSE)
+KNN_CV_15=docvknn(matrix(lstat,ncol=1),medv,Kvalues,nfold=15,verbose = FALSE)
+
+
+KNN_CV_5=sqrt(KNN_CV_5/length(medv))
+Kbest_5=Kvalues[which.min(KNN_CV_5)]
+
+
+KNN_CV_10=sqrt(KNN_CV_10/length(medv))
+Kbest_10=Kvalues[which.min(KNN_CV_10)]
+
+
+KNN_CV_15=sqrt(KNN_CV_15/length(medv))
+Kbest_15=Kvalues[which.min(KNN_CV_15)]
+
+#Plot a graph comparing 5-,10-, and 15-fold Cross-Validation of KNN
+
+yRange=range(c(KNN_CV_5,KNN_CV_10,KNN_CV_15))
+
+plot(Kvalues,KNN_CV_5,type='l',col='maroon', lwd=2, ylim=yRange,
+     xlab='k', ylab='RMSE')
+abline(v=Kbest_5, col='maroon',lty=2)
+text(Kbest_5,(yRange[1]+yRange[2])/2,paste("K*=",Kbest_5),pos=2, cex=.8,col="maroon")
+
+
+lines(Kvalues,KNN_CV_10, col='navyblue', lwd=2)
+abline(v=Kbest_10, col='navyblue',lty=2)
+text(Kbest_10,(yRange[1]+yRange[2])/2+.2,paste("K*=",Kbest_10),pos=2, cex=.8,col="navyblue")
+
+
+lines(Kvalues,KNN_CV_15, col='darkgreen', lwd=2)
+abline(v=Kbest_15, col='darkgreen',lty=2)
+text(Kbest_15,(yRange[1]+yRange[2])/2-.2,paste("K*=",Kbest_15),pos=2, cex=.8,col="darkgreen")
+
+legend('topright',legend=c('5-Fold','10-Fold','15-Fold'),
+                  col=c('maroon','navyblue','darkgreen'),lwd=2, box.lty=0)
+
+
+cat('Lets use the average of 5-,10-, and 15-fol \n')
+
+
+KNN_CV_avg=(KNN_CV_5+KNN_CV_10+KNN_CV_15)/3
+Kbest=which.min(KNN_CV_avg)
+
+plot(Kvalues,KNN_CV_avg,type='l',col='maroon', lwd=2, ylim=yRange,
+     xlab='k', ylab='RMSE')
+abline(v=Kbest, col='maroon',lty=2)
+text(Kbest,(yRange[1]+yRange[2])/2,paste("K*=",Kbest),pos=2, cex=.8,col="maroon")
+
+cat("The best K is:",Kbest,"\n")
+
+#Fitting kNN with best k and plot the fit.
+KFbest=kknn(medv~lstat,data.frame(lstat,medv),data.frame(lstat=sort(lstat)),
+            k=Kbest,kernel = 'rectangular')
+
+plot(lstat,medv,xlab='Low Status (%)',ylab = 'Median Value($)', col="gray45")
+lines(sort(lstat),KFbest$fitted.values,col="darkred",lwd=3)
+
+```
+
+### Showing Variance-Bias-TradeOff by an Example
+
+```{r, echo=FALSE, fig.height = 8, fig.width = 12}
+
+library(kknn)
+x=c()
+y=c()
+N=1000
+set.seed(1364)
+fn=function(x){return (cospi(x))}
+for (i in 1:N){
+x[i]=rnorm(1,2,1)
+y[i]=fn(x[i])+rnorm(1,0,.5)
+}
+plot(x,y,col="gray45")
+
+
+kvec=c(5,40,150)
+nsim=30
+fit1=rep(0,nsim)
+fit2=rep(0,nsim)
+
+fit3=rep(0,nsim)
+train = data.frame(x,y)
+test = data.frame(x=sort(x))
+par(mfrow=c(2,3))
+ntrain=200
+fitind = 400
+ylm = c(-.5,1.5)
+kfit1_fitted=matrix(0,N,nsim)
+kfit2_fitted=matrix(0,N,nsim)
+kfit3_fitted=matrix(0,N,nsim)
+#get good one
+gknn = kknn(y~x,train,data.frame(x=test[fitind,1]),k=40,kernel = "rectangular")
+set.seed(99)
+for(i in 1:nsim) {
+ii = sample(1:nrow(train),ntrain)
+kfit1 = kknn(y~x,train[ii,],test,k=kvec[1],kernel = "rectangular")
+kfit1_fitted[,i]=kfit1$fitted
+fit1[i]=kfit1$fitted[fitind]
+kfit2 = kknn(y~x,train[ii,],test,k=kvec[2],kernel = "rectangular")
+kfit2_fitted[,i]=kfit2$fitted
+fit2[i]=kfit2$fitted[fitind]
+kfit3 = kknn(y~x,train[ii,],test,k=kvec[3],kernel = "rectangular")
+kfit3_fitted[,i]=kfit3$fitted
+fit3[i]=kfit3$fitted[fitind]
+}
+plot(x,y,col="gray45")
+for (i in 1:nsim){
+lines(test$x,kfit1_fitted[,i],col='royalblue2',lwd=.25)
+points(test[fitind,1],fit1[i],col='black',pch=20,cex=1.5)
+title(main=paste("k=", kvec[1], sep=""), font.main=1)
+}
+plot(x,y,col="gray45")
+for (i in 1:nsim){
+lines(test$x,kfit2_fitted[,i],col='royalblue2',lwd=.25)
+points(test[fitind,1],fit2[i],col='black',pch=20,cex=1.5)
+title(main=paste("k=", kvec[2], sep=""), font.main=1)
+}
+plot(x,y,col="gray45")
+for (i in 1:nsim){
+lines(test$x,kfit3_fitted[,i],col='royalblue2',lwd=.25)
+points(test[fitind,1],fit3[i],col='black',pch=20,cex=1.5)
+title(main=paste("k=", kvec[3], sep=""), font.main=1)
+}
+
+
+boxplot(fit1,ylim=ylm)
+abline(h=fn(test[fitind,1]),col="red")
+boxplot(fit2,ylim=ylm)
+abline(h=fn(test[fitind,1]),col="red")
+boxplot(fit3,ylim=ylm)
+abline(h=fn(test[fitind,1]),col="red")
+
+```
+
+
+## $k$-Nearest Neighbors, p>1
+
+In the previous sections, we studied the $kNN$ prediction algorithm for the cases where there is only one feature. Finding the $k$ nearest points for a problem with one feature/independent variable is straightforward, but how does the algorithm changes if we want to use more than one feature/independent variable?
+
+The idea of $kNN$ is predicting based on the most similar, closest, observations on the training subsample. Where $p>1$, the problem is finding the predicted values of $Y_k$ given a set of the features/covariates $X_f=(x_{f1},x_{f2},\dots,x_{fp})$. 
+
+
+$kNN$:
+
+To predict $\hat{Y}_f$ using $X_f=(x_{f1},x_{f2},\dots,x_{fp})$, we can define a neighborhood around $X_f$ which include $k$ nearest $X_i$'s to $X_f$ on the training dataset; then, we calculate the average of $y_i$'s corresponding to these $k$ smallest $d_i$.
+
+There are different distance metric. Here, we use one of the most well-known one, that is Euclidean Distance:
+
+
+\begin{equation}
+
+d_{if}=\sqrt{\sum_{j=1}^p (x_{fj}-x_{ij})^2}~, X_i~in~training~data
+
+
+\end{equation}
+
+The second issue that we should address in employing $kNN$ for problems with more than one feature is rescaling and normalizing the features. 
+
+Let's take a look at below scatter plots of Median Housing price versus Percentage of lower status of the population, *lstat*, and  Weighted distances to five Boston employment centers, *dis*.
+
+```{r, echo=FALSE, fig.height = 8, fig.width = 10}
+library(MASS)
+attach(Boston)
+
+par(mfrow=c(1,2)) #two plot frames
+
+plot(lstat,medv,col='maroon', lwd=2,
+     xlab='Low Status (%)', ylab='Median Housing Price')
+
+plot(dis,medv,col='maroon', lwd=2,
+     xlab='Distance from Business Center', ylab='Median Housing Price')
+
+```
+
+As you can see in the above photo, the unit of *lstat* is different from the unit of *dis*. This different between units of features affect finding the nearest points around $X_f$. One common solution is rescaling/normalizing the features before applying $kNN$ algorithm. There are two common rescaling approaches:
+
+
+1. 
+
+\begin{equation}
+
+\tilde{x}=\frac{x-min(x)}{max(x)-min(x)}
+
+\end{equation}
+
+This rescaling formula limit the X's to $0$ and $1$.
+
+2. 
+
+\begin{equation}
+
+\tilde{x}=\frac{x-\bar{x}}{\sigma_x}
+
+\end{equation}
+
+Let's see how this rescaling changes the correlation between *dis* and *medv*:
+
+
+
+```{r, echo=FALSE,  fig.height = 9, fig.width = 9}
+library(MASS)
+attach(Boston)
+
+standard=function(x){return((x-mean(x))/sd(x))}
+mmsc=function(x){return((x-min(x))/(max(x)-min(x)))}
+
+lstat_s=mmsc(lstat)
+dis_s=mmsc(dis)
+
+par(mfrow=c(2,2)) 
+#
+#,  
+plot(lstat,medv,col='maroon', lwd=2,
+     xlab='Low Status (%)', ylab='Median Housing Price')
+
+plot(lstat_s,medv,col='maroon', lwd=2,
+     xlab='Low Status (%)', ylab='Median Housing Price')
+
+plot(dis,medv,col='maroon', lwd=2,
+     xlab='Distance from Business Center', ylab='Median Housing Price')
+
+plot(dis_s,medv,col='maroon', lwd=2,
+     xlab='Distance from Business Center', ylab='Median Housing Price')
+```
+
+As you can see in the above graphs, rescaling features does not change the association between the features and the outcome variable.
+
+```{r, echo=FALSE,  fig.height = 8, fig.width = 8}
+library(MASS)
+attach(Boston)
+
+library(scatterplot3d)
+
+mmsc=function(x){return((x-min(x))/(max(x)-min(x)))}
+
+lstat_s=mmsc(lstat)
+dis_s=mmsc(dis)
+
+library(scatterplot3d)
+
+scatterplot3d(dis_s, lstat_s, medv,
+              color="maroon",
+              xlab = "Distance",
+              ylab = "Low Status Population (%)",
+              zlab = "Median Housing Price")
+
+
+
+library(devtools)
+source_url('https://raw.githubusercontent.com/babakrezaee/DataWrangling/master/Functions/KpointsMat_fun.R')
+
+
+X_f=c(.7,.4)
+X_s=data.frame(lstat_s,dis_s)
+
+
+Neighbor=KpointsMat_fun(X_s,X_f,25)
+
+
+plot(lstat_s,dis_s,col='gray45', lwd=2,
+     xlab='Low Status Population (%)', ylab='Distance',
+     main='k=25', pch=19)
+
+points(X_f[1],X_f[2], col='red', pch=19, cex=1.7)
+
+points(Neighbor$lstat_s,Neighbor$dis_s, 
+       col='red', cex=1.5)
+
+abline(v=X_f[1], h=X_f[2], col="darkgreen",lty=2, lwd=2)
+
+
+```
+
+
+## A Prediction Problem with Large $N$ and Large $p$ using $kNN$
+
+Now, let's predict the median price of houses in Boston data using several features. The features that I picked to predict the housing price, *medv*, are *crim,indus,age,dis,black,* and *lstat*. Before estimating the prediction model, it can be helpful to plot the scatter plots showing the association between the outcome and the features.
+```{r, echo=FALSE, warning=FALSE, fig.height = 12, fig.width = 9}
+
+library(MASS)
+
+attach(Boston)
+
+par(mfrow=c(3,2)) 
+
+plot(crim,medv,col="darkgreen", pch=19)
+plot(indus,medv,col="darkgreen", pch=19)
+plot(age,medv,col="darkgreen", pch=19)
+plot(dis,medv,col="darkgreen", pch=19)
+plot(black,medv,col="darkgreen", pch=19)
+plot(lstat,medv,col="darkgreen", pch=19)
+
+```
+
+
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, fig.height = 8, fig.width = 8}
+library(MASS)
+
+attach(Boston)
+
+library(kknn)
+source_url('https://raw.githubusercontent.com/babakrezaee/DataWrangling/master/Functions/docv_fun.R') ## Cross validation function
+
+X=cbind(crim,indus,age,dis,black,lstat)
+
+mmsc=function(x){return((x-min(x))/(max(x)-min(x)))}
+
+X_s=apply(X, 2, mmsc)
+
+set.seed(7)
+
+kv=2:100 #these are the k values (k as in kNN) we will try
+
+ndocv=35 # Number of cross validation
+
+
+## 5-fold
+cv_mat_5=matrix(0,length(kv),ndocv)
+
+
+#pb <- txtProgressBar(min = 0, max = ndocv, style = 3) # Setting up the progress bar
+
+for (i in 1:ndocv){
+    cv_temp=docvknn(X_s,medv,kv,nfold=5)
+    cv_mat_5[,i]=sqrt(cv_temp/length(medv))
+    #setTxtProgressBar(pb, i)
+  }
+cv_mean_5=apply(cv_mat_5,1,mean)
+
+kbest_5 = kv[which.min(cv_mean_5)]
+cat("The min value of RMSE for 10-fold cross-validation is associated with k=",kbest_5,"\n")
+
+## 10-fold
+
+cv_mat_10=matrix(0,length(kv),ndocv)
+
+
+#pb <- txtProgressBar(min = 0, max = ndocv, style = 3) # Setting up the progress bar
+for (i in 1:ndocv){
+      cv_temp=docvknn(X_s,medv,kv,nfold=10)
+      cv_mat_10[,i]=sqrt(cv_temp/length(medv))
+      #setTxtProgressBar(pb, i)
+}
+
+cv_mean_10=apply(cv_mat_10,1,mean)
+
+kbest_10 = kv[which.min(cv_mean_10)]
+cat("The min value of RMSE for 10-fold cross-validation is associated with k=",kbest_10,"\n")
+
+plot(kv, cv_mean_5, xlab="K", ylab="RMSE", type='l', col="black", lwd=2 )
+for (i in 1:ndocv) lines(kv,cv_mat_5[,i], col=550+i, lwd=.4)
+lines(kv, cv_mean_5, xlab="K", ylab="RMSE", col="black", lwd=2, lty=2 )
+title(main="nfold=5", font.main= 1)
+
+
+plot(kv, cv_mean_10, xlab="K", ylab="RMSE", type='l', col="black", lwd=2 )
+for (i in 1:ndocv) lines(kv,cv_mat_10[,i], col=550+i, lwd=.4)
+lines(kv, cv_mean_10, xlab="K", ylab="RMSE", col="black", lwd=2, lty=2 )
+title(main="nfold=10", font.main= 1)
+
+##What is the best of way of measuring
+
+data = data.frame(medv,X_s)
+
+kf_best_5 = kknn(medv~.,data,data,k=kbest_5,kernel = "rectangular")
+RMSE_fold_5=sqrt(sum((data$medv-kf_best_5$fitted)^2)/length(data$medv))
+cat("The RMSE for 5-fold kNN is", RMSE_fold_5,"\n")
+
+
+kf_best_10 = kknn(medv~.,data,data,k=kbest_10,kernel = "rectangular")
+RMSE_fold_10=sqrt(sum((data$medv-kf_best_10$fitted)^2)/length(data$medv))
+cat("The RMSE for 10-fold kNN is", RMSE_fold_10,"\n")
+
+lmf = lm(medv~.,data)
+fmat = cbind(medv,lmf$fitted,kf_best_5$fitted,kf_best_10$fitted)
+
+my_line <- function(x,y,...){
+    points(x,y,...)
+    segments(min(x), min(y), max(x), max(y),...)
+}
+
+colnames(fmat)=c("y","linear", "kNN5", "kNN10")
+pairs(fmat, lower.panel = my_line, upper.panel = my_line, col='maroon')
+print(cor(fmat))
+
+```

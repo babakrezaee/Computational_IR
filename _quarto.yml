@@ -10,6 +10,8 @@ book:
     - index.qmd
     - intro.qmd
     - knn.qmd
+    - NaiveBayes.qmd
+    - TreeModels.qmd
     - summary.qmd
     - references.qmd
   page-navigation: true  # Enables Next/Previous navigation

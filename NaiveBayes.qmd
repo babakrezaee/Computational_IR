@@ -1,0 +1,472 @@
+---
+title: "Naive Bayes"
+format: html
+---
+
+```{r setup, include=FALSE}
+install.packages("latex2exp")  # Only needed once
+library(latex2exp)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+#suppressPackageStartupMessages(library(KKNN))
+#suppressPackageStartupMessages(library(MASS))
+
+```
+
+
+In a scientific research, we cannot prove our theoretical model is *true*. However, we can investigate what is the *probablity* that our theoretical model is *not true*. To measure and quantify this uncertainty, we employ probability theorem and statistics.
+
+## A Brief Introduction to Probability Theory
+
+In social science, we are interested in studying the variations in one, sometime a set of, outcome across time and/or location: inter-state war, civil war, housing price, gender inequality, election results, and so forth. We often show this outcome variable, aka dependent variable, with $Y$. Roughly speaking, a theory/hypothesis/proposition explain the association between the outcome variable $Y$ with another random variable that is called explanatory variable, aka independent variable, exogenous variable, and feature, and is often shown by $X$. 
+
+Virtually, all statistical methods employed by social scientists aims to find and explain what is the probability of observing a specific outcome $Y=y$ given a specific value of independent variable $X=x$. We can write this as: $P(Y=y|X=x)$. Some simply write this as $P(y|x)$. As you will see in this course, and you might saw it in your other advanced methods course, the statistical techniques and algorithms that we use can be mainly divided to two groups based on whether $Y$ is continuous or discrete/categorical. The latter one is often called classification question. (___note:___ _do not mix classification with clustering. These are two different types of problems. We will discuss clustering in the final sessions of this course._)
+
+
+The common practice in studying $P(Y=y|X=x)$ directly by making an assumption about the functional form of the association between $Y$ and $X$. For instance, in linear regression models such as _OLS_, we assume that the association between $Y$ and $X$ is linear: $y=\alpha+\beta x+\epsilon$. That said, you do not have to use probability models to develop a statistical learning model. You also can develop an algorithm and explore its performance. In fact, you can develop any algorithm you want, but you need to show that it works. $k$ nearest neighbors (_kNN_) is one of these algorithms that does not need any probability model; we will cover _kNN_ in this course. There is also another approach to study $P(Y=y|X=x)$ using the _Bayes Theorem_, which is the topic of this session.
+
+We will first briefly review very basic probability notations and concepts, then will learn the _Bayes Theorem_, and finally will study the _Naive Bayes_ algorithm.
+
+### Discrete Random Variables
+
+
+We are uncertain about the value of a random variable. Thus, we use a (statistical) distribution to describe it. A discrete random variable can only take a countable number of values, and a _probability distribution_ shows the probability of realization of each value/outcome. For example, if we toss a fair coin twice, then the distribution of the number of heads (X) can be written as follow:
+
+[//]: # (This may be the most platform independent comment)
+
+\center
+
+| $X$             | $P(X=x)$      | 
+| -------------   |:-------------:| 
+| $0$             | $.25$           | 
+| $1$             | $.5$            |  
+| $2$             | $.25$           |    
+
+
+\center
+
+
+__Question:__ What is $P(X \geq 1)$? What is $P(X > 1)$?
+
+
+### Probability mass/denisty function and cumulative denisty function
+
+
+$f(x)=P(X=x)$ is known as the probability mass function (PMF) when $X$ is discrete, and the probability density function (PDF) when $X$ is continuous. Also, the cumulative density function (CDF) is 
+
+$$F(x)=\sum_{k\leq x}f(k)~~if~~x \in \mathbb{Z}$$
+
+and
+
+$$F(x)=\int_{k\leq x}f(k)~~if~~x \in \mathbb{R}.$$
+
+Some of the commonly used distributions are $X\sim N(\mu,\sigma)$, $X\sim Bernoulli(p)$, and $X\sim Poisson(\lambda)$.
+
+### Conditional, joint, and marginal distributions
+
+
+* __Joint	(Probability)	Distribution:__ Probability of observing two (or more) outcomes together is measured using joint probability distribution written as:  $P(X=x, Y=y)$. Of course, it can be extended to more than two outcomes: 
+
+$$P(X_1=x_1,X_2=x_2,\dots,X_N=x_N)$$.
+
+* __Conditional (Probability) Distribution:__ Intuitively, this means how knowing the values/outcomes of some variables affect our understanding about the values/outcomes of other variables. The simplest version of it for a two-variable case is P(Y=y|X=x), and the extended version of it is:
+
+$$P(Y_1=y_1,Y=y_2,...,Y_L=y_L|X_1=x_1,X_2=x_2,\dots,X_M=x_M).$$
+
+Suppose that we are interested in modeling the type of contentious politics,$\{0=Peace, 1=Nonviolent~Protests, 2=Violent~Protests, 3=Civil~War\}$, in The Republic of Gilead^[The Republic of Gilead is the fictional country name in the Handmaid' tale Tale, Margaret Atwood, 1985.] next year given the economic condition. For the sake of simplicity assume that there are two economic conditions: boom and bust. 
+
+
+\center
+
+| $S$                 | $P(S=s\|C=boom)$ | $S$                 |$P(S=s\|C=bust)$ |
+| -------------       |:----------------:|:-------------------:|:---------------:|
+| Peace               | $.80$            | Peace               |     $.50$       |
+| Nonviolent Protests | $.15$            | Nonviolent Protests |     $.25$       |
+| Violent Protests    | $.03$            | Violent Protests    |     $.20$       |
+| Civil war           | $.02$            | Civil war           |     $.05$       |
+
+\center
+
+We read P(S=Violent protests|E=bust)=.20: The probability/likelihood of "Violent protests" (S=Violent protests) conditional on/given a bad economy(C=bust) is $.20$.
+
+
+![Outcome tree](https://www.dropbox.com/s/i9w11kvqhr63jez/Bayes_TreeExample.jpg?dl=1)
+
+
+
+There are eight outcomes whose probabilities are conditional on the economic conditions:
+
+
+\center
+
+| $(C, S)$              | $P(S=s, C=c)$   | 
+| -------------------   |:---------------:| 
+| $(Boom, Peace)$       | $.16$           | 
+| $(Boom, Nonviolent)$  | $.07$            |  
+| $(Boom, Violent)$     | $.006$          |    
+| $(Boom, Civil~War)$   | $.004$          |
+| $(Bust, Peace)$       | $.4$           | 
+| $(Bust, Nonviolent)$  | $.2$            |  
+| $(Bust, Violent)$     | $.16$          |    
+| $(Bust, Civil~War)$   | $.04$          |
+
+
+\center
+
+
+### How are conditional, joint, and marginal probabilities related?
+
+Joint and conditional probabilities:
+
+\begin{align} \label{standardization}
+P(Y=y,X=x)=P(X=x)P(Y=y|X=x)\\
+          =P(Y=y)P(X=x|Y=y)
+\end{align}
+
+
+Joint and marginal probabilities:
+
+\begin{align}
+P(X=x)=\sum_y Pr(X=x,Y=y) \\
+P(Y=y)=\sum_x Pr(X=x,Y=y)
+\end{align}
+
+
+
+**Finding condtional probabilities from joints**
+
+Here is the two-way probability table of above example.
+
+![Two-Way probability table](https://www.dropbox.com/s/qrdpoen40jnzbmw/Two_way_1.jpg?dl=1){width=500px}
+
+* What is the *probability of civil war outcome*?
+* What is the *probability of civil war outcome knowing that the economy* is busting?
+
+Solution: we can formally write these two questions as 
+
+$P(S=Civil~War)=?$ and $P(S=Civil~War|E=Bust)=?$
+
+
+\begin{align}
+P(S=Civil~War) = \sum_{e \in E} P(S=Civil~War,E=e) \\
+               = P(S=Civil~War,E=Bust)\\
+               +P(S=Civil~War,E=Boost)\\
+               = .04+.004=.044
+\end{align}
+
+
+To find $P(S=Civil~War|E=Bust)$, we can use $P(Y=y,X=x)=P(X=x)P(Y=y|X=x)$:
+
+
+![Two-Way probability table](https://www.dropbox.com/s/8b7dpy2mvopfrhj/Two_way_2.jpg?dl=1){width=500px}
+
+\begin{align}
+P(S=Civil~War|E=Bust) = \frac{P(S=Civil~War,E=Bust)}{p(E=Bust)}\\
+                      =  \frac{.04}{.8}=.05=5\%
+\end{align}
+
+
+## Bayes' Theorem
+
+We are interested in finding $P(y|x)$, and the common practice by *frequentist* statisticians is assuming a functional form for the association between $x$ and $y$, and then estimating the parameters of the function using different methods such as *OLS*, *MLE*, and so forth. However, there is another approach based on *Bayes' Theorem*:
+
+\begin{align}
+P(y|x)=\frac{P(x,y)}{p(x)}=\frac{P(x,y)}{\sum_y p(x,y)}=\frac{p(y)p(x|y)}{\sum_y p(y)p(x|y)}
+\end{align}
+
+In other words, we can say Bayes' Theorem suggest computing $P(y|x)$ from $P(y)$ and $P(x|y)$.
+
+**Picnic Day Example:** Assume that you are planning to go out for a picnic today. However, you find that the weather is cloudy when you wake up. 50\% of rainy days start off cloudy. However, cloudy days are common in your city. 40\% of days start cloudy. Further, season it is a dry month, you know that in average 3 of 30 days end to rain, i.e. 10\%. The question is what is the likelihood of raining today when it starts cloudy/
+
+
+*Solution:*
+
+
+\begin{align}
+P(Rain|Cloud)=\frac{P(Cloud|Rain) P(Rain)}{P(Cloud)}
+             = \frac{.1 \times .5}{.4}=.125=12.5\%
+\end{align}
+
+
+
+**Question:** What is the posterior odds ratio if $y={0,1}$?
+
+### Extending Bayes' Theorem to more than two variables
+
+
+Often, we face a question which requires modeling more than two variables. We still can extend the relationship between the joint and conditional distributions to more than two variables:
+
+\begin{align}
+P(Y_1=y_1, Y_2=y_2, Y_3=y_3)= P(Y_1=y_1) P(Y_2=y_2|Y_1=y_1) P(Y_3=y_3|Y_1=y_1, Y_2=y_2)
+
+\end{align}
+
+
+### Independence
+
+
+Consider a set of random variables, $\{x_1, x_2, \dots, x_k\}$. They are independent of each other if the conditional distribution of any of them is not dependent on our observation of any others.
+
+
+**Example:** Suppose a fair coin is tossed 20 times. Let $Y_i$ be 1 if the coin is a head at the $i^{th}$ round, and $0$ otherwise. What is $P(Y_{11}=1)$? What is $P(Y_{11}=1|y_1=1,\dots,y_{10}=1)=?$
+
+
+
+If two variables are independent, the the relation between the joint and conditional distributions changes to:
+
+
+\begin{align}
+
+P(Y=y|X=x)=P(Y=y)
+
+\end{align}
+
+So, 
+
+\begin{align}
+
+P(Y=y|X=x)=P(Y=y)\\
+
+P(X=x,Y=y)=P(Y=y|X=x) P(X=x)\\
+          =P(Y=y)P(X=x)
+
+\end{align}
+
+
+**Theorem:** $X$ and $Y$ are independent if and only if $P(x,y)=P(y|x)P(x)=p(y)p(x)$
+
+
+### Identical distributions
+
+Another common assumption in statistical analysis is that random variables are distributed *identically*. This means if we toss a coin 100 times, and $Y_i=1$ and $0$ otherwise, then $P(Y_{30}=1)=P(Y_{85}=1)$!
+
+When random variables are distributed identically and independently, they are called IID distributions.
+
+
+## Naive Bayes Classification
+
+Despite its other name, "Idiot's" Bayes Classification, this method often shows a very good classification performance!
+
+
+Assume that you have a categorical outcome $Y$. As mentioned above, we are interested in finding $P(y|x)$, that is what is the probability of $Y$ conditional on observing $X=x$.
+
+For the sake of simplicity, assume that $Y=\{0,1\}$. Then, the common practice among political scientists is estimating a logistic regression:
+
+$$
+P(y=1|x) \sim Bernoulli(p(x)), p(x)=\frac{e^{x'\beta}}{1+e^{x'\beta}}
+$$
+
+where $x=(x_1, x_2, \dots, x_p)'$ and $\beta=(\beta_1, \beta_2, \dots, \beta_p)'$.
+
+However, we can use Bayes Theorem to indirectly compute $P(y|x)$. Naive Bayes classification makes a simplification assumption, which makes the name of this method *naive*: the elements of the features/explanatory variables of $X=(X_1, X_2, \dots, X_p)$ are conditionally independent given Y:
+
+$$
+p(Y=y|X=x)=\frac{p(X=x|Y=y)p(Y=y)}{p(X=x)}
+$$
+For continuous $x$, we can re-write:
+
+$$
+p(Y=k|X=x)=\frac{\pi_k f_k(x)}{\sum_{l=1}^k f_l(x)}
+$$
+
+
+Getting back to the discrete model; for a problem with $X=(X_1, X_2, \dots, X_p)$, we have:
+
+$$
+p(Y=y|X=x)=\frac{p(\{x_1, x_2, \dots, x_p \}|Y=y)p(Y=y)}{p(X=x)}
+$$
+
+Naive Bayes assumes that $p(\{x_1, x_2, \dots, x_p \}|Y=y)=\prod_i p(x_i|y)$. Thus,
+
+$$
+p(y|x) \propto  p(y)\prod_i p(x_i|y)
+$$
+
+What is the interpretation of the above formula?
+
+
+## An example: Spam or Ham?
+
+Content and sentiment analysis are a process of understanding the communicated messages in a text using computational methods. Every word in a piece of text can add information about the expressed opinion in it.
+
+Here, we do a simple analysis of short message texts to categorize them to *Spam* and *Ham*. In this example, we use the *Bag of Words* which does not consider the order of words, which contain information as well. However, surprisingly, it still a powerful too, as you see below.
+
+
+In the *Bag of Words* method, these below texts are considered identical:
+
+* Sentence 1: There will be a presentation on Machine Learning in the school of management
+
+* Sentence 2: Learning will be a on Machine management  in the school of There presentation.
+
+Let's now do the coding part:
+
+```{r}
+## Loading the data of the web
+smsData=read.csv("https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/DataSets/sms_spam.csv", stringsAsFactors = FALSE, encoding="UTF-8")
+
+```
+
+
+```{r}
+## Let's take a look at the first few observations
+
+head(smsData)
+
+summary(smsData$type)
+
+is.factor(smsData$type)
+
+# We need to change the data type for "type" from text to factor
+
+smsData$type=factor(smsData$type)
+
+# Let's look at the data now:
+
+summary(smsData$type)
+
+plot(smsData$type)
+
+is.factor(smsData$type)
+
+dim(smsData)
+
+names(smsData)
+
+
+smsData$type[1:5]
+
+smsData$text[1:5]
+
+```
+In this question, the outcome variable is $y=type$, and the feature is $x=text$. We can check the frequency of words in the texts:
+
+```{r}
+library(wordcloud)
+
+  wordcloud(smsData$text, min.freq = 1,
+          max.words=200, random.order=FALSE, rot.per=0, 
+          colors=brewer.pal(8, "Dark2"))
+
+```
+
+
+## Cleaning up the data
+We need to prepare a corpus of texts, and the corpus needs some cleaning up.
+
+```{r}
+
+library(tm)
+library(SnowballC)
+
+smsCorpus=VCorpus(VectorSource(smsData$text))
+
+smsCl=tm_map(smsCorpus,content_transformer(tolower)) # Change all words from upper to lower letters
+
+smsCl=tm_map(smsCl, removeNumbers)
+smsCl=tm_map(smsCl, removeWords, stopwords())
+smsCl=tm_map(smsCl, removePunctuation)
+smsCl=tm_map(smsCl, stemDocument)
+smsCl=tm_map(smsCl, stripWhitespace)
+
+```
+
+Now, we can check how the data turned out:
+
+```{r}
+smsData$text[1]
+
+smsCl[[1]]$content
+
+```
+
+
+The next step is creating a Document Term Matrix:
+
+```{r}
+smsDTM=DocumentTermMatrix(smsCl)
+
+dim(smsDTM)
+
+
+print(as.matrix(smsDTM[100:110,100:110]))
+```
+
+You can check the frequent terms in the document as follow. In the example below, we want to find words that occur at least ten times:
+
+```{r}
+
+findFreqTerms(smsDTM, lowfreq = 100)
+
+```
+
+## Splitting Data into Train and Test 
+
+We divide the data to train and test sub-samples. We first train our algorithm using the train data, then we will evaluate its classifying power on the test data. We learned about cross-validation last session, but let's for now do a simple one for the sake of training. There will be later assignments for you to explore how this can be done usng cross-vlidation method.
+
+
+```{r}
+smsTrain=smsDTM[1:4000,]
+smsTest=smsDTM[4001:5559,]
+
+smsTrainY=smsData[1:4000,]$type
+smsTestY=smsData[4001:5559,]$type
+
+cat("Training fraction is ",round((4000/5559)*100,2),"% \n")
+```
+
+
+As we saw above, there are many words that are repeated in the texts a few times. I will drop all words with frequency of less than 7 times over all texts.
+
+```{r}
+smsWordsFreq=findFreqTerms(smsTrain,7) # Words with freq >=7
+
+smsFreqTrain=smsTrain[,smsWordsFreq]
+smsFreqTest=smsTest[,smsWordsFreq]
+
+```
+
+
+```{r}
+
+convertCounts <-function(x){
+
+  x<-ifelse(x>0, "Yes", "No")
+
+}
+
+# apply() convert_counts() to columns of train/test data
+
+smsTrain=apply(smsFreqTrain, MARGIN = 2, convertCounts)
+
+smsTest=apply(smsFreqTest,MARGIN = 2, convertCounts)
+
+```
+
+Now, let's check the final version of the prepared data:
+
+```{r}
+
+dim(smsTrain)
+
+is.matrix(smsTrain)
+
+smsTrain[10:10,1:10]
+
+```
+
+# Naive Bayes and Missclassification
+
+Now, we are finally ready to do Naive Bayes classification using ${\tt e1071}$ $\mathcal{R}$ package.
+
+```{r}
+library(e1071)
+smsNB=naiveBayes(smsTrain,smsTrainY, laplace=1)
+yhat=predict(smsNB,smsTest)
+ctab=table(yhat,smsTestY)
+ctab
+
+missClass=1-(sum(ctab)-sum(diag(ctab)))/sum(ctab)
+
+perSpam=ctab[2,2]/sum(ctab[,2])
+
+cat("Missclassification and Spam classification rate",round(missClass,2),"% and ",round(perSpam,2),"%, respectively \n")
+```

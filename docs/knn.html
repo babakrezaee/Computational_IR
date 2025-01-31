@@ -209,8 +209,14 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#k-nearest-neighbors-knn-algorithm" id="toc-k-nearest-neighbors-knn-algorithm" class="nav-link active" data-scroll-target="#k-nearest-neighbors-knn-algorithm"><span class="header-section-number">3</span> k-nearest neighbors (KNN) algorithm</a></li>
-  <li><a href="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example" id="toc-a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="nav-link" data-scroll-target="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example"><span class="header-section-number">4</span> A simple Comparison of OLS and k-NN: Boston Housing Example</a></li>
+  <li><a href="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example" id="toc-a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="nav-link active" data-scroll-target="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example"><span class="header-section-number">2.1</span> A simple Comparison of OLS and k-NN: Boston Housing Example</a></li>
+  <li><a href="#how-does-k-nn-estimate-f." id="toc-how-does-k-nn-estimate-f." class="nav-link" data-scroll-target="#how-does-k-nn-estimate-f."><span class="header-section-number">2.2</span> How does k-NN estimate f(.)?</a></li>
+  <li><a href="#what-is-the-best-k" id="toc-what-is-the-best-k" class="nav-link" data-scroll-target="#what-is-the-best-k"><span class="header-section-number">2.3</span> What is the “best” K?</a></li>
+  <li><a href="#measuring-accuracy" id="toc-measuring-accuracy" class="nav-link" data-scroll-target="#measuring-accuracy"><span class="header-section-number">2.4</span> Measuring Accuracy</a></li>
+  <li><a href="#bias-variance-tradeoff" id="toc-bias-variance-tradeoff" class="nav-link" data-scroll-target="#bias-variance-tradeoff"><span class="header-section-number">2.5</span> Bias-Variance Tradeoff</a></li>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">2.6</span> Cross-Validation</a></li>
+  <li><a href="#k-nearest-neighbors-p1" id="toc-k-nearest-neighbors-p1" class="nav-link" data-scroll-target="#k-nearest-neighbors-p1"><span class="header-section-number">2.7</span> <span class="math inline">\(k\)</span>-Nearest Neighbors, p&gt;1</a></li>
+  <li><a href="#a-prediction-problem-with-large-n-and-large-p-using-knn" id="toc-a-prediction-problem-with-large-n-and-large-p-using-knn" class="nav-link" data-scroll-target="#a-prediction-problem-with-large-n-and-large-p-using-knn"><span class="header-section-number">2.8</span> A Prediction Problem with Large <span class="math inline">\(N\)</span> and Large <span class="math inline">\(p\)</span> using <span class="math inline">\(kNN\)</span></a></li>
   </ul>
 </nav>
     </div>
@@ -236,15 +242,12 @@ window.Quarto = {
 </header>
 
 
-<section id="k-nearest-neighbors-knn-algorithm" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> k-nearest neighbors (KNN) algorithm</h1>
 <p>In social sciences, we are often interested in studying the variations in an outcome variable, <span class="math inline">\(Y\)</span>-also known as dependent variable-conditional on a set of independent variables, <span class="math inline">\(X\)</span>-also known as predictors and features.This usually is written formally as:</p>
 <p><span class="math display">\[
 P(Y=y|X=x)
 \]</span> One very common strategy in modeling this conditional probability is making some assumptions about the function, <span class="math inline">\(f(.)\)</span>, that maps <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>, and then estimating its parameters. The <em>Ordinary Least Square (OLS)</em> has been one of the oldest and the most important tools of modeling association between two variables. Under Classic Assumptions of Linear Regression, an <em>OLS</em> estimator is the <em>Best Linear Unbiased Estimate, (BLUE)</em>. However, there are situations that these assumptions do not hold. We will return to addressing the violations of some of these assumptions in the following weeks. Here, we study <span class="math inline">\(K\)</span>-NN algorithm as a model-free algorithm, which impose less assumption into the prediction algorithm.Although <span class="math inline">\(K\)</span>-NN does not offer useful information about the quality and quantity of association between the outcome variable and the predictors, it often is an effective predicting algorithm.</p>
-</section>
-<section id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> A simple Comparison of OLS and k-NN: Boston Housing Example</h1>
+<section id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example"><span class="header-section-number">2.1</span> A simple Comparison of OLS and k-NN: Boston Housing Example</h2>
 <p>Boston Housing dataset contains information on housing in the Boston, Massachusetts area in the US. Assume that we want to predict the median value of a house base on the percent of lower status population in the sub-area.The below scatter plot shows how these two variables are associated:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS) <span class="do">## a library of example datasets</span></span>
@@ -262,6 +265,418 @@ P(Y=y|X=x)
 </div>
 </div>
 <p>We need a function to estimate how the housing values is associated with the percent of low status population in the neighborhood. A linear function can be one of our first candidates. That is we assume that <span class="math inline">\(Y_i=\alpha+\beta X+\epsilon\)</span>. After estimating the parameters of this model, i.e.&nbsp;<span class="math inline">\(\hat{\alpha}\)</span> and <span class="math inline">\(\hat{\beta}\)</span>, the predicted values of <em>OLS</em> estimation is <span class="math inline">\(\hat{Y}=\hat \alpha +\hat \beta X\)</span>. Not surprisingly, since we assumed that the association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is linear, the predicted line fitted to the data is linear (Blue line in the below plot).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat,medv,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">'grey'</span>,<span class="at">cex=</span>.<span class="dv">75</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">'Low Status Percent'</span>,<span class="at">ylab =</span> <span class="st">'Median Value($)'</span>, <span class="at">main=</span><span class="fu">TeX</span>(<span class="st">'$Y=</span><span class="sc">\\</span><span class="st">alpha + </span><span class="sc">\\</span><span class="st">beta X$'</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>lmHousing<span class="ot">=</span><span class="fu">lm</span>(medv<span class="sc">~</span>lstat)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmHousing<span class="sc">$</span>coef, <span class="at">col=</span><span class="st">"navy"</span>, <span class="at">lwd=</span><span class="fl">2.5</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>yhat_lm25<span class="ot">=</span><span class="fu">predict</span>(lmHousing,<span class="fu">data.frame</span>(<span class="at">lstat=</span><span class="fu">c</span>(<span class="dv">20</span>)))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">20</span>,yhat_lm25,<span class="at">cex=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"maroon"</span>, <span class="at">pch=</span><span class="dv">15</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">20</span>,yhat_lm25,<span class="fu">paste</span>(<span class="fu">round</span>(yhat_lm25,<span class="at">digits =</span> <span class="dv">2</span>)),<span class="at">pos=</span><span class="dv">3</span>, <span class="at">cex=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">"maroon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To predict using <em>OLS</em>, we make several assumptions about the form of <span class="math inline">\(Y=f(X)\)</span>. The same applies to non-linear models such as <em>Logit</em> and <em>Probit</em>. However, there are non-parametric approaches that impose less assumption on the form of <span class="math inline">\(f(X)\)</span>. <span class="math inline">\(k\)</span>-NN is one the most commonly used non-parametric predicting algorithms. Before discussing this method, take a look at how this algorithms fits function <span class="math inline">\(f(.)\)</span> to the data:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>kNN15: the median value of a house in a neighborhood with 20% low status residents is 14.37 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="how-does-k-nn-estimate-f." class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="how-does-k-nn-estimate-f."><span class="header-section-number">2.2</span> How does k-NN estimate f(.)?</h2>
+<p>We first need to define a training dataset based on our main sample. The training set for a k-NN algorithm consist of the N pairs of the feature(x) and outcomes as follow:</p>
+<p><span class="math display">\[\begin{equation}
+
+\{(x_1,y_1), (x_2,y_2), \dots, (x_n,y_n) \}
+
+\end{equation}\]</span></p>
+<p>We start with a one feature model, but later in this handout, we will extend <span class="math inline">\(k\)</span>-NN to the cases with more than one feature, i.e.&nbsp;<span class="math inline">\(j&gt;1\)</span>.</p>
+<p><span class="math inline">\(k\)</span>-NN calculates <span class="math inline">\(f(x_i)\)</span> by taking the average of outcome values for the <span class="math inline">\(k\)</span> nearest <span class="math inline">\(x\)</span>’s to <span class="math inline">\(x_i\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-4-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-the-best-k" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="what-is-the-best-k"><span class="header-section-number">2.3</span> What is the “best” K?</h2>
+<p>We learned how K-NN works, but there is an issue here: K is chosen discretionary and for any <span class="math inline">\(K\)</span>, we can get (significantly) different results.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If we choose a large <span class="math inline">\(k\)</span>, then we get a simple line such that for k=500, the like is almost the mean of Median House price. On the other hand, choosing a small <span class="math inline">\(k\)</span> gives a volatile estimation which captures the complexity of the data very well, yet it is very sensitive to any small changes in the data. Can we find a middle-way value for <span class="math inline">\(k\)</span>? This is roughly the idea behind using cross-validation to overcome Bias-Variance Trade-Off. To discuss this idea more in detail, we need to learn about interpreting the prediction accuracy of an estimated function.</p>
+</section>
+<section id="measuring-accuracy" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="measuring-accuracy"><span class="header-section-number">2.4</span> Measuring Accuracy</h2>
+<p>For any given feature (<span class="math inline">\(x\in X\)</span>), or the set of features, we can find the predicted value of the outcome variable, <span class="math inline">\(\hat{y}\)</span>, using the estimated function <span class="math inline">\(\hat{f}(x_i)\)</span>. Given this information, we can find the prediction error for each observation by <span class="math inline">\(y_i-\hat{y}_i\)</span>. The prediction error of each statistical model can be calculated using different indices based on these individual errors. One of the most common one is Root Mean Square Error (<em>RMSE</em>).</p>
+<p><span class="math display">\[\begin{equation}
+
+RMSE=\sqrt{\frac{1}{n}\sum_{i=1}^n [y_i-\hat{f}(x_i)]^2}
+
+\end{equation}\]</span></p>
+<p><em>RMSE</em> calculates the average prediction errors.</p>
+<p>Now, let’s calculate the RMSE of predicting Median House Value in Boston Housing data when we use k-NN model, at different levels of k.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-variance-tradeoff" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="bias-variance-tradeoff"><span class="header-section-number">2.5</span> Bias-Variance Tradeoff</h2>
+<p>Below figure presents one of the core ideas of statistical learning. When the complexity of the model is low, training model has low variance but suffers high bias, which lead to a high prediction error. As the complexity of the model increases, the error of training sample decreases. However, since a model with a high level of complexity is trained to captured biases in the training sample, its prediction power for the test sample decreases, leading to a higher prediction error.</p>
+<p>We can model association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> as follow:</p>
+<p><span class="math display">\[\begin{equation}
+
+
+Y= \underbrace{f(X)}_\text{Signal}+\underbrace{\epsilon}_{Noise}
+
+\end{equation}\]</span></p>
+<p><span class="math inline">\(\epsilon\)</span> is the shock component, also known as noise, of the process. The goal of statistical modeling of a process is capturing the changes caused by <span class="math inline">\(f(x)\)</span>, as the shock/noise component is a random process. Thus, we do not want to mistakenly capture the changes caused by the noise part of the model as the changes caused by signal. If we fit a highly complex model which captures/model all changes in the outcome, then the risk of estimating a noisy model increases.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.dropbox.com/s/8rgk2omprkhe4nq/BiasVarianceTradeoff_ESL.png?dl=1" class="img-fluid figure-img"></p>
+<figcaption>Test and training error as a function of model complexity. (Copied from The Elements of Statistical Learning by Jerome, Friedman, Tibshirani, and Hastie)</figcaption>
+</figure>
+</div>
+<p>Estimating a simple model to explain a complex process leads to a bias function, thought this estimation has a low level of variance. On the other hand, a complex model is sensitive to every bit of changes in the data, which leads to a high variance, though the bias is low.</p>
+</section>
+<section id="cross-validation" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">2.6</span> Cross-Validation</h2>
+<p>Dividing the sample to a train sample and a test sample allows us to evaluate the performance of predictive model. However, there are few challenges regarding this approach:</p>
+<ol type="1">
+<li><p>How can we be sure that the prediction results are independent of the train set? How can we draw the samples to address this concern?</p></li>
+<li><p>Leaving a part of dataset for validating the trained model means that we overlook part of information that we can get from the validation sub-sample. As we overlook this part of information to train our model, we might get a higher level of errors.</p></li>
+</ol>
+<p>The suggested in statistical learning literature solution to address the above issues is <em>Cross-Validation</em>.</p>
+<section id="leave-one-out-cross-validation" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="leave-one-out-cross-validation"><span class="header-section-number">2.6.1</span> Leave-One-Out Cross-Validation</h3>
+<p>In this approach, we divide the sample into train and test samples. Assuming that the size of train sample is <span class="math inline">\(n\)</span>, we leave one observation out, say <span class="math inline">\(i^{th}\)</span> observation, and train the model using <span class="math inline">\(n-1\)</span> remaining observations. Then, we predict the outcome of <span class="math inline">\(i^{th}\)</span> observation and compute the amount of prediction error: <span class="math inline">\(RMSE_i=\sqrt{(Y_i-\hat{Y}_i)^2}\)</span>. We repeat this procedure for all observations in the test sample and compute the mean of Cross-Validation RMSE:</p>
+<p><span class="math display">\[\begin{equation}
+
+RMSE_{LOCV}=\frac{1}{n}\sum_{i=1}^n RMSE_i
+
+\end{equation}\]</span></p>
+</section>
+<section id="k-fold-cross-validation" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">2.6.2</span> <span class="math inline">\(k\)</span>-fold Cross Validation</h3>
+<p><em>Leave-One-Out Cross-Validation</em> is computationally intensive since you need to repeat the training and evaluation <span class="math inline">\(n\)</span> times. An alternative approach is increasing the number of observations that are left out at each stage. To do so, we can divide the sample randomly to <span class="math inline">\(k\)</span> almost equal size groups; then, we will leave one of these groups out for the validation and use the remaining <span class="math inline">\(k-1\)</span> groups to train the model. Using this training model, we can predict the outcome for the observations in the validation subsample and then calculate the prediction for each of thoes observations. We will iterate the training and validation steps for each group (<span class="math inline">\(k\)</span> times). Below figure shows a schematic view of <span class="math inline">\(k\)</span>-fold Cross-Validation (KCV).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.dropbox.com/s/assm8rmbub0frz0/K-fold-cross-validation-E-is-the-overall-error-estimate.png?dl=1" class="img-fluid figure-img"></p>
+<figcaption>The photo is borrowed from: https://www.researchgate.net/figure/K-fold-cross-validation-E-is-the-overall-error-estimate_fig3_320270458</figcaption>
+</figure>
+</div>
+<p>Considering the calculated error terms for each observation, we can compute the mean of <span class="math inline">\(RMSE^{KCV}\)</span> as follow:</p>
+<p><span class="math display">\[\begin{equation}
+
+RMSE^{KCV}=\sqrt{\frac{1}{n}\sum_{i=1}^n(Y_i-\hat{Y}_i)^2}
+
+\end{equation}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Lets use the average of 5-,10-, and 15-fol </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The best K is: 34 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="showing-variance-bias-tradeoff-by-an-example" class="level3" data-number="2.6.3">
+<h3 data-number="2.6.3" class="anchored" data-anchor-id="showing-variance-bias-tradeoff-by-an-example"><span class="header-section-number">2.6.3</span> Showing Variance-Bias-TradeOff by an Example</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="1152"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="k-nearest-neighbors-p1" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="k-nearest-neighbors-p1"><span class="header-section-number">2.7</span> <span class="math inline">\(k\)</span>-Nearest Neighbors, p&gt;1</h2>
+<p>In the previous sections, we studied the <span class="math inline">\(kNN\)</span> prediction algorithm for the cases where there is only one feature. Finding the <span class="math inline">\(k\)</span> nearest points for a problem with one feature/independent variable is straightforward, but how does the algorithm changes if we want to use more than one feature/independent variable?</p>
+<p>The idea of <span class="math inline">\(kNN\)</span> is predicting based on the most similar, closest, observations on the training subsample. Where <span class="math inline">\(p&gt;1\)</span>, the problem is finding the predicted values of <span class="math inline">\(Y_k\)</span> given a set of the features/covariates <span class="math inline">\(X_f=(x_{f1},x_{f2},\dots,x_{fp})\)</span>.</p>
+<p><span class="math inline">\(kNN\)</span>:</p>
+<p>To predict <span class="math inline">\(\hat{Y}_f\)</span> using <span class="math inline">\(X_f=(x_{f1},x_{f2},\dots,x_{fp})\)</span>, we can define a neighborhood around <span class="math inline">\(X_f\)</span> which include <span class="math inline">\(k\)</span> nearest <span class="math inline">\(X_i\)</span>’s to <span class="math inline">\(X_f\)</span> on the training dataset; then, we calculate the average of <span class="math inline">\(y_i\)</span>’s corresponding to these <span class="math inline">\(k\)</span> smallest <span class="math inline">\(d_i\)</span>.</p>
+<p>There are different distance metric. Here, we use one of the most well-known one, that is Euclidean Distance:</p>
+<p><span class="math display">\[\begin{equation}
+
+d_{if}=\sqrt{\sum_{j=1}^p (x_{fj}-x_{ij})^2}~, X_i~in~training~data
+
+
+\end{equation}\]</span></p>
+<p>The second issue that we should address in employing <span class="math inline">\(kNN\)</span> for problems with more than one feature is rescaling and normalizing the features.</p>
+<p>Let’s take a look at below scatter plots of Median Housing price versus Percentage of lower status of the population, <em>lstat</em>, and Weighted distances to five Boston employment centers, <em>dis</em>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see in the above photo, the unit of <em>lstat</em> is different from the unit of <em>dis</em>. This different between units of features affect finding the nearest points around <span class="math inline">\(X_f\)</span>. One common solution is rescaling/normalizing the features before applying <span class="math inline">\(kNN\)</span> algorithm. There are two common rescaling approaches:</p>
+<ol type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[\begin{equation}
+
+\tilde{x}=\frac{x-min(x)}{max(x)-min(x)}
+
+\end{equation}\]</span></p>
+<p>This rescaling formula limit the X’s to <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>.</p>
+<ol start="2" type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[\begin{equation}
+
+\tilde{x}=\frac{x-\bar{x}}{\sigma_x}
+
+\end{equation}\]</span></p>
+<p>Let’s see how this rescaling changes the correlation between <em>dis</em> and <em>medv</em>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see in the above graphs, rescaling features does not change the association between the features and the outcome variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a-prediction-problem-with-large-n-and-large-p-using-knn" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="a-prediction-problem-with-large-n-and-large-p-using-knn"><span class="header-section-number">2.8</span> A Prediction Problem with Large <span class="math inline">\(N\)</span> and Large <span class="math inline">\(p\)</span> using <span class="math inline">\(kNN\)</span></h2>
+<p>Now, let’s predict the median price of houses in Boston data using several features. The features that I picked to predict the housing price, <em>medv</em>, are <em>crim,indus,age,dis,black,</em> and <em>lstat</em>. Before estimating the prediction model, it can be helpful to plot the scatter plots showing the association between the outcome and the features.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kknn)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source_url</span>(<span class="st">'https://raw.githubusercontent.com/babakrezaee/DataWrangling/master/Functions/docv_fun.R'</span>) <span class="do">## Cross validation function</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">cbind</span>(crim,indus,age,dis,black,lstat)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>mmsc<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">return</span>((x<span class="sc">-</span><span class="fu">min</span>(x))<span class="sc">/</span>(<span class="fu">max</span>(x)<span class="sc">-</span><span class="fu">min</span>(x)))}</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>X_s<span class="ot">=</span><span class="fu">apply</span>(X, <span class="dv">2</span>, mmsc)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>kv<span class="ot">=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">100</span> <span class="co">#these are the k values (k as in kNN) we will try</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ndocv<span class="ot">=</span><span class="dv">35</span> <span class="co"># Number of cross validation</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 5-fold</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>cv_mat_5<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="fu">length</span>(kv),ndocv)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#pb &lt;- txtProgressBar(min = 0, max = ndocv, style = 3) # Setting up the progress bar</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv){</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    cv_temp<span class="ot">=</span><span class="fu">docvknn</span>(X_s,medv,kv,<span class="at">nfold=</span><span class="dv">5</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    cv_mat_5[,i]<span class="ot">=</span><span class="fu">sqrt</span>(cv_temp<span class="sc">/</span><span class="fu">length</span>(medv))</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#setTxtProgressBar(pb, i)</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>cv_mean_5<span class="ot">=</span><span class="fu">apply</span>(cv_mat_5,<span class="dv">1</span>,mean)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>kbest_5 <span class="ot">=</span> kv[<span class="fu">which.min</span>(cv_mean_5)]</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The min value of RMSE for 10-fold cross-validation is associated with k="</span>,kbest_5,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The min value of RMSE for 10-fold cross-validation is associated with k= 7 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 10-fold</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>cv_mat_10<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="fu">length</span>(kv),ndocv)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#pb &lt;- txtProgressBar(min = 0, max = ndocv, style = 3) # Setting up the progress bar</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv){</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      cv_temp<span class="ot">=</span><span class="fu">docvknn</span>(X_s,medv,kv,<span class="at">nfold=</span><span class="dv">10</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      cv_mat_10[,i]<span class="ot">=</span><span class="fu">sqrt</span>(cv_temp<span class="sc">/</span><span class="fu">length</span>(medv))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="co">#setTxtProgressBar(pb, i)</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>cv_mean_10<span class="ot">=</span><span class="fu">apply</span>(cv_mat_10,<span class="dv">1</span>,mean)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>kbest_10 <span class="ot">=</span> kv[<span class="fu">which.min</span>(cv_mean_10)]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The min value of RMSE for 10-fold cross-validation is associated with k="</span>,kbest_10,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The min value of RMSE for 10-fold cross-validation is associated with k= 5 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kv, cv_mean_5, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">type=</span><span class="st">'l'</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv) <span class="fu">lines</span>(kv,cv_mat_5[,i], <span class="at">col=</span><span class="dv">550</span><span class="sc">+</span>i, <span class="at">lwd=</span>.<span class="dv">4</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(kv, cv_mean_5, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span> )</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="st">"nfold=5"</span>, <span class="at">font.main=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kv, cv_mean_10, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">type=</span><span class="st">'l'</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv) <span class="fu">lines</span>(kv,cv_mat_10[,i], <span class="at">col=</span><span class="dv">550</span><span class="sc">+</span>i, <span class="at">lwd=</span>.<span class="dv">4</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(kv, cv_mean_10, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span> )</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="st">"nfold=10"</span>, <span class="at">font.main=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">##What is the best of way of measuring</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">data.frame</span>(medv,X_s)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>kf_best_5 <span class="ot">=</span> <span class="fu">kknn</span>(medv<span class="sc">~</span>.,data,data,<span class="at">k=</span>kbest_5,<span class="at">kernel =</span> <span class="st">"rectangular"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>RMSE_fold_5<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((data<span class="sc">$</span>medv<span class="sc">-</span>kf_best_5<span class="sc">$</span>fitted)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(data<span class="sc">$</span>medv))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The RMSE for 5-fold kNN is"</span>, RMSE_fold_5,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The RMSE for 5-fold kNN is 4.01538 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>kf_best_10 <span class="ot">=</span> <span class="fu">kknn</span>(medv<span class="sc">~</span>.,data,data,<span class="at">k=</span>kbest_10,<span class="at">kernel =</span> <span class="st">"rectangular"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>RMSE_fold_10<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((data<span class="sc">$</span>medv<span class="sc">-</span>kf_best_10<span class="sc">$</span>fitted)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(data<span class="sc">$</span>medv))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The RMSE for 10-fold kNN is"</span>, RMSE_fold_10,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The RMSE for 10-fold kNN is 3.786824 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>lmf <span class="ot">=</span> <span class="fu">lm</span>(medv<span class="sc">~</span>.,data)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fmat <span class="ot">=</span> <span class="fu">cbind</span>(medv,lmf<span class="sc">$</span>fitted,kf_best_5<span class="sc">$</span>fitted,kf_best_10<span class="sc">$</span>fitted)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>my_line <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y,...){</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(x,y,...)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">segments</span>(<span class="fu">min</span>(x), <span class="fu">min</span>(y), <span class="fu">max</span>(x), <span class="fu">max</span>(y),...)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fmat)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"y"</span>,<span class="st">"linear"</span>, <span class="st">"kNN5"</span>, <span class="st">"kNN10"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(fmat, <span class="at">lower.panel =</span> my_line, <span class="at">upper.panel =</span> my_line, <span class="at">col=</span><span class="st">'maroon'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="knn_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(fmat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               y    linear      kNN5     kNN10
+y      1.0000000 0.7715306 0.9015274 0.9118707
+linear 0.7715306 1.0000000 0.8534194 0.8376299
+kNN5   0.9015274 0.8534194 1.0000000 0.9870313
+kNN10  0.9118707 0.8376299 0.9870313 1.0000000</code></pre>
+</div>
+</div>
 
 
 </section>
