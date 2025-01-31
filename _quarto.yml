@@ -2,12 +2,13 @@ project:
   type: book
 
 book:
-  title: "Computational_IR"
-  author: "Norah Jones"
+  title: "Computational International Relations"
+  author:  Babak RezaeeDaryakenari
   date: "1/31/2025"
   chapters:
     - index.qmd
     - intro.qmd
+    - knn.qmd
     - summary.qmd
     - references.qmd
 
