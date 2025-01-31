@@ -1,9 +1,5 @@
 # Preface {.unnumbered}
 
-This is a Quarto book.
+This handout is prepared for Computational International Relations by Dr. Babak RezaeeDaryakenari [s.rezaeedaryakenari@fsw.leidenuniv.nl](mailto:s.rezaeedaryakenari@fsw.leidenuniv.nl). 
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
-
-```{r}
-1 + 1
-```
+This is an ongoing project. Please do not share or use it without the author's written permission.
