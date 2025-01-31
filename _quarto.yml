@@ -6,7 +6,9 @@ book:
   title: "Computational International Relations"
   author:  Babak RezaeeDaryakenari
   date: "1/31/2025"
-  chapters:
+  #chapters:
+  navbar:
+    left:
     - index.qmd
     - intro.qmd
     - knn.qmd
