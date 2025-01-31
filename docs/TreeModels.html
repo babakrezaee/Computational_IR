@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Tree Models: Random Forest – Computational International Relations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./summary.html" rel="next">
+<link href="./NaiveBayes.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./TreeModels.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computational International Relations</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./knn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">K-Nearest Neighbors (KNN)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./NaiveBayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Naive Bayes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TreeModels.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#regression-trees" id="toc-regression-trees" class="nav-link active" data-scroll-target="#regression-trees"><span class="header-section-number">4.1</span> Regression Trees</a></li>
+  <li><a href="#a-tree-with-two-explanatory-variables" id="toc-a-tree-with-two-explanatory-variables" class="nav-link" data-scroll-target="#a-tree-with-two-explanatory-variables"><span class="header-section-number">4.2</span> A Tree with Two Explanatory Variables</a></li>
+  <li><a href="#what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" id="toc-what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" class="nav-link" data-scroll-target="#what-is-the-loss-problem-and-optimization-question-in-tree-algorithm"><span class="header-section-number">4.3</span> What is the loss problem and optimization question in tree algorithm?</a></li>
+  <li><a href="#how-to-fit-the-data-to-a-tree-model" id="toc-how-to-fit-the-data-to-a-tree-model" class="nav-link" data-scroll-target="#how-to-fit-the-data-to-a-tree-model"><span class="header-section-number">4.4</span> How to fit the data to a tree model?</a></li>
+  <li><a href="#pruning-trees" id="toc-pruning-trees" class="nav-link" data-scroll-target="#pruning-trees"><span class="header-section-number">4.5</span> Pruning trees</a></li>
+  <li><a href="#a-cross-validated-problem" id="toc-a-cross-validated-problem" class="nav-link" data-scroll-target="#a-cross-validated-problem"><span class="header-section-number">4.6</span> A cross-validated problem</a></li>
+  <li><a href="#bagging-and-random-forest" id="toc-bagging-and-random-forest" class="nav-link" data-scroll-target="#bagging-and-random-forest"><span class="header-section-number">4.7</span> Bagging and Random Forest</a></li>
+  <li><a href="#california-housing-data" id="toc-california-housing-data" class="nav-link" data-scroll-target="#california-housing-data"><span class="header-section-number">4.8</span> California Housing Data</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The idea of trees in statistical learning has similarity with decision trees models. Trees and its extensions have been used widely for modeling the prediction of outcome variables. Let’s start with reviewing the advantages and disadvantages of this method:</p>
+<p><em>Benefits:</em></p>
+<ul>
+<li><p>Very good in capturing the interactions between the features of a models and non-linearity associations</p></li>
+<li><p>performs very well in handling categorical variables, with nice interpretation of the results</p></li>
+<li><p>relatively faster than other machine learning algorithms</p></li>
+<li><p>does not require scaling x variables/features.</p></li>
+</ul>
+<p><em>Disadvantage:</em></p>
+<ul>
+<li>Simple tree models do not lead to the best out-of-sample predictive.</li>
+</ul>
+<p>However, if we grow a good forest and bag/boost the models to combine the fits from different tree models, we can improve the prediction power.</p>
+<section id="regression-trees" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="regression-trees"><span class="header-section-number">4.1</span> Regression Trees</h2>
+<p>It is much easier to explain the tree models using an example. Let’s start with the Boston housing data that we used before in <span class="math inline">\(kNN\)</span> section. Similarly, I want to predict median housing price in a neighborhood, <span class="math inline">\({\tt medv}\)</span>, using the ratio of low state households, <span class="math inline">\({\tt lstat}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS) </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(Boston)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">=</span> <span class="fu">data.frame</span>(lstat,medv)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data here</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>oo<span class="ot">=</span><span class="fu">order</span>(ddf<span class="sc">$</span>lstat)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">=</span> ddf[oo,]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>m_tree<span class="ot">=</span><span class="fu">rpart</span>(medv<span class="sc">~</span>lstat,<span class="at">data=</span>ddf)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the estimated tree</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+rpart(formula = medv ~ lstat, data = ddf)
+  n= 506 
+
+          CP nsplit rel error    xerror       xstd
+1 0.44236500      0 1.0000000 1.0019518 0.08305987
+2 0.15283400      1 0.5576350 0.5937544 0.04887727
+3 0.06275014      2 0.4048010 0.4328859 0.03963475
+4 0.01374053      3 0.3420509 0.3935850 0.03952768
+5 0.01200979      4 0.3283103 0.3814673 0.03843902
+6 0.01159492      5 0.3163005 0.3757149 0.03743713
+7 0.01000000      6 0.3047056 0.3747370 0.03775155
+
+Variable importance
+lstat 
+  100 
+
+Node number 1: 506 observations,    complexity param=0.442365
+  mean=22.53281, MSE=84.41956 
+  left son=2 (294 obs) right son=3 (212 obs)
+  Primary splits:
+      lstat &lt; 9.725  to the right, improve=0.442365, (0 missing)
+
+Node number 2: 294 observations,    complexity param=0.06275014
+  mean=17.34354, MSE=23.83089 
+  left son=4 (144 obs) right son=5 (150 obs)
+  Primary splits:
+      lstat &lt; 16.085 to the right, improve=0.3825785, (0 missing)
+
+Node number 3: 212 observations,    complexity param=0.152834
+  mean=29.72925, MSE=79.31047 
+  left son=6 (162 obs) right son=7 (50 obs)
+  Primary splits:
+      lstat &lt; 4.65   to the right, improve=0.3882819, (0 missing)
+
+Node number 4: 144 observations,    complexity param=0.01374053
+  mean=14.26181, MSE=18.74458 
+  left son=8 (75 obs) right son=9 (69 obs)
+  Primary splits:
+      lstat &lt; 19.9   to the right, improve=0.2174498, (0 missing)
+
+Node number 5: 150 observations
+  mean=20.302, MSE=10.84406 
+
+Node number 6: 162 observations,    complexity param=0.01159492
+  mean=26.6463, MSE=42.74335 
+  left son=12 (134 obs) right son=13 (28 obs)
+  Primary splits:
+      lstat &lt; 5.495  to the right, improve=0.07152825, (0 missing)
+
+Node number 7: 50 observations,    complexity param=0.01200979
+  mean=39.718, MSE=67.21788 
+  left son=14 (32 obs) right son=15 (18 obs)
+  Primary splits:
+      lstat &lt; 3.325  to the right, improve=0.1526421, (0 missing)
+
+Node number 8: 75 observations
+  mean=12.32533, MSE=16.18776 
+
+Node number 9: 69 observations
+  mean=16.36667, MSE=13.01729 
+
+Node number 12: 134 observations
+  mean=25.84701, MSE=40.14324 
+
+Node number 13: 28 observations
+  mean=30.47143, MSE=37.49776 
+
+Node number 14: 32 observations
+  mean=37.31562, MSE=65.92382 
+
+Node number 15: 18 observations
+  mean=43.98889, MSE=41.01765 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ddf<span class="sc">$</span>medv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   5.00   17.02   21.20   22.53   25.00   50.00 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m_tree)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(m_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>But, this plot does not often look good. Indeed, it usually is a mess! To plot a nice tree, I suggest using <span class="math inline">\({\tt rpart.plot}\)</span> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(m_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>At each interior node, there is decision rule, <span class="math inline">\(x&gt;c\)</span>. If <span class="math inline">\(x&gt;c\)</span>, you should follow the branch on the left. This continues until you reach a bottom/terminal node, which also is known as the leaf of the tree.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ddf<span class="sc">$</span>lstat,ddf<span class="sc">$</span>medv, <span class="at">col=</span><span class="st">'blue'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ddf<span class="sc">$</span>lstat,<span class="fu">predict</span>(m_tree,ddf),<span class="at">col=</span><span class="st">'maroon'</span>,<span class="at">lwd=</span><span class="dv">3</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> m_tree<span class="sc">$</span>splits[,<span class="dv">4</span>] ){</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>i, <span class="at">col=</span><span class="st">"orange"</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The set of bottom nodes gives us a partition of the predictor <span class="math inline">\(x\)</span> space into disjoint regions. At right, the vertical lines display the partition. With just one x, this is just a set of intervals.</p>
+<p>Within each region (interval) we compute the average of the <span class="math inline">\(y\)</span> values for the subset of training data in the region. This gives us the step function which is our <span class="math inline">\(\hat{f}\)</span>. The <span class="math inline">\(\bar{y}\)</span> values are also printed at the bottom nodes. To predict, we just use the above step function estimation of f(x).</p>
+</section>
+<section id="a-tree-with-two-explanatory-variables" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="a-tree-with-two-explanatory-variables"><span class="header-section-number">4.2</span> A Tree with Two Explanatory Variables</h2>
+<p>Now, let’s estimate a tree model using two features: <span class="math inline">\(x=(lstat, dis)\)</span> and <span class="math inline">\(y=medx\)</span>.</p>
+<p>First, let’s take a look at scatter plot of these variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">=</span> <span class="fu">data.frame</span>(medv,rm,nox,lstat, dis)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data here</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>oo<span class="ot">=</span><span class="fu">order</span>(ddf<span class="sc">$</span>lstat)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">=</span> ddf[oo,]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ddf, <span class="fu">aes</span>(lstat, dis, <span class="at">colour =</span> medv)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m_tree2<span class="ot">=</span><span class="fu">rpart</span>(medv<span class="sc">~</span>lstat<span class="sc">+</span>dis,<span class="at">data=</span>ddf)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(m_tree2, <span class="at">box.palette =</span> <span class="st">"Grays"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(m_tree2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>n= 506 
+
+node), split, n, deviance, yval
+      * denotes terminal node
+
+ 1) root 506 42716.3000 22.53281  
+   2) lstat&gt;=9.725 294  7006.2830 17.34354  
+     4) lstat&gt;=16.085 144  2699.2200 14.26181  
+       8) dis&lt; 2.0037 75  1114.6990 11.96933 *
+       9) dis&gt;=2.0037 69   761.9316 16.75362 *
+     5) lstat&lt; 16.085 150  1626.6090 20.30200 *
+   3) lstat&lt; 9.725 212 16813.8200 29.72925  
+     6) lstat&gt;=4.65 162  6924.4230 26.64630  
+      12) dis&gt;=2.4501 144  3493.3720 25.67986  
+        24) lstat&gt;=5.495 118  2296.9260 24.71695 *
+        25) lstat&lt; 5.495 26   590.4850 30.05000 *
+      13) dis&lt; 2.4501 18  2220.5910 34.37778 *
+     7) lstat&lt; 4.65 50  3360.8940 39.71800  
+      14) dis&gt;=3.20745 38  2087.6880 37.00789  
+        28) lstat&gt;=3.99 13   179.3908 32.06154 *
+        29) lstat&lt; 3.99 25  1424.8400 39.58000 *
+      15) dis&lt; 3.20745 12   110.3000 48.30000 *</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_tree2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+rpart(formula = medv ~ lstat + dis, data = ddf)
+  n= 506 
+
+          CP nsplit rel error    xerror       xstd
+1 0.44236500      0 1.0000000 1.0010651 0.08279637
+2 0.15283400      1 0.5576350 0.6158927 0.05218432
+3 0.06275014      2 0.4048010 0.4567523 0.04201186
+4 0.02833720      3 0.3420509 0.4167670 0.04165252
+5 0.02722395      4 0.3137137 0.4164386 0.04073631
+6 0.01925703      5 0.2864897 0.4005999 0.04043000
+7 0.01418570      6 0.2672327 0.3734997 0.03940346
+8 0.01131786      7 0.2530470 0.3593048 0.03914959
+9 0.01000000      8 0.2417291 0.3416455 0.03531836
+
+Variable importance
+lstat   dis 
+   72    28 
+
+Node number 1: 506 observations,    complexity param=0.442365
+  mean=22.53281, MSE=84.41956 
+  left son=2 (294 obs) right son=3 (212 obs)
+  Primary splits:
+      lstat &lt; 9.725   to the right, improve=0.4423650, (0 missing)
+      dis   &lt; 2.5977  to the left,  improve=0.1169235, (0 missing)
+  Surrogate splits:
+      dis &lt; 4.48025 to the left,  agree=0.737, adj=0.373, (0 split)
+
+Node number 2: 294 observations,    complexity param=0.06275014
+  mean=17.34354, MSE=23.83089 
+  left son=4 (144 obs) right son=5 (150 obs)
+  Primary splits:
+      lstat &lt; 16.085  to the right, improve=0.3825785, (0 missing)
+      dis   &lt; 2.0754  to the left,  improve=0.3369205, (0 missing)
+  Surrogate splits:
+      dis &lt; 2.2166  to the left,  agree=0.724, adj=0.438, (0 split)
+
+Node number 3: 212 observations,    complexity param=0.152834
+  mean=29.72925, MSE=79.31047 
+  left son=6 (162 obs) right son=7 (50 obs)
+  Primary splits:
+      lstat &lt; 4.65    to the right, improve=0.3882819, (0 missing)
+      dis   &lt; 2.16475 to the right, improve=0.1528193, (0 missing)
+  Surrogate splits:
+      dis &lt; 1.48495 to the right, agree=0.769, adj=0.02, (0 split)
+
+Node number 4: 144 observations,    complexity param=0.01925703
+  mean=14.26181, MSE=18.74458 
+  left son=8 (75 obs) right son=9 (69 obs)
+  Primary splits:
+      dis   &lt; 2.0037  to the left,  improve=0.3047506, (0 missing)
+      lstat &lt; 19.9    to the right, improve=0.2174498, (0 missing)
+  Surrogate splits:
+      lstat &lt; 19.73   to the right, agree=0.771, adj=0.522, (0 split)
+
+Node number 5: 150 observations
+  mean=20.302, MSE=10.84406 
+
+Node number 6: 162 observations,    complexity param=0.0283372
+  mean=26.6463, MSE=42.74335 
+  left son=12 (144 obs) right son=13 (18 obs)
+  Primary splits:
+      dis   &lt; 2.4501  to the right, improve=0.17481020, (0 missing)
+      lstat &lt; 5.495   to the right, improve=0.07152825, (0 missing)
+
+Node number 7: 50 observations,    complexity param=0.02722395
+  mean=39.718, MSE=67.21788 
+  left son=14 (38 obs) right son=15 (12 obs)
+  Primary splits:
+      dis   &lt; 3.20745 to the right, improve=0.3460110, (0 missing)
+      lstat &lt; 3.325   to the right, improve=0.1526421, (0 missing)
+  Surrogate splits:
+      lstat &lt; 1.95    to the right, agree=0.8, adj=0.167, (0 split)
+
+Node number 8: 75 observations
+  mean=11.96933, MSE=14.86266 
+
+Node number 9: 69 observations
+  mean=16.75362, MSE=11.04249 
+
+Node number 12: 144 observations,    complexity param=0.0141857
+  mean=25.67986, MSE=24.25952 
+  left son=24 (118 obs) right son=25 (26 obs)
+  Primary splits:
+      lstat &lt; 5.495   to the right, improve=0.17346010, (0 missing)
+      dis   &lt; 4.39775 to the right, improve=0.07588735, (0 missing)
+
+Node number 13: 18 observations
+  mean=34.37778, MSE=123.3662 
+
+Node number 14: 38 observations,    complexity param=0.01131786
+  mean=37.00789, MSE=54.93915 
+  left son=28 (13 obs) right son=29 (25 obs)
+  Primary splits:
+      lstat &lt; 3.99    to the right, improve=0.2315753, (0 missing)
+      dis   &lt; 6.40075 to the right, improve=0.1173026, (0 missing)
+
+Node number 15: 12 observations
+  mean=48.3, MSE=9.191667 
+
+Node number 24: 118 observations
+  mean=24.71695, MSE=19.46548 
+
+Node number 25: 26 observations
+  mean=30.05, MSE=22.71096 
+
+Node number 28: 13 observations
+  mean=32.06154, MSE=13.79929 
+
+Node number 29: 25 observations
+  mean=39.58, MSE=56.9936 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tree)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>m_tree2<span class="ot">=</span><span class="fu">tree</span>(medv<span class="sc">~</span>lstat<span class="sc">+</span>dis,<span class="at">data=</span>ddf)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_tree2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Regression tree:
+tree(formula = medv ~ lstat + dis, data = ddf)
+Number of terminal nodes:  9 
+Residual mean deviance:  20.78 = 10330 / 497 
+Distribution of residuals:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-14.780  -2.713  -0.302   0.000   2.298  15.620 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">partition.tree</span>(m_tree2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mid<span class="ot">&lt;-</span><span class="fu">mean</span>(medv)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ddf, <span class="fu">aes</span>(lstat, rm, <span class="at">colour =</span> medv)) <span class="sc">+</span> <span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">scale_color_gradient2</span>(<span class="at">midpoint=</span>mid, <span class="at">low=</span><span class="st">"blue"</span>, <span class="at">mid=</span><span class="st">"cyan"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high=</span><span class="st">"maroon"</span>, <span class="at">space =</span><span class="st">"Lab"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>m_tree31<span class="ot">=</span><span class="fu">rpart</span>(medv<span class="sc">~</span>lstat<span class="sc">+</span>rm<span class="sc">+</span>dis,<span class="at">data=</span>ddf)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_tree31)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+rpart(formula = medv ~ lstat + rm + dis, data = ddf)
+  n= 506 
+
+          CP nsplit rel error    xerror       xstd
+1 0.45274420      0 1.0000000 1.0104108 0.08357045
+2 0.17117244      1 0.5472558 0.6556225 0.05903245
+3 0.07165784      2 0.3760834 0.4356052 0.04821239
+4 0.03616428      3 0.3044255 0.3413502 0.04259462
+5 0.03336923      4 0.2682612 0.3370692 0.04369192
+6 0.02311607      5 0.2348920 0.3232198 0.04264504
+7 0.01585116      6 0.2117759 0.3129324 0.04029676
+8 0.01000000      7 0.1959248 0.2951398 0.04120684
+
+Variable importance
+   rm lstat   dis 
+   54    33    13 
+
+Node number 1: 506 observations,    complexity param=0.4527442
+  mean=22.53281, MSE=84.41956 
+  left son=2 (430 obs) right son=3 (76 obs)
+  Primary splits:
+      rm    &lt; 6.941   to the left,  improve=0.4527442, (0 missing)
+      lstat &lt; 9.725   to the right, improve=0.4423650, (0 missing)
+      dis   &lt; 2.5977  to the left,  improve=0.1169235, (0 missing)
+  Surrogate splits:
+      lstat &lt; 4.83    to the right, agree=0.891, adj=0.276, (0 split)
+
+Node number 2: 430 observations,    complexity param=0.1711724
+  mean=19.93372, MSE=40.27284 
+  left son=4 (175 obs) right son=5 (255 obs)
+  Primary splits:
+      lstat &lt; 14.4    to the right, improve=0.4222277, (0 missing)
+      dis   &lt; 2.58835 to the left,  improve=0.2036255, (0 missing)
+      rm    &lt; 6.5455  to the left,  improve=0.1442877, (0 missing)
+  Surrogate splits:
+      dis &lt; 2.23935 to the left,  agree=0.781, adj=0.463, (0 split)
+      rm  &lt; 5.858   to the left,  agree=0.688, adj=0.234, (0 split)
+
+Node number 3: 76 observations,    complexity param=0.07165784
+  mean=37.23816, MSE=79.7292 
+  left son=6 (46 obs) right son=7 (30 obs)
+  Primary splits:
+      rm    &lt; 7.437   to the left,  improve=0.50515690, (0 missing)
+      lstat &lt; 4.68    to the right, improve=0.33189140, (0 missing)
+      dis   &lt; 6.75885 to the right, improve=0.03479472, (0 missing)
+  Surrogate splits:
+      lstat &lt; 3.99    to the right, agree=0.776, adj=0.433, (0 split)
+
+Node number 4: 175 observations,    complexity param=0.02311607
+  mean=14.956, MSE=19.27572 
+  left son=8 (86 obs) right son=9 (89 obs)
+  Primary splits:
+      dis   &lt; 2.0037  to the left,  improve=0.2927244, (0 missing)
+      lstat &lt; 19.83   to the right, improve=0.2696497, (0 missing)
+      rm    &lt; 5.567   to the left,  improve=0.0750970, (0 missing)
+  Surrogate splits:
+      lstat &lt; 19.73   to the right, agree=0.749, adj=0.488, (0 split)
+      rm    &lt; 5.5505  to the left,  agree=0.634, adj=0.256, (0 split)
+
+Node number 5: 255 observations,    complexity param=0.03616428
+  mean=23.3498, MSE=26.0087 
+  left son=10 (248 obs) right son=11 (7 obs)
+  Primary splits:
+      dis   &lt; 1.5511  to the right, improve=0.2329242, (0 missing)
+      lstat &lt; 4.91    to the right, improve=0.2208409, (0 missing)
+      rm    &lt; 6.543   to the left,  improve=0.2172099, (0 missing)
+
+Node number 6: 46 observations,    complexity param=0.01585116
+  mean=32.11304, MSE=41.29592 
+  left son=12 (7 obs) right son=13 (39 obs)
+  Primary splits:
+      lstat &lt; 9.65    to the right, improve=0.35644260, (0 missing)
+      dis   &lt; 3.45845 to the left,  improve=0.08199333, (0 missing)
+      rm    &lt; 7.3     to the right, improve=0.05938584, (0 missing)
+  Surrogate splits:
+      dis &lt; 1.6469  to the left,  agree=0.87, adj=0.143, (0 split)
+
+Node number 7: 30 observations
+  mean=45.09667, MSE=36.62832 
+
+Node number 8: 86 observations
+  mean=12.53953, MSE=16.13867 
+
+Node number 9: 89 observations
+  mean=17.29101, MSE=11.21228 
+
+Node number 10: 248 observations,    complexity param=0.03336923
+  mean=22.93629, MSE=14.75159 
+  left son=20 (193 obs) right son=21 (55 obs)
+  Primary splits:
+      rm    &lt; 6.543   to the left,  improve=0.38962730, (0 missing)
+      lstat &lt; 7.685   to the right, improve=0.33560120, (0 missing)
+      dis   &lt; 2.8405  to the left,  improve=0.03769213, (0 missing)
+  Surrogate splits:
+      lstat &lt; 5.055   to the right, agree=0.839, adj=0.273, (0 split)
+      dis   &lt; 10.648  to the left,  agree=0.782, adj=0.018, (0 split)
+
+Node number 11: 7 observations
+  mean=38, MSE=204.1457 
+
+Node number 12: 7 observations
+  mean=23.05714, MSE=61.85673 
+
+Node number 13: 39 observations
+  mean=33.73846, MSE=20.24391 
+
+Node number 20: 193 observations
+  mean=21.65648, MSE=8.23738 
+
+Node number 21: 55 observations
+  mean=27.42727, MSE=11.69398 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(m_tree31, <span class="at">box.palette =</span> <span class="st">"Grays"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m_tree32<span class="ot">=</span><span class="fu">rpart</span>(medv<span class="sc">~</span>lstat<span class="sc">+</span>rm<span class="sc">+</span>dis,<span class="at">data=</span>ddf)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(m_tree32, <span class="at">box.palette =</span> <span class="st">"Grays"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="what-is-the-loss-problem-and-optimization-question-in-tree-algorithm"><span class="header-section-number">4.3</span> What is the loss problem and optimization question in tree algorithm?</h2>
+<p>As shown above, we want to split the feature space, i.e.&nbsp;<span class="math inline">\(X=\{x_1, x_2, \dots, x_k\}\)</span>, to smaller rectangular, or boxes. If we find a splitting pattern which has the lowest prediction error for the training data, then we can predict the associated outcome with the prediction feature set <span class="math inline">\(X_p\)</span> by finding to which box this set belongs. Roughly, we can think about about tree algorithm like a <span class="math inline">\(kNN\)</span> algorithm in which <span class="math inline">\(k\)</span> is dynamic and can change according to the changes in the data.</p>
+<p><span class="math display">\[\begin{align}
+
+min_{R_1,R_2,\dots,R_J} \sum_{j=1}^J \sum_{i \in R_j} (y_i-\hat{y}_{R_j})^2
+
+\end{align}\]</span></p>
+<p>This loss has a straightforward intuition: we want to find <span class="math inline">\(R_j\)</span>s to minimize the sum of the squared deviation of observations from the mean response within each box. In theory, we can define infinite number of boxes, and we need to evaluate the squared errors of each set of boxes to see which one is minimized. This is computationally very intensive and almost impossible.</p>
+<p>To solve this problem, a <em>recursive partitioning</em> top-down approach is used to find the <em>optimal</em> boxes:</p>
+<ul>
+<li><p>Scan each feature/predictor in the data to find the one for which splitting gives the best performance/prediction power, i.e.&nbsp;lowest error.</p></li>
+<li><p>Now, for each split repeat the previous step, and continue this until splitting is too costly (we will discuss later what “costly” means, but just as a tip: <em>think about bias-variance tradeoff</em>), or reach a pre-defined tree size.</p></li>
+</ul>
+<p>This is a <em>greedy</em> approach since the splitting process only focus on each step and pick the split that is associated with the best fit at the current step, rather than looking ahead and picking the split which lead to a better prediction tree in the following steps.</p>
+</section>
+<section id="how-to-fit-the-data-to-a-tree-model" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="how-to-fit-the-data-to-a-tree-model"><span class="header-section-number">4.4</span> How to fit the data to a tree model?</h2>
+<p>To execute the above algorithm, statistical algorithms re-write the above problem as follow:</p>
+<p><span class="math display">\[\begin{align}
+
+C(T,y)=L(T,y)+\alpha |T|
+
+\end{align}\]</span></p>
+<p>where L(T,y) is the loss of fitting outcome <span class="math inline">\(y\)</span> with tree <span class="math inline">\(T\)</span>. Our goal always is minimizing the loss, that is small <span class="math inline">\(L\)</span> is preferred.</p>
+<p>However, we do not want to make the model/tree too complex. A complex model might be good in capturing all variances in the training data, but would lead to a biased prediction of in the test data. Thus, we add the number of nodes in tree T, i.e.&nbsp;<span class="math inline">\(|T|\)</span>, with a penalty parameter <span class="math inline">\(\alpha\)</span> to the cost function <span class="math inline">\(C(T,y)\)</span>. For the continuous <span class="math inline">\(y\)</span>, we can use <em>RMSE</em>, and for categorical <span class="math inline">\(y\)</span>, we can use any of the classification measures that are discussed in the previous section.</p>
+<p>What is the best <span class="math inline">\(\alpha\)</span>? if we pick a big <span class="math inline">\(\alpha\)</span>, then the penalty for having a big and complex tree is large. Thus, the optimization problem return a small tree which can lead to a large <span class="math inline">\(L\)</span> on the training data. On the other hand, for a small <span class="math inline">\(\alpha\)</span>, we allow the model pick a big tree. Here, <span class="math inline">\(\alpha\)</span> is analogous to <span class="math inline">\(k\)</span> in <span class="math inline">\(kNN\)</span>. How do we pick <span class="math inline">\(\alpha\)</span>? The answer similar to most of the similar cases in this course is <em>cross-validation</em>.</p>
+</section>
+<section id="pruning-trees" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="pruning-trees"><span class="header-section-number">4.5</span> Pruning trees</h2>
+<p>The idea here is first allow a tree grows as much as possible without being worried about its complexity size. Then, considering the complexity parameter, CP value, we prune/cut the tree with the optimal CP value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df<span class="ot">=</span>Boston[,<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">13</span>,<span class="dv">14</span>)] <span class="co"># pick dis, lstat, medv</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "dis"   "lstat" "medv" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First grow a big tree</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>tree_ml<span class="ot">=</span><span class="fu">tree</span>(medv<span class="sc">~</span>., df)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tree_ml)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>node), split, n, deviance, yval
+      * denotes terminal node
+
+ 1) root 506 42720.0 22.53  
+   2) lstat &lt; 9.725 212 16810.0 29.73  
+     4) lstat &lt; 4.65 50  3361.0 39.72  
+       8) dis &lt; 3.20745 12   110.3 48.30 *
+       9) dis &gt; 3.20745 38  2088.0 37.01  
+        18) lstat &lt; 3.99 25  1425.0 39.58 *
+        19) lstat &gt; 3.99 13   179.4 32.06 *
+     5) lstat &gt; 4.65 162  6924.0 26.65  
+      10) dis &lt; 2.4501 18  2221.0 34.38 *
+      11) dis &gt; 2.4501 144  3493.0 25.68  
+        22) lstat &lt; 5.495 26   590.5 30.05 *
+        23) lstat &gt; 5.495 118  2297.0 24.72 *
+   3) lstat &gt; 9.725 294  7006.0 17.34  
+     6) lstat &lt; 16.085 150  1627.0 20.30 *
+     7) lstat &gt; 16.085 144  2699.0 14.26  
+      14) dis &lt; 2.0037 75  1115.0 11.97 *
+      15) dis &gt; 2.0037 69   761.9 16.75 *</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree_ml)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(tree_ml)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Size of the big tree: </span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Size of the big tree: </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(<span class="fu">unique</span>(tree_ml<span class="sc">$</span>where)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Boston_fit<span class="ot">=</span><span class="fu">predict</span>(tree_ml,df)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, let's prune it down to a tree with 6 leaves/nodes</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>tree_ml_7<span class="ot">=</span><span class="fu">prune.tree</span>(tree_ml,<span class="at">best=</span><span class="dv">7</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Size of the big tree: </span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Size of the big tree: </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(<span class="fu">unique</span>(tree_ml_7<span class="sc">$</span>where)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree_ml_7, <span class="at">type=</span><span class="st">'u'</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(tree_ml_7, <span class="at">col=</span><span class="st">'maroon'</span>, <span class="at">label=</span><span class="fu">c</span>(<span class="st">'yval'</span>), <span class="at">cex=</span>.<span class="dv">9</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>Boston_fit7<span class="ot">=</span><span class="fu">predict</span>(tree_ml_7,df)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>ResultsMat<span class="ot">=</span><span class="fu">cbind</span>(medv,Boston_fit,Boston_fit7)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ResultsMat)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"medv"</span>,<span class="st">"tree"</span>,<span class="st">"tree7"</span>)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(ResultsMat, <span class="at">col=</span><span class="st">'maroon'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-9-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(ResultsMat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           medv      tree     tree7
+medv  1.0000000 0.8707875 0.8560183
+tree  0.8707875 1.0000000 0.9830393
+tree7 0.8560183 0.9830393 1.0000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Let's use the trained algorithm to predict the value for a specific point</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>Pred_point<span class="ot">=</span><span class="fu">data.frame</span>(<span class="at">lstat=</span><span class="dv">15</span>,<span class="at">dis=</span><span class="dv">2</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>yhat<span class="ot">=</span><span class="fu">predict</span>(tree_ml,Pred_point)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'prediction is: </span><span class="sc">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>prediction is: </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(yhat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     1 
+20.302 </code></pre>
+</div>
+</div>
+</section>
+<section id="a-cross-validated-problem" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="a-cross-validated-problem"><span class="header-section-number">4.6</span> A cross-validated problem</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>df<span class="ot">=</span>Boston[,<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">13</span>,<span class="dv">14</span>)]</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "dis"   "lstat" "medv" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's fit a single tree and plot the importance of the variables</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>tree<span class="ot">=</span><span class="fu">rpart</span>(medv<span class="sc">~</span>., <span class="at">method=</span><span class="st">"anova"</span>,<span class="at">data=</span>df,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">control=</span><span class="fu">rpart.control</span>(<span class="at">minsplit =</span> <span class="dv">5</span>,<span class="at">cp=</span>.<span class="dv">0005</span>))</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>Ntree<span class="ot">=</span><span class="fu">length</span>(<span class="fu">unique</span>(tree<span class="sc">$</span>where))</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Size of big tree is:"</span>,Ntree,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Size of big tree is: 90 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check the CV results</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>best_a<span class="ot">=</span><span class="fu">which.min</span>(tree<span class="sc">$</span>cptable[,<span class="st">"xerror"</span>])</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>bestCP<span class="ot">=</span>tree<span class="sc">$</span>cptable[best_a,<span class="st">"CP"</span>]</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>bestSize<span class="ot">=</span>tree<span class="sc">$</span>cptable[best_a,<span class="st">"nsplit"</span>]<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>best_tree<span class="ot">=</span><span class="fu">prune</span>(tree,<span class="at">cp=</span>bestCP)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(best_tree,<span class="at">uniform=</span><span class="cn">TRUE</span>)</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(best_tree,<span class="at">digits=</span><span class="dv">2</span>, <span class="at">use.n =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bagging-and-random-forest" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="bagging-and-random-forest"><span class="header-section-number">4.7</span> Bagging and Random Forest</h2>
+<p>The idea behind <em>Bagging</em> is bootstrapping the data adequately enough to make sure that trees with good explanatory power are captured. This approach is computationally intensive and time-consuming.</p>
+<p>Random Forests starts from <em>Bagging</em> and adds another kind of randomization. In this method, instead of going over all features when we do the greedy approach, this method randomly samples a subset of <span class="math inline">\(m\)</span> variables to search over each time we make a split.</p>
+<p>In this method, more types of trees will be evaluated. Since this method is Bootstraped, the important variables will be identified in average more than others; and thus can be used for prediction.</p>
+<p>How to choose parameters for a Random Forest model? <span class="math inline">\(B\)</span> is the number of Bootstrapped samples, and <span class="math inline">\(m\)</span> is the number of variables to sample. A common choice for <span class="math inline">\(m\)</span> is <span class="math inline">\(\sqrt p\)</span>, where <span class="math inline">\(p\)</span> is the number of features in the model. When we set <span class="math inline">\(m=p\)</span>, then Random Forest is Bagging.</p>
+</section>
+<section id="california-housing-data" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="california-housing-data"><span class="header-section-number">4.8</span> California Housing Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>rawData<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/DataSets/calhouse.csv"</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co"># First divide the sample to train, validation, and test samples</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">nrow</span>(rawData)</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>n1<span class="ot">=</span><span class="fu">floor</span>(n<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>n2<span class="ot">=</span><span class="fu">floor</span>(n<span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>n3<span class="ot">=</span>n<span class="sc">-</span>n1<span class="sc">-</span>n2</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Shuffle the data</span></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>ii<span class="ot">=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n,n)</span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>CAtrain<span class="ot">=</span>rawData[ii[<span class="dv">1</span><span class="sc">:</span>n1],]</span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>CAval<span class="ot">=</span>rawData[ii[n1<span class="sc">+</span><span class="dv">1</span><span class="sc">:</span>n2],]</span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>CAtest<span class="ot">=</span>rawData[ii[n1<span class="sc">+</span>n2<span class="sc">+</span><span class="dv">1</span><span class="sc">:</span>n3],]</span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Fitting using the RF on train and evaluate on the tes, and predict on val</span></span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>RF<span class="ot">=</span><span class="fu">randomForest</span>(logMedVal<span class="sc">~</span>.,<span class="at">data=</span>CAtrain,<span class="at">mtry=</span><span class="dv">3</span>,<span class="at">ntree=</span><span class="dv">500</span>)</span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>RFpred<span class="ot">=</span><span class="fu">predict</span>(RF,<span class="at">newdata=</span>CAval)</span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>RMSE<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">mean</span>(CAval<span class="sc">$</span>logMedVal<span class="sc">-</span>RFpred)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'RMSE on the train data for Random Forest is'</span>,RMSE,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE on the train data for Random Forest is 0.00363087 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTree</span>(RF, <span class="dv">1</span>, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   left daughter right daughter        split var split point status prediction
+1              2              3     medianIncome    3.574250     -3  12.086736
+2              4              5     AveOccupancy    2.294164     -3  11.775037
+3              6              7     AveOccupancy    2.783601     -3  12.417998
+4              8              9         latitude   37.975000     -3  12.053484
+5             10             11         AveRooms    4.350556     -3  11.700731
+6             12             13         AveRooms    6.438173     -3  12.556428
+7             14             15     medianIncome    5.745500     -3  12.294984
+8             16             17        longitude -117.135000     -3  12.163971
+9             18             19       households   14.500000     -3  11.674856
+10            20             21       households  446.500000     -3  11.850795
+11            22             23        longitude -118.895000     -3  11.619754
+12            24             25        longitude -117.175000     -3  12.500131
+13            26             27        AveBedrms    1.809925     -3  12.724364
+14            28             29     medianIncome    4.574500     -3  12.129722
+15            30             31 housingMedianAge   27.500000     -3  12.696060
+16            32             33 housingMedianAge   24.500000     -3  12.250378
+17            34             35        longitude -116.180000     -3  11.493662
+18             0              0             &lt;NA&gt;    0.000000     -1   9.615739
+19            36             37        longitude -122.425000     -3  11.683028
+20            38             39     medianIncome    1.854500     -3  11.730831
+21            40             41        longitude -117.795000     -3  11.971906
+22            42             43 housingMedianAge   48.500000     -3  11.531629
+23            44             45         latitude   34.425000     -3  11.759766
+24            46             47         latitude   37.995000     -3  12.516257
+25            48             49     medianIncome    4.595600     -3  12.057731
+26            50             51 housingMedianAge    9.500000     -3  12.797211
+27            52             53        longitude -121.525000     -3  12.182172
+28            54             55     AveOccupancy    2.784340     -3  12.027770
+29            56             57        longitude -122.225000     -3  12.252785
+30            58             59         AveRooms    7.908003     -3  12.648332</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="fu">cbind</span>(CAval<span class="sc">$</span>logMedVal,RFpred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(<span class="fu">cbind</span>(CAval<span class="sc">$</span>logMedVal,RFpred)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    RFpred
+       1.0000000 0.9056696
+RFpred 0.9056696 1.0000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(RF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TreeModels_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./NaiveBayes.html" class="pagination-link" aria-label="Naive Bayes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Naive Bayes</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./summary.html" class="pagination-link" aria-label="Summary">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
