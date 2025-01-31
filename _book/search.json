@@ -1,0 +1,92 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Computational International Relations",
+    "section": "",
+    "text": "Preface\nThis handout is prepared for Computational International Relations by Dr. Babak RezaeeDaryakenari s.rezaeedaryakenari@fsw.leidenuniv.nl.\nThis is an ongoing project. Please do not share or use it without the author’s written permission.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Introduction: What is scientific about Political Science?",
+    "section": "",
+    "text": "Correlation, Causation, and Prediction\nIn social science, we are interested in explaining whether and how two, sometimes more, factors/variables are associated. Generally, there are two groups of associations regarding the direction of associations: correlation vs. causation.\nSometimes our research is descriptive. Although nowadays, due to the causal inference revolution in economics and political science, correlation analysis is downplayed, these types of descriptive research play an important role, especially in introducing new topics to scientific fields. A new group of social scientists has started to explore how we can use machine learning algorithms to improve the prediction power of quantitative models. In this new paradigm, the main focus gives less weight to the causal association and tries to improve the explanatory power of models.\nIn a causal association, unlike a correlation analysis, the research design specifies an identification strategy to make sure that the direction of association is from the independent, also known as exogenous, variable toward the outcome, also known as endogenous, variable.\nFor example, think about the long-standing discussion about the association between economic development and democracy. It is accepted in the comparative political economy literature that there is a correlation between economic development and political development (democracy). However, within this literature, there has been a disagreement on the direction of the link between these two variables. Some scholars argue that economic development leads to political development, and some others contend that political development results in economic development.\nIf we want to show these different types of association schematically, they can be presented as follow:",
+    "crumbs": [
+      "Introduction: What is scientific about Political Science?"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "crumbs": [
+      "References"
+    ]
+  },
+  {
+    "objectID": "intro.html#seven-questions-of-quantitative-analysis",
+    "href": "intro.html#seven-questions-of-quantitative-analysis",
+    "title": "1  Introduction: What is scientific about Political Science?",
+    "section": "",
+    "text": "What is the association of interest? Correlation vs. Causation\nHow do you collect the data? Does the collected data need to be cleaned? 99.99% answer is YES!\nWhat is the functional form of the association between variables? Parametric vs. non-parametric and Linear vs. non-linear\nWhat is your method for estimating the parameters of the model? OLS vs. MLE\nYou need to make some assumptions in the previous steps, to what extent do these assumptions hold?\nHow sensitive are your analysis to changes in the above steps? Robustness check\nIs your analysis available for replication? Is it replicable? Replication revolution!",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction: What is scientific about Political Science?</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#correlation-vs.-causation",
+    "href": "intro.html#correlation-vs.-causation",
+    "title": "1  Introduction: What is scientific about Political Science?",
+    "section": "1.2 Correlation vs. Causation",
+    "text": "1.2 Correlation vs. Causation\nIn social science, we are interested in explaining whether and how two, sometimes more, factors/variables are associated. Generally, there are two groups of associations regarding the direction of associations: correlation vs. causation.\nSometimes our research is descriptive. Although nowadays, due to the causal inference revolution in economics and political science, correlation analysis is downplayed, these types of descriptive research play an important role, especially in introducing new topics to scientific fields. A new group of social scientists has started to explore how we can use machine learning algorithms to improve the prediction power of quantitative models. In this new paradigm, the main focus gives less weight to the causal association and tries to improve the explanatory power of models.\nIn a causal association, unlike a correlation analysis, the research design specifies an identification strategy to make sure that the direction of association is from the independent, also known as exogenous, variable toward the outcome, also known as endogenous, variable.\nFor example, think about the long-standing discussion about the association between economic development and democracy. It is accepted in the comparative political economy literature that there is a correlation between economic development and political development (democracy). However, within this literature, there has been a disagreement on the direction of the link between these two variables. Some scholars argue that economic development leads to political development, and some others contend that political development results in economic development.\nIf we want to show these different types of association schematically, they can be presented as follow:",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction: What is scientific about Political Science?</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#footnotes",
+    "href": "intro.html#footnotes",
+    "title": "Introduction: What is scientific about Political Science?",
+    "section": "",
+    "text": "https://www.britannica.com/science/scientific-hypothesis↩︎\nOf course, some political scientists do use experimental design. However, the share of these scholars varies across subfields.↩︎\nIt is called treatment because it comes from health and medical studies, where scientists used treatment for a disease.↩︎\nIf you enjoy math, here is the formalization: \\(E[Y_i|D_i=1]-E[Y_i|D_i=0]=E[Y_{1i}|D_i=1]-E[Y_{0i}|D_i=0]=E[Y_{1i}|D_i=1]-E[Y_{0i}|D_i=1]\\). The second part holds because in a randomized experiment, the pre-experiment value of the outcome variable for individual \\(i\\) is independent of allocation to the control and treatment groups! In other words, E(Y_{0i},D_i)=0↩︎",
+    "crumbs": [
+      "Introduction: What is scientific about Political Science?"
+    ]
+  },
+  {
+    "objectID": "intro.html#correlation-causation-and-prediction",
+    "href": "intro.html#correlation-causation-and-prediction",
+    "title": "Introduction: What is scientific about Political Science?",
+    "section": "",
+    "text": "Correlation\n\\[\nEconomic~development \\overset{?; +/-}{\\longleftrightarrow} Political~development\n\\]\nCausation\n\\[\nEconomic~development \\overset{+/-}{\\longrightarrow} Political~development\n\\]\n\\[\nEconomic~development \\overset{+/-}{\\longleftarrow} Political~development\n\\]\n\n\nThe experimental ideal\nWhat does prevent us from distinguishing a correlation from causation in empirical research? There is a long list of issues from omitted variable problem and measurement problem to selection bias and reciprocal/bidirectional/simultaneous association that leads to biased estimation. We will, in detail, discuss what we mean by statistical estimation and bias later. However, roughly speaking, a biased estimation means that our estimated association using statistical models is significantly different from its true value.\nIn an ideal world, political scientists2 should have been able to use experimental labs to conduct a randomized experiment in a controlled environment to deal with the problems that cause biased estimations. In fact, most of the research in medical and hard sciences is laboratory research. Some social scientists also use lab and social experiments to test their hypotheses. Nevertheless, these scholars do not form a majority in political science. Also, using experimental design for answering some of social science questions is almost impossible.\nIn one of my recent research projects, I used an experimental design to explore whether providing information about the principles of nonviolent(civil) movements improves individuals’ attitudes toward this method of resistance. I defined a control group and a treatment group.3 Then, I assigned the participants in this experiment randomly to two groups. I showed a clip about the field of International Relations to the first group and a clip about the principles of nonviolent resistance to the second group. After showing the clips, I asked a set of questions and measured their attitudes toward nonviolent resistance. By calculating the average of attitudes in each group, I estimated the average difference between the attitude of treatment and control groups as a result of providing information about nonviolent resistance. Here, the randomization of assigning to treatment and control groups leads to a fundamental assumption: there is not a significant difference between the average attitude of participants in control and treatment groups before the start of experiment.4 This is the beauty of experimental design, although some scholars take further steps to make sure that the random assignment is indeed random by checking the balance over covariates!\n\n\nObservational data\nHowever, some scholars do not have the luxury of conducting experiments to test their hypotheses. Think about the scholars working on conflict! Can you study the effect of civil war on economic development using an experimental design?! Therefore, these scholars use another type of data that is known as observational data. This means scholars cannot manipulate the data generating process, and they sit/wait for a while for nature/society/world to generate the data for them, and then use these observed data to test their hypotheses. There is a rich literature on causal inference that explains how we can infer a causal association from observational data.\nHere, if we want to study the effect of variable/factor \\(x\\) on the outcome \\(y\\), we do not know whether the cases that we study them are assigned randomly to different values of \\(x\\) are or not! What does this mean? Remember the above example about the association between democracy and economic development. Can we claim that the variable democracy is assigned to countries randomly, so if we study its effect on the economy, we can see the pure effect of democracy on the economy?! Obviously, no! Some might argue that democratic countries are not democratic by chance, but they are democratic because of the quality of their economic institutions. Therefore, the high-level of economic development is not due to democracy but is the result of strong economic institutions such as property rights and free-market.\nThese types of problems, known as the selection problem, with observational data might be resolved by adding the omitted variable to the model. We later return to this omitted variable problem in our course. However, the selection problem, which is caused by our limited knowledge about the data generating process, is hard to address! Indeed, often more advanced methods, such as matching, Instrumental Variable, Simeltenous Equation Modeling, and regression discontinuity, are required to address the identification problems.\nDeveloping an identification strategy to conduct a causal inference is not within the scope of this course. That said, I will mention, and sometimes discuss in some details, how we can interpret our findings as causal inference. Instead, the main focus of this course is mainly to teach you how to use an unbiased and efficient statistical estimator to estimate the association between two variables. Also, you will learn how to infer about your theory from your statistical analysis, which is conducted in .\nThe purpose of the above discussion is that to give you a picture of what is one of the major challenges in quantitative analysis, and this course prepares you to take the initial steps toward learning about the foundations of these problems and how they can be possibly addressed.",
+    "crumbs": [
+      "Introduction: What is scientific about Political Science?"
+    ]
+  },
+  {
+    "objectID": "knn.html",
+    "href": "knn.html",
+    "title": "1  k-nearest neighbors (KNN) algorithm",
+    "section": "",
+    "text": "In social sciences, we are often interested in studying the variations in an outcome variable, \\(Y\\)-also known as dependent variable-conditional on a set of independent variables, \\(X\\)-also known as predictors and features.This usually is written formally as:\n$$\nP(Y=y|X=x)\n$$ One very common strategy in modeling this conditional probability is making some assumptions about the function, \\(f(.)\\), that maps \\(X\\) to \\(Y\\), and then estimating its parameters. The Ordinary Least Square (OLS) has been one of the oldest and the most important tools of modeling association between two variables. Under Classic Assumptions of Linear Regression, an OLS estimator is the Best Linear Unbiased Estimate, (BLUE). However, there are situations that these assumptions do not hold. We will return to addressing the violations of some of these assumptions in the following weeks. Here, we study \\(K\\)-NN algorithm as a model-free algorithm, which impose less assumption into the prediction algorithm.Although \\(K\\)-NN does not offer useful information about the quality and quantity of association between the outcome variable and the predictors, it often is an effective predicting algorithm.\n\n2 A simple Comparison of OLS and k-NN: Boston Housing Example\nBoston Housing dataset contains information on housing in the Boston, Massachusetts area in the US. Assume that we want to predict the median value of a house base on the percent of lower status population in the sub-area.The below scatter plot shows how these two variables are associated:\n\nlibrary(MASS) ## a library of example datasets\nattach(Boston)\n\nplot(lstat,medv,\n     col='navy',cex=.75,\n     xlab='Low Status Percent',ylab = 'Median Value($)')\n\n\n\n\n\n\n\n\nWe need a function to estimate how the housing values is associated with the percent of low status population in the neighborhood. A linear function can be one of our first candidates. That is we assume that \\(Y_i=\\alpha+\\beta X+\\epsilon\\). After estimating the parameters of this model, i.e. \\(\\hat{\\alpha}\\) and \\(\\hat{\\beta}\\), the predicted values of OLS estimation is \\(\\hat{Y}=\\hat \\alpha +\\hat \\beta X\\). Not surprisingly, since we assumed that the association between \\(X\\) and \\(Y\\) is linear, the predicted line fitted to the data is linear (Blue line in the below plot).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>k-nearest neighbors (KNN) algorithm</span>"
+    ]
+  }
+]
