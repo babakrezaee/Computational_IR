@@ -1,26 +1,27 @@
 project:
-  type: website
+  type: book
   output-dir: docs
 
 book:
   title: "Computational International Relations"
   author:  Babak RezaeeDaryakenari
   date: "1/31/2025"
-  #chapters:
-  navbar:
-    left:
+  chapters:
     - index.qmd
     - intro.qmd
     - knn.qmd
     - summary.qmd
     - references.qmd
   page-navigation: true  # Ensures navigation is enabled
+  #toc: true  # Enables table of contents
 
 bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
+    toc: true
+    toc-depth: 2
+    number-sections: true
   pdf:
     documentclass: scrreprt
 
