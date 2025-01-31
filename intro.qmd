@@ -1,9 +1,62 @@
-# Introduction
+# Introduction: What is scientific about Political Science? {.unnumbered}
 
-This is a book created from markdown and executable code.
 
-See @knuth84 for additional discussion of literate programming.
+As part of Popperian and Lakatosian research paradigm, mainstream political science relies on empirical analysis to evaluate developed theoretical arguments. While some scholars rely on qualitative methods, others employ quantitative approaches to test their hypotheses. Of course, some scholars mix qualitative and quantitative methods in their empirical analysis, known as mixed-methods.
 
-```{r}
-1 + 1
-```
+\par
+
+In your other classes, you learn about how to develop a theoretical argument, and probably some \textit{hypotheses}, about a political phenomenon. In this class, we learn how to quantitatively evaluate our developed theoretical argument. For Popper, a theory is only scientific if its hypotheses are empirically testable and falsifiable, that is, if it is possible to specify observation statements which would prove it is *wrong*. Therefore, the goal of empirical analysis is not to prove a theory but to reject it. Therefore, when we conduct an empirical analysis and reject the null hypothesis, we say we found empirical support for our hypotheses because we could not reject them. Publishing scientific research means you are inviting other scholars and scientific community in your field of study to scientifically attack your findings to reject them in their future studies.
+
+> ***Scientific hypothesis***, an idea that proposes a tentative explanation about a phenomenon or a narrow set of phenomena observed in the natural world.[^intro-1]
+
+[^intro-1]: https://www.britannica.com/science/scientific-hypothesis
+
+## Correlation, Causation, and Prediction
+
+In social science, we are interested in explaining whether and how two, sometimes more, factors/variables are associated. Generally, there are two groups of associations regarding the direction of associations: correlation vs. causation.
+
+Sometimes our research is descriptive. Although nowadays, due to the causal inference revolution in economics and political science, correlation analysis is downplayed, these types of descriptive research play an important role, especially in introducing new topics to scientific fields. A new group of social scientists has started to explore how we can use machine learning algorithms to improve the prediction power of quantitative models. In this new paradigm, the main focus gives less weight to the causal association and tries to improve the explanatory power of models.
+
+In a causal association, unlike a correlation analysis, the research design specifies an identification strategy to make sure that the direction of association is from the independent, also known as exogenous, variable toward the outcome, also known as endogenous, variable.
+
+For example, think about the long-standing discussion about the association between economic development and democracy. It is accepted in the comparative political economy literature that there is a correlation between economic development and political development (democracy). However, within this literature, there has been a disagreement on the direction of the link between these two variables. Some scholars argue that economic development leads to political development, and some others contend that political development results in economic development.
+
+If we want to show these different types of association schematically, they can be presented as follow:
+
+-   **Correlation**
+
+    $$
+    Economic~development \overset{?; +/-}{\longleftrightarrow} Political~development
+    $$
+
+-   **Causation**
+
+    $$
+    Economic~development \overset{+/-}{\longrightarrow} Political~development
+    $$
+
+    $$
+    Economic~development \overset{+/-}{\longleftarrow} Political~development
+    $$
+    
+### The experimental ideal
+
+What does prevent us from distinguishing a correlation from causation in empirical research? There is a long list of issues from omitted variable problem and measurement problem to selection bias and reciprocal/bidirectional/simultaneous association that leads to *biased estimation*. We will, in detail, discuss what we mean by statistical *estimation* and *bias* later. However, roughly speaking, a *biased estimation* means that our estimated association using statistical models is *significantly* different from its *true* value.
+
+In an ideal world, political scientists^[Of course, some political scientists do use experimental design. However, the share of these scholars varies across subfields.] should have been able to use experimental labs to conduct a randomized experiment in a controlled environment to deal with the problems that cause *biased* estimations. In fact, most of the research in medical and hard sciences is laboratory research. Some social scientists also use lab and social experiments to test their hypotheses. Nevertheless, these scholars do not form a majority in political science. Also, using experimental design for answering some of social science questions is almost impossible.
+
+In one of my recent research projects, I used an experimental design to explore whether providing information about the principles of nonviolent(civil) movements improves individuals' attitudes toward this method of resistance. I defined a control group and a treatment group.^[It is called treatment because it comes from health and medical studies, where scientists used treatment for a disease.] Then, I assigned the participants in this experiment randomly to two groups. I showed a clip about the field of International Relations to the first group and a clip about the principles of nonviolent resistance to the second group. After showing the clips, I asked a set of questions and measured their attitudes toward nonviolent resistance. By calculating the average of attitudes in each group, I estimated the average difference between the attitude of treatment and control groups as a result of providing information about nonviolent resistance. Here, the randomization of assigning to treatment and control groups leads to a fundamental assumption: there is not a significant difference between the average attitude of participants in control and treatment groups before the start of experiment.^[If you enjoy math, here is the formalization: $E[Y_i|D_i=1]-E[Y_i|D_i=0]=E[Y_{1i}|D_i=1]-E[Y_{0i}|D_i=0]=E[Y_{1i}|D_i=1]-E[Y_{0i}|D_i=1]$. The second part holds because in a randomized experiment, the pre-experiment value of the outcome variable for individual $i$ is independent of allocation to the control and treatment groups! In other words, E(Y_{0i},D_i)=0] This is the beauty of experimental design, although some scholars take further steps to make sure that the random assignment is indeed random by checking the balance over covariates!
+
+### Observational data
+
+However, some scholars do not have the luxury of conducting experiments to test their hypotheses. Think about the scholars working on conflict! Can you study the effect of civil war on economic development using an experimental design?! Therefore, these scholars use another type of data that is known as *observational* data. This means scholars cannot manipulate the *data generating process*, and they sit/wait for a while for nature/society/world to generate the data for them, and then use these observed data to test their hypotheses. There is a rich literature on causal inference that explains how we can infer a causal association from observational data.
+
+Here, if we want to study the effect of variable/factor $x$ on the outcome $y$, we do not know whether the cases that we study them are assigned randomly to different values of $x$ are or not! What does this mean? Remember the above example about the association between democracy and economic development. Can we claim that the variable democracy is assigned to countries randomly, so if we study its effect on the economy, we can see the pure effect of democracy on the economy?! Obviously, no! Some might argue that democratic countries are not democratic by chance, but they are democratic because of the quality of their economic institutions. Therefore, the high-level of economic development is not due to democracy but is the result of strong economic institutions such as property rights and free-market.
+
+These types of problems, known as *the selection problem*, with observational data might be resolved by adding the omitted variable to the model. We later return to this omitted variable problem in our course. However, the selection problem, which is caused by our limited knowledge about the data generating process, is hard to address! Indeed, often more advanced methods, such as matching, Instrumental Variable, Simeltenous Equation Modeling, and regression discontinuity, are required to address *the identification problems*.
+
+Developing an identification strategy to conduct a causal inference is not within the scope of this course. That said, I will mention, and sometimes discuss in some details, how we can interpret our findings as causal inference. Instead, the main focus of this course is mainly to teach you how to use an *unbiased* and *efficient* statistical estimator to estimate the association between two variables. Also, you will learn how to infer about your theory from your statistical analysis, which is conducted in \textsf{R}.
+
+The purpose of the above discussion is that to give you a picture of what is one of the major challenges in quantitative analysis, and this course prepares you to take the initial steps toward learning about the foundations of these problems and how they can be possibly addressed.
+
+
