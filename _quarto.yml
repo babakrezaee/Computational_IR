@@ -4,7 +4,7 @@ project:
 
 book:
   title: "Computational International Relations"
-  author:  Babak RezaeeDaryakenari
+  author: "Babak RezaeeDaryakenari"
   date: "1/31/2025"
   chapters:
     - index.qmd
@@ -12,18 +12,17 @@ book:
     - knn.qmd
     - summary.qmd
     - references.qmd
-  page-navigation: true  # Ensures navigation is enabled
-  #toc: true  # Enables table of contents
-
-bibliography: references.bib
+  page-navigation: true  # Enables Next/Previous navigation
 
 format:
   html:
-    toc: true
-    toc-depth: 2
+    theme: cosmo
     number-sections: true
+    toc: true  # Enables Table of Contents
+    toc-depth: 2
   pdf:
     documentclass: scrreprt
 
-editor: visual
+bibliography: references.bib
 
+editor: visual

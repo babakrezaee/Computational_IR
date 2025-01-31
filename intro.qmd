@@ -1,3 +1,8 @@
+---
+title: "Introduction"
+format: html
+---
+
 # Introduction: What is scientific about Political Science? {.unnumbered}
 
 As part of Popperian and Lakatosian research paradigm, mainstream political science relies on empirical analysis to evaluate developed theoretical arguments. While some scholars rely on qualitative methods, others employ quantitative approaches to test their hypotheses. Of course, some scholars mix qualitative and quantitative methods in their empirical analysis, known as mixed-methods.

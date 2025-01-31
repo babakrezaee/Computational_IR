@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>knn</title>
+<title>2&nbsp; K-Nearest Neighbors (KNN) – Computational International Relations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,11 +58,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./summary.html" rel="next">
+<link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -132,31 +135,116 @@ window.Quarto = {
 
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./knn.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">K-Nearest Neighbors (KNN)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computational International Relations</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./knn.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">K-Nearest Neighbors (KNN)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="knn.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#k-nearest-neighbors-knn-algorithm" id="toc-k-nearest-neighbors-knn-algorithm" class="nav-link active" data-scroll-target="#k-nearest-neighbors-knn-algorithm"><span class="header-section-number">3</span> k-nearest neighbors (KNN) algorithm</a></li>
+  <li><a href="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example" id="toc-a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="nav-link" data-scroll-target="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example"><span class="header-section-number">4</span> A simple Comparison of OLS and k-NN: Boston Housing Example</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">K-Nearest Neighbors (KNN)</span></h1>
+</div>
 
 
 
-<section id="k-nearest-neighbors-knn-algorithm" class="level1">
-<h1>k-nearest neighbors (KNN) algorithm</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="k-nearest-neighbors-knn-algorithm" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> k-nearest neighbors (KNN) algorithm</h1>
 <p>In social sciences, we are often interested in studying the variations in an outcome variable, <span class="math inline">\(Y\)</span>-also known as dependent variable-conditional on a set of independent variables, <span class="math inline">\(X\)</span>-also known as predictors and features.This usually is written formally as:</p>
-<p>$$</p>
-<p>P(Y=y|X=x)</p>
-<p>$$ One very common strategy in modeling this conditional probability is making some assumptions about the function, <span class="math inline">\(f(.)\)</span>, that maps <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>, and then estimating its parameters. The <em>Ordinary Least Square (OLS)</em> has been one of the oldest and the most important tools of modeling association between two variables. Under Classic Assumptions of Linear Regression, an <em>OLS</em> estimator is the <em>Best Linear Unbiased Estimate, (BLUE)</em>. However, there are situations that these assumptions do not hold. We will return to addressing the violations of some of these assumptions in the following weeks. Here, we study <span class="math inline">\(K\)</span>-NN algorithm as a model-free algorithm, which impose less assumption into the prediction algorithm.Although <span class="math inline">\(K\)</span>-NN does not offer useful information about the quality and quantity of association between the outcome variable and the predictors, it often is an effective predicting algorithm.</p>
+<p><span class="math display">\[
+P(Y=y|X=x)
+\]</span> One very common strategy in modeling this conditional probability is making some assumptions about the function, <span class="math inline">\(f(.)\)</span>, that maps <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>, and then estimating its parameters. The <em>Ordinary Least Square (OLS)</em> has been one of the oldest and the most important tools of modeling association between two variables. Under Classic Assumptions of Linear Regression, an <em>OLS</em> estimator is the <em>Best Linear Unbiased Estimate, (BLUE)</em>. However, there are situations that these assumptions do not hold. We will return to addressing the violations of some of these assumptions in the following weeks. Here, we study <span class="math inline">\(K\)</span>-NN algorithm as a model-free algorithm, which impose less assumption into the prediction algorithm.Although <span class="math inline">\(K\)</span>-NN does not offer useful information about the quality and quantity of association between the outcome variable and the predictors, it often is an effective predicting algorithm.</p>
 </section>
-<section id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="level1">
-<h1>A simple Comparison of OLS and k-NN: Boston Housing Example</h1>
+<section id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> A simple Comparison of OLS and k-NN: Boston Housing Example</h1>
 <p>Boston Housing dataset contains information on housing in the Boston, Massachusetts area in the US. Assume that we want to predict the median value of a house base on the percent of lower status population in the sub-area.The below scatter plot shows how these two variables are associated:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS) <span class="do">## a library of example datasets</span></span>
@@ -599,6 +687,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./summary.html" class="pagination-link" aria-label="Summary">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
