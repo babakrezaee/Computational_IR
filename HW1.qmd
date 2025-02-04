@@ -1,0 +1,95 @@
+---
+title: "Homework 1"
+format: html
+---
+
+```{r setup, include=FALSE}
+install.packages("latex2exp")  # Only needed once
+library(latex2exp)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+#suppressPackageStartupMessages(library(KKNN))
+#suppressPackageStartupMessages(library(MASS))
+
+```
+
+## **Question 1: Setting Up Your GitHub Repository**
+
+*GitHub* is a popular cloud-based platform used by software engineers and data scientists use to document projects and collaborate effectively. As a free repository, *GitHub* can also help you document your work for this course. For example, rather than submitting datasets directly to me, you'll learn how to read data from cloud repositories like GitHub and Dropbox.
+
+### **Instructions:**
+
+**a.** Watch [this video](https://www.youtube.com/watch?v=Gn3w1UvTx0A) and create a *GitHub account*.
+
+**b.* Watch [this video](https://www.youtube.com/watch?v=iv8rSLsi1xo).  
+- *Note:* You do *NOT* need to set up the desktop version, so feel free to skip that part.
+
+- Now, create a **new repository** and label it as:  *LU_BAP_CIR*
+
+
+**c.** Download the *Acemoglu_Robinson_2001 dataset.csv* via this OneDrive link:  
+[Download Dataset Here](https://leidenuniv1-my.sharepoint.com/:x:/g/personal/rezaeedaryakenars_vuw_leidenuniv_nl/EZdLiK_KnxFAh4bdBKUS7esB1I1TQLLK6T4TXSWokOsfeA?e=CngI3z)  
+
+- Create a **new folder** within your *LU_BAP_CIR* repository and name it: *datasets*
+
+- Upload the downloaded *Acemoglu_Robinson_2001 dataset** into the `Datasets` folder.
+
+### **Submission:**
+
+Share the *link to your GitHub profile* as your answer. For example, mine looks like this:  
+[https://github.com/babakrezaee](https://github.com/babakrezaee)  
+
+I expect to see the following structure in your GitHub repository:
+- A repository named **`LU_BAP_CIR`**
+- A folder named **`datasets`** within the repository
+- The **Acemoglu_Robinson_2001 dataset.csv** uploaded inside the `Datasets` folder
+
+## **Question 2: Attitude toward violent method of resiatnce**
+
+
+In a paper published in *Research & Politics*, my co-author and I explore the effects of providing information on individuals' support for nonviolent resistance through an experimental survey. You can access the draft of the paper [here](https://journals.sagepub.com/doi/full/10.1177/2053168020931693).
+
+For this assignment, we will use a *modified version of the dataset* collected for this study. The dataset is publicly available on my GitHub page and can be accessed [here](https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/LeidenUniv_MAQM2020/Datasets/R%26P_RezaeeAsadzadeh_MethodsCourse.csv).
+
+---
+
+### Dataset Description
+
+Before assigning participants in the experiment to *control* and *treatment* groups, we collected data on several *socio-economic factors* and participants' *pre-experiment attitudes* toward both *nonviolent* and *violent methods of resistance*.
+
+For this assignment, we will focus on analyzing the variable *`Violent_method`*, which measures participants' attitudes toward violent methods of resistance. Let’s begin by loading the dataset and performing some *descriptive analysis*.
+
+```{r, echo=TRUE, warning=FALSE, fig.width=6, fig.height=4}
+
+# Load necessary libraries
+library(ggplot2)
+
+# Load the dataset
+data_cl <- read.csv("https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/LeidenUniv_MAQM2020/Datasets/R%26P_RezaeeAsadzadeh_MethodsCourse.csv")
+
+# Basic Descriptive Statistics
+nrow(data_cl)                        # Number of observations
+summary(data_cl$Violent_method)      # Summary statistics for Violent_method
+
+# Kernel Density Plot for 'Violent_method'
+ggplot(data_cl, aes(x = Violent_method)) +
+  geom_density(kernel = "gaussian", fill = "darkred", alpha = 0.6, adjust = 1) +
+  labs(
+    title = "Kernel Density Estimation (KDE) of Violent Method",
+    x = "Violent Method",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+```
+
+### Assignment: Predicting Attitudes Using *k*-NN
+
+
+- *Model Development:*  
+  Use at least *three features* from the dataset to build your predictive model. Ensure your *k*-NN algorithm is *cross-validated* to assess its performance effectively.
+
+- *Documentation:*  
+  Clearly explain the *decisions you made* throughout the process, including your choice of features, parameter settings (e.g., the value of *k*), and data preprocessing steps.
+
+- *Analysis:* 
+  Discuss your *findings* in detail. Reflect on the performance of your model, the influence of different features on predictions, and any challenges you encountered during the analysis.

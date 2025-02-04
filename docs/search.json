@@ -392,5 +392,75 @@
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>K-Nearest Neighbors (KNN)</span>"
     ]
+  },
+  {
+    "objectID": "HW1.html",
+    "href": "HW1.html",
+    "title": "6  Homework 1",
+    "section": "",
+    "text": "6.1 Question 1: Setting Up Your GitHub Repository\nGitHub is a popular cloud-based platform used by software engineers and data scientists use to document projects and collaborate effectively. As a free repository, GitHub can also help you document your work for this course. For example, rather than submitting datasets directly to me, you’ll learn how to read data from cloud repositories like GitHub and Dropbox.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Homework 1</span>"
+    ]
+  },
+  {
+    "objectID": "HW1.html#question-1-setting-up-your-github-repository",
+    "href": "HW1.html#question-1-setting-up-your-github-repository",
+    "title": "6  Homework 1",
+    "section": "",
+    "text": "6.1.1 Instructions:\na. Watch this video and create a GitHub account.\n**b.* Watch this video.\n- Note: You do NOT need to set up the desktop version, so feel free to skip that part.\n\nNow, create a new repository and label it as: LU_BAP_CIR\n\nc. Download the Acemoglu_Robinson_2001 dataset.csv via this OneDrive link:\nDownload Dataset Here\n\nCreate a new folder within your LU_BAP_CIR repository and name it: datasets\nUpload the downloaded *Acemoglu_Robinson_2001 dataset** into the Datasets folder.\n\n\n\n6.1.2 Submission:\nShare the link to your GitHub profile as your answer. For example, mine looks like this:\nhttps://github.com/babakrezaee\nI expect to see the following structure in your GitHub repository: - A repository named LU_BAP_CIR - A folder named datasets within the repository - The Acemoglu_Robinson_2001 dataset.csv uploaded inside the Datasets folder",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Homework 1</span>"
+    ]
+  },
+  {
+    "objectID": "HW1.html#question-2-clean-up-the-data-and-visualize",
+    "href": "HW1.html#question-2-clean-up-the-data-and-visualize",
+    "title": "6  Homework 1",
+    "section": "6.2 Question 2: Clean up the data and visualize",
+    "text": "6.2 Question 2: Clean up the data and visualize\nIn a paper in Research & Politics, my co-author and I explore the effects of providing information on individuals support for nonviolent resistance in an experimental survey. The draft of the paper is available here. We will use a modified version of the collected data in this study. The collected data is available from my GitHub page: here\nBefore assigning the participants in the experiment to control and treatment groups, we asked some questions to measure some of important socio-economic factors and pre-experiment attitude toward nonviolent and violent methods of resistance. We used a set of questions to measure participants attitude toward (non)violent method of resistance. For this assignment, you can only focus on violent_method. Let’s load the data and do some descrptive analysis.\n\ndata_cl=read.csv(\"https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/LeidenUniv_MAQM2020/Datasets/R%26P_RezaeeAsadzadeh_MethodsCourse.csv\")\n\nlibrary(ggplot2)\n\nnrow(data_cl)\n\n[1] 436\n\nsummary(data_cl$Violent_method)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n  1.000   2.000   3.900   4.081   5.850  10.000       1 \n\n# Kernel Density Plot for 'Violent_method'\nggplot(data_cl, aes(x = Violent_method)) +\n  geom_density(kernel = \"gaussian\", fill = \"darkred\", alpha = 0.6, adjust = 1) +\n  labs(\n    title = \"Kernel Density Estimation (KDE) of Violent Method\",\n    x = \"Violent Method\",\n    y = \"Density\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\nUse class lectures to train a knn algorithm that predicts attitude toward violent methods of resiatnce, i.e. Violent_method. When preparing you answers, make sure that you algorithm is cross-validated. Discuss your decisions and discuss your findings. The number of features should be at least three.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Homework 1</span>"
+    ]
+  },
+  {
+    "objectID": "HW1.html#footnotes",
+    "href": "HW1.html#footnotes",
+    "title": "6  Homework 1",
+    "section": "",
+    "text": "Daron Acemoglu, Simon Johnson, and James A. Robinson. The Colonial Origins of Comparative Development: An Empirical Investigation. The American Economic Review, 91(5):1369–1401, 2001. http://www.jstor.org/stable/26779306↩︎",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Homework 1</span>"
+    ]
+  },
+  {
+    "objectID": "HW1.html#question-2-attitude-toward-violent-method-of-resiatnce",
+    "href": "HW1.html#question-2-attitude-toward-violent-method-of-resiatnce",
+    "title": "6  Homework 1",
+    "section": "6.2 Question 2: Attitude toward violent method of resiatnce",
+    "text": "6.2 Question 2: Attitude toward violent method of resiatnce\nIn a paper published in Research & Politics, my co-author and I explore the effects of providing information on individuals’ support for nonviolent resistance through an experimental survey. You can access the draft of the paper here.\nFor this assignment, we will use a modified version of the dataset collected for this study. The dataset is publicly available on my GitHub page and can be accessed here.\n\n\n6.2.1 Dataset Description\nBefore assigning participants in the experiment to control and treatment groups, we collected data on several socio-economic factors and participants’ pre-experiment attitudes toward both nonviolent and violent methods of resistance.\nFor this assignment, we will focus on analyzing the variable Violent_method, which measures participants’ attitudes toward violent methods of resistance. Let’s begin by loading the dataset and performing some descriptive analysis.\n\n# Load necessary libraries\nlibrary(ggplot2)\n\n# Load the dataset\ndata_cl &lt;- read.csv(\"https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/LeidenUniv_MAQM2020/Datasets/R%26P_RezaeeAsadzadeh_MethodsCourse.csv\")\n\n# Basic Descriptive Statistics\nnrow(data_cl)                        # Number of observations\n\n[1] 436\n\nsummary(data_cl$Violent_method)      # Summary statistics for Violent_method\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n  1.000   2.000   3.900   4.081   5.850  10.000       1 \n\n# Kernel Density Plot for 'Violent_method'\nggplot(data_cl, aes(x = Violent_method)) +\n  geom_density(kernel = \"gaussian\", fill = \"darkred\", alpha = 0.6, adjust = 1) +\n  labs(\n    title = \"Kernel Density Estimation (KDE) of Violent Method\",\n    x = \"Violent Method\",\n    y = \"Density\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n6.2.2 Assignment: Predicting Attitudes Using k-NN\n\nModel Development:\nUse at least three features from the dataset to build your predictive model. Ensure your k-NN algorithm is cross-validated to assess its performance effectively.\nDocumentation:\nClearly explain the decisions you made throughout the process, including your choice of features, parameter settings (e.g., the value of k), and data preprocessing steps.\nAnalysis: Discuss your findings in detail. Reflect on the performance of your model, the influence of different features on predictions, and any challenges you encountered during the analysis.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Homework 1</span>"
+    ]
+  },
+  {
+    "objectID": "HW1.html#dataset-description",
+    "href": "HW1.html#dataset-description",
+    "title": "6  Homework 1",
+    "section": "7.1 Dataset Description",
+    "text": "7.1 Dataset Description\nBefore assigning participants in the experiment to control and treatment groups, we collected data on several socio-economic factors and participants’ pre-experiment attitudes toward both nonviolent and violent methods of resistance.\nFor this assignment, we will focus on analyzing the variable Violent_method, which measures participants’ attitudes toward violent methods of resistance. Let’s begin by loading the dataset and performing some descriptive analysis.\n\n# Load necessary libraries\nlibrary(ggplot2)\n\n# Load the dataset\ndata_cl &lt;- read.csv(\"https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/LeidenUniv_MAQM2020/Datasets/R%26P_RezaeeAsadzadeh_MethodsCourse.csv\")\n\n# Basic Descriptive Statistics\nnrow(data_cl)                        # Number of observations\n\n[1] 436\n\nsummary(data_cl$Violent_method)      # Summary statistics for Violent_method\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n  1.000   2.000   3.900   4.081   5.850  10.000       1 \n\n# Kernel Density Plot for 'Violent_method'\nggplot(data_cl, aes(x = Violent_method)) +\n  geom_density(kernel = \"gaussian\", fill = \"darkred\", alpha = 0.6, adjust = 1) +\n  labs(\n    title = \"Kernel Density Estimation (KDE) of Violent Method\",\n    x = \"Violent Method\",\n    y = \"Density\"\n  ) +\n  theme_minimal()",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Homework 1</span>"
+    ]
+  },
+  {
+    "objectID": "HW1.html#assignment-predicting-attitudes-using-k-nn",
+    "href": "HW1.html#assignment-predicting-attitudes-using-k-nn",
+    "title": "6  Homework 1",
+    "section": "7.2 Assignment: Predicting Attitudes Using k-NN",
+    "text": "7.2 Assignment: Predicting Attitudes Using k-NN\n\nModel Development:\nUse at least three features from the dataset to build your predictive model. Ensure your k-NN algorithm is cross-validated to assess its performance effectively.\nDocumentation:\nClearly explain the decisions you made throughout the process, including your choice of features, parameter settings (e.g., the value of k), and data preprocessing steps.\nAnalysis: Discuss your findings in detail. Reflect on the performance of your model, the influence of different features on predictions, and any challenges you encountered during the analysis.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Homework 1</span>"
+    ]
   }
 ]
