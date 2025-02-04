@@ -20,37 +20,32 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
 **a.** Watch [this video](https://www.youtube.com/watch?v=Gn3w1UvTx0A) and create a *GitHub account*.
 
-**b.* Watch [this video](https://www.youtube.com/watch?v=iv8rSLsi1xo).  
+\*\*b.\* Watch [this video](https://www.youtube.com/watch?v=iv8rSLsi1xo).\
 - *Note:* You do *NOT* need to set up the desktop version, so feel free to skip that part.
 
-- Now, create a **new repository** and label it as:  *LU_BAP_CIR*
+-   Now, create a **new repository** and label it as: *LU_BAP_CIR*
 
+**c.** Download the *Acemoglu_Robinson_2001 dataset.csv* via this OneDrive link:\
+[Download Dataset Here](https://leidenuniv1-my.sharepoint.com/:x:/g/personal/rezaeedaryakenars_vuw_leidenuniv_nl/EZdLiK_KnxFAh4bdBKUS7esB1I1TQLLK6T4TXSWokOsfeA?e=CngI3z)
 
-**c.** Download the *Acemoglu_Robinson_2001 dataset.csv* via this OneDrive link:  
-[Download Dataset Here](https://leidenuniv1-my.sharepoint.com/:x:/g/personal/rezaeedaryakenars_vuw_leidenuniv_nl/EZdLiK_KnxFAh4bdBKUS7esB1I1TQLLK6T4TXSWokOsfeA?e=CngI3z)  
+-   Create a **new folder** within your *LU_BAP_CIR* repository and name it: *datasets*
 
-- Create a **new folder** within your *LU_BAP_CIR* repository and name it: *datasets*
-
-- Upload the downloaded *Acemoglu_Robinson_2001 dataset** into the `Datasets` folder.
+-   Upload the downloaded \*Acemoglu_Robinson_2001 dataset\*\* into the `Datasets` folder.
 
 ### **Submission:**
 
-Share the *link to your GitHub profile* as your answer. For example, mine looks like this:  
-[https://github.com/babakrezaee](https://github.com/babakrezaee)  
+Share the *link to your GitHub profile* as your answer. For example, mine looks like this:\
+<https://github.com/babakrezaee>
 
-I expect to see the following structure in your GitHub repository:
-- A repository named **`LU_BAP_CIR`**
-- A folder named **`datasets`** within the repository
-- The **Acemoglu_Robinson_2001 dataset.csv** uploaded inside the `Datasets` folder
+I expect to see the following structure in your GitHub repository: - A repository named **`LU_BAP_CIR`** - A folder named **`datasets`** within the repository - The **Acemoglu_Robinson_2001 dataset.csv** uploaded inside the `Datasets` folder
 
 ## **Question 2: Attitude toward violent method of resiatnce**
-
 
 In a paper published in *Research & Politics*, my co-author and I explore the effects of providing information on individuals' support for nonviolent resistance through an experimental survey. You can access the draft of the paper [here](https://journals.sagepub.com/doi/full/10.1177/2053168020931693).
 
 For this assignment, we will use a *modified version of the dataset* collected for this study. The dataset is publicly available on my GitHub page and can be accessed [here](https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/LeidenUniv_MAQM2020/Datasets/R%26P_RezaeeAsadzadeh_MethodsCourse.csv).
 
----
+------------------------------------------------------------------------
 
 ### Dataset Description
 
@@ -84,12 +79,10 @@ ggplot(data_cl, aes(x = Violent_method)) +
 
 ### Assignment: Predicting Attitudes Using *k*-NN
 
+-   *Model Development:*\
+    Use at least *three features* from the dataset to build your predictive model. Ensure your *k*-NN algorithm is *cross-validated* to assess its performance effectively.
 
-- *Model Development:*  
-  Use at least *three features* from the dataset to build your predictive model. Ensure your *k*-NN algorithm is *cross-validated* to assess its performance effectively.
+-   *Documentation:*\
+    Clearly explain the *decisions you made* throughout the process, including your choice of features, parameter settings (e.g., the value of *k*), and data preprocessing steps.
 
-- *Documentation:*  
-  Clearly explain the *decisions you made* throughout the process, including your choice of features, parameter settings (e.g., the value of *k*), and data preprocessing steps.
-
-- *Analysis:* 
-  Discuss your *findings* in detail. Reflect on the performance of your model, the influence of different features on predictions, and any challenges you encountered during the analysis.
+-   *Analysis:* Discuss your *findings* in detail. Reflect on the performance of your model, the influence of different features on predictions, and any challenges you encountered during the analysis.
