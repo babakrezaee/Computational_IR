@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
+<link href="./NaiveBayes.html" rel="next">
 <link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -172,7 +172,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">preface</span></a>
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -189,8 +189,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./NaiveBayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Naive Bayes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TreeModels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -209,14 +221,15 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example" id="toc-a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="nav-link active" data-scroll-target="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example"><span class="header-section-number">2.1</span> A simple Comparison of OLS and k-NN: Boston Housing Example</a></li>
-  <li><a href="#how-does-k-nn-estimate-f." id="toc-how-does-k-nn-estimate-f." class="nav-link" data-scroll-target="#how-does-k-nn-estimate-f."><span class="header-section-number">2.2</span> How does k-NN estimate f(.)?</a></li>
-  <li><a href="#what-is-the-best-k" id="toc-what-is-the-best-k" class="nav-link" data-scroll-target="#what-is-the-best-k"><span class="header-section-number">2.3</span> What is the “best” K?</a></li>
-  <li><a href="#measuring-accuracy" id="toc-measuring-accuracy" class="nav-link" data-scroll-target="#measuring-accuracy"><span class="header-section-number">2.4</span> Measuring Accuracy</a></li>
-  <li><a href="#bias-variance-tradeoff" id="toc-bias-variance-tradeoff" class="nav-link" data-scroll-target="#bias-variance-tradeoff"><span class="header-section-number">2.5</span> Bias-Variance Tradeoff</a></li>
-  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">2.6</span> Cross-Validation</a></li>
-  <li><a href="#k-nearest-neighbors-p1" id="toc-k-nearest-neighbors-p1" class="nav-link" data-scroll-target="#k-nearest-neighbors-p1"><span class="header-section-number">2.7</span> <span class="math inline">\(k\)</span>-Nearest Neighbors, p&gt;1</a></li>
-  <li><a href="#a-prediction-problem-with-large-n-and-large-p-using-knn" id="toc-a-prediction-problem-with-large-n-and-large-p-using-knn" class="nav-link" data-scroll-target="#a-prediction-problem-with-large-n-and-large-p-using-knn"><span class="header-section-number">2.8</span> A Prediction Problem with Large <span class="math inline">\(N\)</span> and Large <span class="math inline">\(p\)</span> using <span class="math inline">\(kNN\)</span></a></li>
+  <li><a href="#non-parametric-models" id="toc-non-parametric-models" class="nav-link active" data-scroll-target="#non-parametric-models"><span class="header-section-number">2.1</span> Non-Parametric Models</a></li>
+  <li><a href="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example" id="toc-a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="nav-link" data-scroll-target="#a-simple-comparison-of-ols-and-k-nn-boston-housing-example"><span class="header-section-number">2.2</span> A simple Comparison of OLS and k-NN: Boston Housing Example</a></li>
+  <li><a href="#how-does-k-nn-estimate-fcdot" id="toc-how-does-k-nn-estimate-fcdot" class="nav-link" data-scroll-target="#how-does-k-nn-estimate-fcdot"><span class="header-section-number">2.3</span> How Does <span class="math inline">\(K\)</span>-NN Estimate <span class="math inline">\(f(\cdot)\)</span>?</a></li>
+  <li><a href="#what-is-the-best-k" id="toc-what-is-the-best-k" class="nav-link" data-scroll-target="#what-is-the-best-k"><span class="header-section-number">2.4</span> What is the “best” K?</a></li>
+  <li><a href="#measuring-accuracy" id="toc-measuring-accuracy" class="nav-link" data-scroll-target="#measuring-accuracy"><span class="header-section-number">2.5</span> Measuring Accuracy</a></li>
+  <li><a href="#bias-variance-tradeoff" id="toc-bias-variance-tradeoff" class="nav-link" data-scroll-target="#bias-variance-tradeoff"><span class="header-section-number">2.6</span> Bias-Variance Tradeoff</a></li>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">2.7</span> Cross-Validation</a></li>
+  <li><a href="#k-nearest-neighbors-p1" id="toc-k-nearest-neighbors-p1" class="nav-link" data-scroll-target="#k-nearest-neighbors-p1"><span class="header-section-number">2.8</span> <span class="math inline">\(k\)</span>-Nearest Neighbors, p&gt;1</a></li>
+  <li><a href="#a-prediction-problem-with-large-n-and-large-p-using-knn" id="toc-a-prediction-problem-with-large-n-and-large-p-using-knn" class="nav-link" data-scroll-target="#a-prediction-problem-with-large-n-and-large-p-using-knn"><span class="header-section-number">2.9</span> A Prediction Problem with Large <span class="math inline">\(N\)</span> and Large <span class="math inline">\(p\)</span> using <span class="math inline">\(kNN\)</span></a></li>
   </ul>
 </nav>
     </div>
@@ -242,20 +255,30 @@ window.Quarto = {
 </header>
 
 
-<p>In social sciences, we are often interested in studying the variations in an outcome variable, <span class="math inline">\(Y\)</span>-also known as dependent variable-conditional on a set of independent variables, <span class="math inline">\(X\)</span>-also known as predictors and features.This usually is written formally as:</p>
+<p>In the social sciences, we are often interested in examining the variation in an outcome variable, <span class="math inline">\(Y\)</span>—also known as the dependent variable—conditional on a set of independent variables, <span class="math inline">\(X\)</span>, which are also referred to as predictors, features, or regressors. This relationship can be formally expressed as:</p>
 <p><span class="math display">\[
 P(Y=y|X=x)
-\]</span> One very common strategy in modeling this conditional probability is making some assumptions about the function, <span class="math inline">\(f(.)\)</span>, that maps <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>, and then estimating its parameters. The <em>Ordinary Least Square (OLS)</em> has been one of the oldest and the most important tools of modeling association between two variables. Under Classic Assumptions of Linear Regression, an <em>OLS</em> estimator is the <em>Best Linear Unbiased Estimate, (BLUE)</em>. However, there are situations that these assumptions do not hold. We will return to addressing the violations of some of these assumptions in the following weeks. Here, we study <span class="math inline">\(K\)</span>-NN algorithm as a model-free algorithm, which impose less assumption into the prediction algorithm.Although <span class="math inline">\(K\)</span>-NN does not offer useful information about the quality and quantity of association between the outcome variable and the predictors, it often is an effective predicting algorithm.</p>
-<section id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example"><span class="header-section-number">2.1</span> A simple Comparison of OLS and k-NN: Boston Housing Example</h2>
-<p>Boston Housing dataset contains information on housing in the Boston, Massachusetts area in the US. Assume that we want to predict the median value of a house base on the percent of lower status population in the sub-area.The below scatter plot shows how these two variables are associated:</p>
+\]</span> A common strategy for modeling this conditional relationship is to make assumptions about the function, <span class="math inline">\(f(\cdot)\)</span>, that maps <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>, and then estimate its parameters. The <strong>Ordinary Least Squares (OLS)</strong> method is one of the oldest and most important tools for modeling associations between variables. As a <strong>parametric model</strong>, OLS assumes a specific linear relationship between the dependent and independent variables. Under the <strong>classical assumptions of linear regression</strong>, the OLS estimator is considered the <strong>Best Linear Unbiased Estimator (BLUE)</strong>.</p>
+<p>However, in many real-world situations, these assumptions do not hold. When this happens, we can take one of two approaches:</p>
+<ol type="1">
+<li><strong>Stick with the parametric framework</strong> and try to <strong>adjust the model</strong> to account for the violated assumptions. This may involve adding interaction terms, transforming variables, or using regularization techniques.<br>
+</li>
+<li><strong>Switch to non-parametric models</strong>, which make <strong>fewer assumptions</strong> about the underlying data structure and can flexibly capture complex relationships.</li>
+</ol>
+<section id="non-parametric-models" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="non-parametric-models"><span class="header-section-number">2.1</span> Non-Parametric Models</h2>
+<p>In this context, we introduce the <span class="math inline">\(K\)</span>-Nearest Neighbors (<span class="math inline">\(K\)</span>-NN) algorithm, a classic example of a <em>non-parametric model</em>. Unlike parametric models, <span class="math inline">\(K\)</span>-NN does not assume a specific functional form between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Instead, it makes predictions based on the <em>similarity</em> between data points, using the values of the <span class="math inline">\(K\)</span> nearest observations to estimate the outcome. While <span class="math inline">\(K\)</span>-NN does not provide insights into the <em>strength</em> or <em>nature</em> of the association between the outcome variable and the predictors, it is often an effective algorithm for <em>prediction</em>, especially when the true relationship between variables is complex or unknown.</p>
+</section>
+<section id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="a-simple-comparison-of-ols-and-k-nn-boston-housing-example"><span class="header-section-number">2.2</span> A simple Comparison of OLS and k-NN: Boston Housing Example</h2>
+<p>The <em>Boston Housing Dataset</em> contains information on housing in the Boston, Massachusetts area in the United States. Suppose we want to predict the <em>median value of a house</em> based on the <em>percentage of the population experiencing socioeconomic disadvantage</em> in a given neighborhood. In the original dataset, this variable is labeled as <em>“lower status,”</em> reflecting the historical language used when the dataset was created in the 1970s. However, modern academic and professional standards call for more thoughtful and respectful terminology when discussing socioeconomic conditions. Therefore, I have <em>relabeled this variable as “socioeconomic disadvantage population”</em> to provide a more accurate and considerate description. The below scatter plot shows how these two variables are associated:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS) <span class="do">## a library of example datasets</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat,medv,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="st">'navy'</span>,<span class="at">cex=</span>.<span class="dv">75</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">'Low Status Percent'</span>,<span class="at">ylab =</span> <span class="st">'Median Value($)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">'Socioeconomic Disadvantage Population(%)'</span>,<span class="at">ylab =</span> <span class="st">'Median Value($)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -264,11 +287,21 @@ P(Y=y|X=x)
 </div>
 </div>
 </div>
-<p>We need a function to estimate how the housing values is associated with the percent of low status population in the neighborhood. A linear function can be one of our first candidates. That is we assume that <span class="math inline">\(Y_i=\alpha+\beta X+\epsilon\)</span>. After estimating the parameters of this model, i.e.&nbsp;<span class="math inline">\(\hat{\alpha}\)</span> and <span class="math inline">\(\hat{\beta}\)</span>, the predicted values of <em>OLS</em> estimation is <span class="math inline">\(\hat{Y}=\hat \alpha +\hat \beta X\)</span>. Not surprisingly, since we assumed that the association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is linear, the predicted line fitted to the data is linear (Blue line in the below plot).</p>
+<section id="linear-model-for-housing-values" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="linear-model-for-housing-values"><span class="header-section-number">2.2.1</span> Linear Model for Housing Values</h3>
+<p>To analyze how <em>housing values</em> are associated with the <em>percentage of the population experiencing socioeconomic disadvantage</em> in a neighborhood, we need to define a function that models this relationship. A <em>linear function</em> is often a reasonable starting point. In this case, we assume the following linear model:</p>
+<p><span class="math display">\[
+Y_i = \alpha + \beta X_i + \varepsilon_i
+\]</span> Here, <span class="math inline">\(Y_i\)</span> represents the <strong>housing value</strong>, <span class="math inline">\(X_i\)</span> is the <strong>percentage of socioeconomic disadvantage</strong>, <span class="math inline">\(\alpha\)</span> is the <strong>intercept</strong>, <span class="math inline">\(\beta\)</span> is the <strong>slope coefficient</strong>, and <span class="math inline">\(\varepsilon_i\)</span> is the <strong>error term</strong>.</p>
+<p>After estimating the parameters of this model—denoted as <span class="math inline">\(\hat{\alpha}\)</span> and <span class="math inline">\(\hat{\beta}\)</span>—the predicted housing values are given by the <strong>Ordinary Least Squares (OLS)</strong> estimation formula:</p>
+<p><span class="math display">\[
+\hat{Y}_i = \hat{\alpha} + \hat{\beta} X_i
+\]</span></p>
+<p>Since we have assumed a <em>linear relationship</em> between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, the fitted prediction line is also linear. This is reflected in the plot below, where the <em>blue line</em> represents the OLS-fitted regression line.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat,medv,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">'grey'</span>,<span class="at">cex=</span>.<span class="dv">75</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">'Low Status Percent'</span>,<span class="at">ylab =</span> <span class="st">'Median Value($)'</span>, <span class="at">main=</span><span class="fu">TeX</span>(<span class="st">'$Y=</span><span class="sc">\\</span><span class="st">alpha + </span><span class="sc">\\</span><span class="st">beta X$'</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">'Socioeconomic Disadvantage Population (%)'</span>,<span class="at">ylab =</span> <span class="st">'Median Value($)'</span>, <span class="at">main=</span><span class="fu">TeX</span>(<span class="st">'$Y=</span><span class="sc">\\</span><span class="st">alpha + </span><span class="sc">\\</span><span class="st">beta X$'</span>))</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>lmHousing<span class="ot">=</span><span class="fu">lm</span>(medv<span class="sc">~</span>lstat)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmHousing<span class="sc">$</span>coef, <span class="at">col=</span><span class="st">"navy"</span>, <span class="at">lwd=</span><span class="fl">2.5</span>)</span>
@@ -283,11 +316,40 @@ P(Y=y|X=x)
 </div>
 </div>
 </div>
-<p>To predict using <em>OLS</em>, we make several assumptions about the form of <span class="math inline">\(Y=f(X)\)</span>. The same applies to non-linear models such as <em>Logit</em> and <em>Probit</em>. However, there are non-parametric approaches that impose less assumption on the form of <span class="math inline">\(f(X)\)</span>. <span class="math inline">\(k\)</span>-NN is one the most commonly used non-parametric predicting algorithms. Before discussing this method, take a look at how this algorithms fits function <span class="math inline">\(f(.)\)</span> to the data:</p>
+<p>When using <em>OLS</em> for prediction, we make several key assumptions about the form of the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, denoted as <span class="math inline">\(Y = f(X)\)</span>. These assumptions include linearity, homoscedasticity, independence of errors, and normality of residuals. The same applies to other parametric models, such as <em>Logit</em> and <em>Probit</em>, which assume specific functional forms for modeling binary outcomes.</p>
+<p>However, <em>non-parametric approaches</em> impose fewer assumptions on the functional form of <span class="math inline">\(f(X)\)</span>. This flexibility allows them to model complex, non-linear relationships without requiring a predetermined structure. One of the most commonly used non-parametric algorithms is the <em><span class="math inline">\(K\)</span>-Nearest Neighbors (<span class="math inline">\(K\)</span>-NN)</em> algorithm.</p>
+<p>Before diving into the details of this method, let’s first explore how <em><span class="math inline">\(K\)</span>-NN fits the function <span class="math inline">\(f(\cdot)\)</span></em> to the data, relying on the proximity of data points rather than predefined functional forms.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(MASS) ## a library of example datasets</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#attach(Boston)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kknn) <span class="do">## knn library</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We first need to divide the sample to train (in-sample) and test (out-sample) subsampes. </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(Boston) <span class="co"># Sample size</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#fit knn with k</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>train <span class="ot">=</span> <span class="fu">data.frame</span>(lstat,medv) <span class="co">#data frame with variables of interest</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#test is data frame with x you want f(x) at, sort lstat to make plots nice.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>test <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">lstat =</span> <span class="fu">sort</span>(lstat))</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>kf15 <span class="ot">=</span> <span class="fu">kknn</span>(medv<span class="sc">~</span>lstat,train,test,<span class="at">k=</span><span class="dv">15</span>,<span class="at">kernel =</span> <span class="st">"rectangular"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat,medv,<span class="at">xlab=</span><span class="st">'Socioeconomic Disadvantage Population (%)'</span>,<span class="at">ylab =</span> <span class="st">'Median Value($)'</span>, <span class="at">col=</span><span class="st">"gray45"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(test<span class="sc">$</span>lstat,kf15<span class="sc">$</span>fitted.values,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>dfp <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">lstat=</span><span class="dv">20</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>kf15_20 <span class="ot">=</span> <span class="fu">kknn</span>(medv<span class="sc">~</span>lstat,train,dfp,<span class="at">k=</span><span class="dv">15</span>,<span class="at">kernel =</span> <span class="st">"rectangular"</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"kNN15: the median value of a house in a neighborhood with 20% Socioeconomic Disadvantage Population residents is"</span>,<span class="fu">round</span>(kf15_20<span class="sc">$</span>fitted,<span class="at">digits=</span><span class="dv">2</span>),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>kNN15: the median value of a house in a neighborhood with 20% low status residents is 14.37 </code></pre>
+<pre><code>kNN15: the median value of a house in a neighborhood with 20% Socioeconomic Disadvantage Population residents is 14.37 </code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">20</span>,kf15_20<span class="sc">$</span>fitted,<span class="at">cex=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"maroon"</span>, <span class="at">pch=</span><span class="dv">15</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">20</span>,kf15_20<span class="sc">$</span>fitted,<span class="fu">paste</span>(<span class="fu">round</span>(kf15_20<span class="sc">$</span>fitted,<span class="at">digits =</span> <span class="dv">2</span>)),<span class="at">pos=</span><span class="dv">3</span>, <span class="at">cex=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">"maroon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -297,16 +359,15 @@ P(Y=y|X=x)
 </div>
 </div>
 </section>
-<section id="how-does-k-nn-estimate-f." class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="how-does-k-nn-estimate-f."><span class="header-section-number">2.2</span> How does k-NN estimate f(.)?</h2>
-<p>We first need to define a training dataset based on our main sample. The training set for a k-NN algorithm consist of the N pairs of the feature(x) and outcomes as follow:</p>
-<p><span class="math display">\[\begin{equation}
-
-\{(x_1,y_1), (x_2,y_2), \dots, (x_n,y_n) \}
-
-\end{equation}\]</span></p>
-<p>We start with a one feature model, but later in this handout, we will extend <span class="math inline">\(k\)</span>-NN to the cases with more than one feature, i.e.&nbsp;<span class="math inline">\(j&gt;1\)</span>.</p>
-<p><span class="math inline">\(k\)</span>-NN calculates <span class="math inline">\(f(x_i)\)</span> by taking the average of outcome values for the <span class="math inline">\(k\)</span> nearest <span class="math inline">\(x\)</span>’s to <span class="math inline">\(x_i\)</span>.</p>
+</section>
+<section id="how-does-k-nn-estimate-fcdot" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="how-does-k-nn-estimate-fcdot"><span class="header-section-number">2.3</span> How Does <span class="math inline">\(K\)</span>-NN Estimate <span class="math inline">\(f(\cdot)\)</span>?</h2>
+<p>To estimate <span class="math inline">\(f(\cdot)\)</span> using <em><span class="math inline">\(K\)</span>-Nearest Neighbors (<span class="math inline">\(K\)</span>-NN)</em>, we first need to define a <em>training dataset</em> based on our main sample. The training set for a <span class="math inline">\(K\)</span>-NN algorithm consists of <span class="math inline">\(N\)</span> pairs of <em>features</em> (<span class="math inline">\(x\)</span>) and <em>outcomes</em> (<span class="math inline">\(y\)</span>) as follows:</p>
+<p><span class="math display">\[
+\{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n) \}
+\]</span></p>
+<p>We begin with a <em>single-feature model</em> for simplicity. Later in this handout, we will extend the <span class="math inline">\(K\)</span>-NN algorithm to handle cases with <em>multiple features</em>, where <span class="math inline">\(j &gt; 1\)</span>.</p>
+<p>The <span class="math inline">\(K\)</span>-NN algorithm estimates <span class="math inline">\(f(x_i)\)</span> by calculating the <em>average of the outcome values</em> for the <em><span class="math inline">\(K\)</span> nearest neighbors</em> to <span class="math inline">\(x_i\)</span>. This approach relies on the idea that observations with similar feature values tend to have similar outcomes, allowing <span class="math inline">\(K\)</span>-NN to make predictions without assuming a specific functional form for the data.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -338,8 +399,8 @@ P(Y=y|X=x)
 </div>
 </div>
 </section>
-<section id="what-is-the-best-k" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="what-is-the-best-k"><span class="header-section-number">2.3</span> What is the “best” K?</h2>
+<section id="what-is-the-best-k" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="what-is-the-best-k"><span class="header-section-number">2.4</span> What is the “best” K?</h2>
 <p>We learned how K-NN works, but there is an issue here: K is chosen discretionary and for any <span class="math inline">\(K\)</span>, we can get (significantly) different results.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -352,8 +413,8 @@ P(Y=y|X=x)
 </div>
 <p>If we choose a large <span class="math inline">\(k\)</span>, then we get a simple line such that for k=500, the like is almost the mean of Median House price. On the other hand, choosing a small <span class="math inline">\(k\)</span> gives a volatile estimation which captures the complexity of the data very well, yet it is very sensitive to any small changes in the data. Can we find a middle-way value for <span class="math inline">\(k\)</span>? This is roughly the idea behind using cross-validation to overcome Bias-Variance Trade-Off. To discuss this idea more in detail, we need to learn about interpreting the prediction accuracy of an estimated function.</p>
 </section>
-<section id="measuring-accuracy" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="measuring-accuracy"><span class="header-section-number">2.4</span> Measuring Accuracy</h2>
+<section id="measuring-accuracy" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="measuring-accuracy"><span class="header-section-number">2.5</span> Measuring Accuracy</h2>
 <p>For any given feature (<span class="math inline">\(x\in X\)</span>), or the set of features, we can find the predicted value of the outcome variable, <span class="math inline">\(\hat{y}\)</span>, using the estimated function <span class="math inline">\(\hat{f}(x_i)\)</span>. Given this information, we can find the prediction error for each observation by <span class="math inline">\(y_i-\hat{y}_i\)</span>. The prediction error of each statistical model can be calculated using different indices based on these individual errors. One of the most common one is Root Mean Square Error (<em>RMSE</em>).</p>
 <p><span class="math display">\[\begin{equation}
 
@@ -379,8 +440,8 @@ RMSE=\sqrt{\frac{1}{n}\sum_{i=1}^n [y_i-\hat{f}(x_i)]^2}
 </div>
 </div>
 </section>
-<section id="bias-variance-tradeoff" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="bias-variance-tradeoff"><span class="header-section-number">2.5</span> Bias-Variance Tradeoff</h2>
+<section id="bias-variance-tradeoff" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="bias-variance-tradeoff"><span class="header-section-number">2.6</span> Bias-Variance Tradeoff</h2>
 <p>Below figure presents one of the core ideas of statistical learning. When the complexity of the model is low, training model has low variance but suffers high bias, which lead to a high prediction error. As the complexity of the model increases, the error of training sample decreases. However, since a model with a high level of complexity is trained to captured biases in the training sample, its prediction power for the test sample decreases, leading to a higher prediction error.</p>
 <p>We can model association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> as follow:</p>
 <p><span class="math display">\[\begin{equation}
@@ -398,16 +459,16 @@ Y= \underbrace{f(X)}_\text{Signal}+\underbrace{\epsilon}_{Noise}
 </div>
 <p>Estimating a simple model to explain a complex process leads to a bias function, thought this estimation has a low level of variance. On the other hand, a complex model is sensitive to every bit of changes in the data, which leads to a high variance, though the bias is low.</p>
 </section>
-<section id="cross-validation" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">2.6</span> Cross-Validation</h2>
+<section id="cross-validation" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">2.7</span> Cross-Validation</h2>
 <p>Dividing the sample to a train sample and a test sample allows us to evaluate the performance of predictive model. However, there are few challenges regarding this approach:</p>
 <ol type="1">
 <li><p>How can we be sure that the prediction results are independent of the train set? How can we draw the samples to address this concern?</p></li>
 <li><p>Leaving a part of dataset for validating the trained model means that we overlook part of information that we can get from the validation sub-sample. As we overlook this part of information to train our model, we might get a higher level of errors.</p></li>
 </ol>
 <p>The suggested in statistical learning literature solution to address the above issues is <em>Cross-Validation</em>.</p>
-<section id="leave-one-out-cross-validation" class="level3" data-number="2.6.1">
-<h3 data-number="2.6.1" class="anchored" data-anchor-id="leave-one-out-cross-validation"><span class="header-section-number">2.6.1</span> Leave-One-Out Cross-Validation</h3>
+<section id="leave-one-out-cross-validation" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="leave-one-out-cross-validation"><span class="header-section-number">2.7.1</span> Leave-One-Out Cross-Validation</h3>
 <p>In this approach, we divide the sample into train and test samples. Assuming that the size of train sample is <span class="math inline">\(n\)</span>, we leave one observation out, say <span class="math inline">\(i^{th}\)</span> observation, and train the model using <span class="math inline">\(n-1\)</span> remaining observations. Then, we predict the outcome of <span class="math inline">\(i^{th}\)</span> observation and compute the amount of prediction error: <span class="math inline">\(RMSE_i=\sqrt{(Y_i-\hat{Y}_i)^2}\)</span>. We repeat this procedure for all observations in the test sample and compute the mean of Cross-Validation RMSE:</p>
 <p><span class="math display">\[\begin{equation}
 
@@ -415,8 +476,8 @@ RMSE_{LOCV}=\frac{1}{n}\sum_{i=1}^n RMSE_i
 
 \end{equation}\]</span></p>
 </section>
-<section id="k-fold-cross-validation" class="level3" data-number="2.6.2">
-<h3 data-number="2.6.2" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">2.6.2</span> <span class="math inline">\(k\)</span>-fold Cross Validation</h3>
+<section id="k-fold-cross-validation" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="k-fold-cross-validation"><span class="header-section-number">2.7.2</span> <span class="math inline">\(k\)</span>-fold Cross Validation</h3>
 <p><em>Leave-One-Out Cross-Validation</em> is computationally intensive since you need to repeat the training and evaluation <span class="math inline">\(n\)</span> times. An alternative approach is increasing the number of observations that are left out at each stage. To do so, we can divide the sample randomly to <span class="math inline">\(k\)</span> almost equal size groups; then, we will leave one of these groups out for the validation and use the remaining <span class="math inline">\(k-1\)</span> groups to train the model. Using this training model, we can predict the outcome for the observations in the validation subsample and then calculate the prediction for each of thoes observations. We will iterate the training and validation steps for each group (<span class="math inline">\(k\)</span> times). Below figure shows a schematic view of <span class="math inline">\(k\)</span>-fold Cross-Validation (KCV).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -460,8 +521,8 @@ RMSE^{KCV}=\sqrt{\frac{1}{n}\sum_{i=1}^n(Y_i-\hat{Y}_i)^2}
 </div>
 </div>
 </section>
-<section id="showing-variance-bias-tradeoff-by-an-example" class="level3" data-number="2.6.3">
-<h3 data-number="2.6.3" class="anchored" data-anchor-id="showing-variance-bias-tradeoff-by-an-example"><span class="header-section-number">2.6.3</span> Showing Variance-Bias-TradeOff by an Example</h3>
+<section id="showing-variance-bias-tradeoff-by-an-example" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="showing-variance-bias-tradeoff-by-an-example"><span class="header-section-number">2.7.3</span> Showing Variance-Bias-TradeOff by an Example</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -473,8 +534,8 @@ RMSE^{KCV}=\sqrt{\frac{1}{n}\sum_{i=1}^n(Y_i-\hat{Y}_i)^2}
 </div>
 </section>
 </section>
-<section id="k-nearest-neighbors-p1" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="k-nearest-neighbors-p1"><span class="header-section-number">2.7</span> <span class="math inline">\(k\)</span>-Nearest Neighbors, p&gt;1</h2>
+<section id="k-nearest-neighbors-p1" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="k-nearest-neighbors-p1"><span class="header-section-number">2.8</span> <span class="math inline">\(k\)</span>-Nearest Neighbors, p&gt;1</h2>
 <p>In the previous sections, we studied the <span class="math inline">\(kNN\)</span> prediction algorithm for the cases where there is only one feature. Finding the <span class="math inline">\(k\)</span> nearest points for a problem with one feature/independent variable is straightforward, but how does the algorithm changes if we want to use more than one feature/independent variable?</p>
 <p>The idea of <span class="math inline">\(kNN\)</span> is predicting based on the most similar, closest, observations on the training subsample. Where <span class="math inline">\(p&gt;1\)</span>, the problem is finding the predicted values of <span class="math inline">\(Y_k\)</span> given a set of the features/covariates <span class="math inline">\(X_f=(x_{f1},x_{f2},\dots,x_{fp})\)</span>.</p>
 <p><span class="math inline">\(kNN\)</span>:</p>
@@ -543,8 +604,8 @@ d_{if}=\sqrt{\sum_{j=1}^p (x_{fj}-x_{ij})^2}~, X_i~in~training~data
 </div>
 </div>
 </section>
-<section id="a-prediction-problem-with-large-n-and-large-p-using-knn" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="a-prediction-problem-with-large-n-and-large-p-using-knn"><span class="header-section-number">2.8</span> A Prediction Problem with Large <span class="math inline">\(N\)</span> and Large <span class="math inline">\(p\)</span> using <span class="math inline">\(kNN\)</span></h2>
+<section id="a-prediction-problem-with-large-n-and-large-p-using-knn" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="a-prediction-problem-with-large-n-and-large-p-using-knn"><span class="header-section-number">2.9</span> A Prediction Problem with Large <span class="math inline">\(N\)</span> and Large <span class="math inline">\(p\)</span> using <span class="math inline">\(kNN\)</span></h2>
 <p>Now, let’s predict the median price of houses in Boston data using several features. The features that I picked to predict the housing price, <em>medv</em>, are <em>crim,indus,age,dis,black,</em> and <em>lstat</em>. Before estimating the prediction model, it can be helpful to plot the scatter plots showing the association between the outcome and the features.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -556,67 +617,67 @@ d_{if}=\sqrt{\sum_{j=1}^p (x_{fj}-x_{ij})^2}~, X_i~in~training~data
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kknn)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source_url</span>(<span class="st">'https://raw.githubusercontent.com/babakrezaee/DataWrangling/master/Functions/docv_fun.R'</span>) <span class="do">## Cross validation function</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">cbind</span>(crim,indus,age,dis,black,lstat)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>mmsc<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">return</span>((x<span class="sc">-</span><span class="fu">min</span>(x))<span class="sc">/</span>(<span class="fu">max</span>(x)<span class="sc">-</span><span class="fu">min</span>(x)))}</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>X_s<span class="ot">=</span><span class="fu">apply</span>(X, <span class="dv">2</span>, mmsc)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>kv<span class="ot">=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">100</span> <span class="co">#these are the k values (k as in kNN) we will try</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ndocv<span class="ot">=</span><span class="dv">35</span> <span class="co"># Number of cross validation</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 5-fold</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>cv_mat_5<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="fu">length</span>(kv),ndocv)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#pb &lt;- txtProgressBar(min = 0, max = ndocv, style = 3) # Setting up the progress bar</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv){</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    cv_temp<span class="ot">=</span><span class="fu">docvknn</span>(X_s,medv,kv,<span class="at">nfold=</span><span class="dv">5</span>)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    cv_mat_5[,i]<span class="ot">=</span><span class="fu">sqrt</span>(cv_temp<span class="sc">/</span><span class="fu">length</span>(medv))</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#setTxtProgressBar(pb, i)</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>cv_mean_5<span class="ot">=</span><span class="fu">apply</span>(cv_mat_5,<span class="dv">1</span>,mean)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>kbest_5 <span class="ot">=</span> kv[<span class="fu">which.min</span>(cv_mean_5)]</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The min value of RMSE for 10-fold cross-validation is associated with k="</span>,kbest_5,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kknn)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source_url</span>(<span class="st">'https://raw.githubusercontent.com/babakrezaee/DataWrangling/master/Functions/docv_fun.R'</span>) <span class="do">## Cross validation function</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">cbind</span>(crim,indus,age,dis,black,lstat)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>mmsc<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">return</span>((x<span class="sc">-</span><span class="fu">min</span>(x))<span class="sc">/</span>(<span class="fu">max</span>(x)<span class="sc">-</span><span class="fu">min</span>(x)))}</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>X_s<span class="ot">=</span><span class="fu">apply</span>(X, <span class="dv">2</span>, mmsc)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>kv<span class="ot">=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">100</span> <span class="co">#these are the k values (k as in kNN) we will try</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>ndocv<span class="ot">=</span><span class="dv">10</span> <span class="co"># Number of cross validation</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 5-fold</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>cv_mat_5<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="fu">length</span>(kv),ndocv)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#pb &lt;- txtProgressBar(min = 0, max = ndocv, style = 3) # Setting up the progress bar</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv){</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    cv_temp<span class="ot">=</span><span class="fu">docvknn</span>(X_s,medv,kv,<span class="at">nfold=</span><span class="dv">5</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    cv_mat_5[,i]<span class="ot">=</span><span class="fu">sqrt</span>(cv_temp<span class="sc">/</span><span class="fu">length</span>(medv))</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#setTxtProgressBar(pb, i)</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>cv_mean_5<span class="ot">=</span><span class="fu">apply</span>(cv_mat_5,<span class="dv">1</span>,mean)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>kbest_5 <span class="ot">=</span> kv[<span class="fu">which.min</span>(cv_mean_5)]</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The min value of RMSE for 10-fold cross-validation is associated with k="</span>,kbest_5,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The min value of RMSE for 10-fold cross-validation is associated with k= 7 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 10-fold</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>cv_mat_10<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="fu">length</span>(kv),ndocv)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#pb &lt;- txtProgressBar(min = 0, max = ndocv, style = 3) # Setting up the progress bar</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv){</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      cv_temp<span class="ot">=</span><span class="fu">docvknn</span>(X_s,medv,kv,<span class="at">nfold=</span><span class="dv">10</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      cv_mat_10[,i]<span class="ot">=</span><span class="fu">sqrt</span>(cv_temp<span class="sc">/</span><span class="fu">length</span>(medv))</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="co">#setTxtProgressBar(pb, i)</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>cv_mean_10<span class="ot">=</span><span class="fu">apply</span>(cv_mat_10,<span class="dv">1</span>,mean)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>kbest_10 <span class="ot">=</span> kv[<span class="fu">which.min</span>(cv_mean_10)]</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The min value of RMSE for 10-fold cross-validation is associated with k="</span>,kbest_10,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 10-fold</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>cv_mat_10<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="fu">length</span>(kv),ndocv)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#pb &lt;- txtProgressBar(min = 0, max = ndocv, style = 3) # Setting up the progress bar</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv){</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>      cv_temp<span class="ot">=</span><span class="fu">docvknn</span>(X_s,medv,kv,<span class="at">nfold=</span><span class="dv">10</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>      cv_mat_10[,i]<span class="ot">=</span><span class="fu">sqrt</span>(cv_temp<span class="sc">/</span><span class="fu">length</span>(medv))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>      <span class="co">#setTxtProgressBar(pb, i)</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>cv_mean_10<span class="ot">=</span><span class="fu">apply</span>(cv_mat_10,<span class="dv">1</span>,mean)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>kbest_10 <span class="ot">=</span> kv[<span class="fu">which.min</span>(cv_mean_10)]</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The min value of RMSE for 10-fold cross-validation is associated with k="</span>,kbest_10,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The min value of RMSE for 10-fold cross-validation is associated with k= 5 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kv, cv_mean_5, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">type=</span><span class="st">'l'</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv) <span class="fu">lines</span>(kv,cv_mat_5[,i], <span class="at">col=</span><span class="dv">550</span><span class="sc">+</span>i, <span class="at">lwd=</span>.<span class="dv">4</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(kv, cv_mean_5, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span> )</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="st">"nfold=5"</span>, <span class="at">font.main=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kv, cv_mean_5, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">type=</span><span class="st">'l'</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv) <span class="fu">lines</span>(kv,cv_mat_5[,i], <span class="at">col=</span><span class="dv">550</span><span class="sc">+</span>i, <span class="at">lwd=</span>.<span class="dv">4</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(kv, cv_mean_5, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span> )</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="st">"nfold=5"</span>, <span class="at">font.main=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -624,10 +685,10 @@ d_{if}=\sqrt{\sum_{j=1}^p (x_{fj}-x_{ij})^2}~, X_i~in~training~data
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kv, cv_mean_10, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">type=</span><span class="st">'l'</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv) <span class="fu">lines</span>(kv,cv_mat_10[,i], <span class="at">col=</span><span class="dv">550</span><span class="sc">+</span>i, <span class="at">lwd=</span>.<span class="dv">4</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(kv, cv_mean_10, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span> )</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="st">"nfold=10"</span>, <span class="at">font.main=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(kv, cv_mean_10, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">type=</span><span class="st">'l'</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>ndocv) <span class="fu">lines</span>(kv,cv_mat_10[,i], <span class="at">col=</span><span class="dv">550</span><span class="sc">+</span>i, <span class="at">lwd=</span>.<span class="dv">4</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(kv, cv_mean_10, <span class="at">xlab=</span><span class="st">"K"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span> )</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="st">"nfold=10"</span>, <span class="at">font.main=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -635,32 +696,32 @@ d_{if}=\sqrt{\sum_{j=1}^p (x_{fj}-x_{ij})^2}~, X_i~in~training~data
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">##What is the best of way of measuring</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">data.frame</span>(medv,X_s)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>kf_best_5 <span class="ot">=</span> <span class="fu">kknn</span>(medv<span class="sc">~</span>.,data,data,<span class="at">k=</span>kbest_5,<span class="at">kernel =</span> <span class="st">"rectangular"</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>RMSE_fold_5<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((data<span class="sc">$</span>medv<span class="sc">-</span>kf_best_5<span class="sc">$</span>fitted)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(data<span class="sc">$</span>medv))</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The RMSE for 5-fold kNN is"</span>, RMSE_fold_5,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">##What is the best of way of measuring</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">data.frame</span>(medv,X_s)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>kf_best_5 <span class="ot">=</span> <span class="fu">kknn</span>(medv<span class="sc">~</span>.,data,data,<span class="at">k=</span>kbest_5,<span class="at">kernel =</span> <span class="st">"rectangular"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>RMSE_fold_5<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((data<span class="sc">$</span>medv<span class="sc">-</span>kf_best_5<span class="sc">$</span>fitted)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(data<span class="sc">$</span>medv))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The RMSE for 5-fold kNN is"</span>, RMSE_fold_5,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The RMSE for 5-fold kNN is 4.01538 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>kf_best_10 <span class="ot">=</span> <span class="fu">kknn</span>(medv<span class="sc">~</span>.,data,data,<span class="at">k=</span>kbest_10,<span class="at">kernel =</span> <span class="st">"rectangular"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>RMSE_fold_10<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((data<span class="sc">$</span>medv<span class="sc">-</span>kf_best_10<span class="sc">$</span>fitted)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(data<span class="sc">$</span>medv))</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The RMSE for 10-fold kNN is"</span>, RMSE_fold_10,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>kf_best_10 <span class="ot">=</span> <span class="fu">kknn</span>(medv<span class="sc">~</span>.,data,data,<span class="at">k=</span>kbest_10,<span class="at">kernel =</span> <span class="st">"rectangular"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>RMSE_fold_10<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((data<span class="sc">$</span>medv<span class="sc">-</span>kf_best_10<span class="sc">$</span>fitted)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(data<span class="sc">$</span>medv))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The RMSE for 10-fold kNN is"</span>, RMSE_fold_10,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The RMSE for 10-fold kNN is 3.786824 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>lmf <span class="ot">=</span> <span class="fu">lm</span>(medv<span class="sc">~</span>.,data)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fmat <span class="ot">=</span> <span class="fu">cbind</span>(medv,lmf<span class="sc">$</span>fitted,kf_best_5<span class="sc">$</span>fitted,kf_best_10<span class="sc">$</span>fitted)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>my_line <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y,...){</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(x,y,...)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">segments</span>(<span class="fu">min</span>(x), <span class="fu">min</span>(y), <span class="fu">max</span>(x), <span class="fu">max</span>(y),...)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fmat)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"y"</span>,<span class="st">"linear"</span>, <span class="st">"kNN5"</span>, <span class="st">"kNN10"</span>)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(fmat, <span class="at">lower.panel =</span> my_line, <span class="at">upper.panel =</span> my_line, <span class="at">col=</span><span class="st">'maroon'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>lmf <span class="ot">=</span> <span class="fu">lm</span>(medv<span class="sc">~</span>.,data)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fmat <span class="ot">=</span> <span class="fu">cbind</span>(medv,lmf<span class="sc">$</span>fitted,kf_best_5<span class="sc">$</span>fitted,kf_best_10<span class="sc">$</span>fitted)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>my_line <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y,...){</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(x,y,...)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">segments</span>(<span class="fu">min</span>(x), <span class="fu">min</span>(y), <span class="fu">max</span>(x), <span class="fu">max</span>(y),...)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fmat)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"y"</span>,<span class="st">"linear"</span>, <span class="st">"kNN5"</span>, <span class="st">"kNN10"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(fmat, <span class="at">lower.panel =</span> my_line, <span class="at">upper.panel =</span> my_line, <span class="at">col=</span><span class="st">'maroon'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -668,7 +729,7 @@ d_{if}=\sqrt{\sum_{j=1}^p (x_{fj}-x_{ij})^2}~, X_i~in~training~data
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(fmat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(fmat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               y    linear      kNN5     kNN10
 y      1.0000000 0.7715306 0.9015274 0.9118707
@@ -1109,8 +1170,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link" aria-label="Summary">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./NaiveBayes.html" class="pagination-link" aria-label="Naive Bayes">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Naive Bayes</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
