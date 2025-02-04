@@ -12,7 +12,6 @@ book:
     - knn.qmd
     - NaiveBayes.qmd
     - TreeModels.qmd
-    #- summary.qmd
     - HW1.qmd
     - references.qmd
   page-navigation: true  # Enables Next/Previous navigation

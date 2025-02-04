@@ -1,6 +1,5 @@
 # Preface {.unnumbered}
 
-
 This handout is prepared for Computational International Relations by Dr. Babak RezaeeDaryakenari [s.rezaeedaryakenari\@fsw.leidenuniv.nl](mailto:s.rezaeedaryakenari@fsw.leidenuniv.nl).
 
 This is an ongoing project. Please do not share or use it without the author's written permission.
