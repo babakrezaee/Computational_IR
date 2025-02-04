@@ -39,7 +39,7 @@ Share the *link to your GitHub profile* as your answer. For example, mine looks 
 
 I expect to see the following structure in your GitHub repository: - A repository named **`LU_BAP_CIR`** - A folder named **`datasets`** within the repository - The **Acemoglu_Robinson_2001 dataset.csv** uploaded inside the `Datasets` folder
 
-## **Question 2: Attitude toward violent method of resiatnce**
+## **Question 2: Attitude toward violent methods of resiatnce**
 
 In a paper published in *Research & Politics*, my co-author and I explore the effects of providing information on individuals' support for nonviolent resistance through an experimental survey. You can access the draft of the paper [here](https://journals.sagepub.com/doi/full/10.1177/2053168020931693).
 
