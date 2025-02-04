@@ -201,8 +201,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./HW1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Homework 1</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -317,8 +317,8 @@ Y_i = \alpha + \beta X_i + \varepsilon_i
 </div>
 </div>
 <p>When using <em>OLS</em> for prediction, we make several key assumptions about the form of the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, denoted as <span class="math inline">\(Y = f(X)\)</span>. These assumptions include linearity, homoscedasticity, independence of errors, and normality of residuals. The same applies to other parametric models, such as <em>Logit</em> and <em>Probit</em>, which assume specific functional forms for modeling binary outcomes.</p>
-<p>However, <em>non-parametric approaches</em> impose fewer assumptions on the functional form of <span class="math inline">\(f(X)\)</span>. This flexibility allows them to model complex, non-linear relationships without requiring a predetermined structure. One of the most commonly used non-parametric algorithms is the <em><span class="math inline">\(K\)</span>-Nearest Neighbors (<span class="math inline">\(K\)</span>-NN)</em> algorithm.</p>
-<p>Before diving into the details of this method, let’s first explore how <em><span class="math inline">\(K\)</span>-NN fits the function <span class="math inline">\(f(\cdot)\)</span></em> to the data, relying on the proximity of data points rather than predefined functional forms.</p>
+<p>However, <em>non-parametric approaches</em> impose fewer assumptions on the functional form of <span class="math inline">\(f(X)\)</span>. This flexibility allows them to model complex, non-linear relationships without requiring a predetermined structure. One of the most commonly used non-parametric algorithms is the <span class="math inline">\(K\)</span>-Nearest Neighbors (<span class="math inline">\(K\)</span>-NN) algorithm.</p>
+<p>Before diving into the details of this method, let’s first explore how <span class="math inline">\(K\)</span>-NN fits the function <span class="math inline">\(f(\cdot)\)</span> to the data, relying on the proximity of data points rather than predefined functional forms.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(MASS) ## a library of example datasets</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#attach(Boston)</span></span>
@@ -362,12 +362,12 @@ Y_i = \alpha + \beta X_i + \varepsilon_i
 </section>
 <section id="how-does-k-nn-estimate-fcdot" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="how-does-k-nn-estimate-fcdot"><span class="header-section-number">2.3</span> How Does <span class="math inline">\(K\)</span>-NN Estimate <span class="math inline">\(f(\cdot)\)</span>?</h2>
-<p>To estimate <span class="math inline">\(f(\cdot)\)</span> using <em><span class="math inline">\(K\)</span>-Nearest Neighbors (<span class="math inline">\(K\)</span>-NN)</em>, we first need to define a <em>training dataset</em> based on our main sample. The training set for a <span class="math inline">\(K\)</span>-NN algorithm consists of <span class="math inline">\(N\)</span> pairs of <em>features</em> (<span class="math inline">\(x\)</span>) and <em>outcomes</em> (<span class="math inline">\(y\)</span>) as follows:</p>
+<p>To estimate <span class="math inline">\(f(\cdot)\)</span> using <span class="math inline">\(K\)</span>-Nearest Neighbors (<span class="math inline">\(K\)</span>-NN), we first need to define a <em>training dataset</em> based on our main sample. The training set for a <span class="math inline">\(K\)</span>-NN algorithm consists of <span class="math inline">\(N\)</span> pairs of <em>features</em> (<span class="math inline">\(x\)</span>) and <em>outcomes</em> (<span class="math inline">\(y\)</span>) as follows:</p>
 <p><span class="math display">\[
 \{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n) \}
 \]</span></p>
 <p>We begin with a <em>single-feature model</em> for simplicity. Later in this handout, we will extend the <span class="math inline">\(K\)</span>-NN algorithm to handle cases with <em>multiple features</em>, where <span class="math inline">\(j &gt; 1\)</span>.</p>
-<p>The <span class="math inline">\(K\)</span>-NN algorithm estimates <span class="math inline">\(f(x_i)\)</span> by calculating the <em>average of the outcome values</em> for the <em><span class="math inline">\(K\)</span> nearest neighbors</em> to <span class="math inline">\(x_i\)</span>. This approach relies on the idea that observations with similar feature values tend to have similar outcomes, allowing <span class="math inline">\(K\)</span>-NN to make predictions without assuming a specific functional form for the data.</p>
+<p>The <span class="math inline">\(K\)</span>-NN algorithm estimates <span class="math inline">\(f(x_i)\)</span> by calculating the <em>average of the outcome values</em> for the <span class="math inline">\(K\)</span> nearest neighbors to <span class="math inline">\(x_i\)</span>. This approach relies on the idea that observations with similar feature values tend to have similar outcomes, allowing <span class="math inline">\(K\)</span>-NN to make predictions without assuming a specific functional form for the data.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>

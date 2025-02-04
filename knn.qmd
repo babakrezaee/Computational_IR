@@ -47,8 +47,7 @@ To analyze how *housing values* are associated with the *percentage of the popul
 
 $$
 Y_i = \alpha + \beta X_i + \varepsilon_i
-$$
-Here, $Y_i$ represents the **housing value**, $X_i$ is the **percentage of socioeconomic disadvantage**, $\alpha$ is the **intercept**, $\beta$ is the **slope coefficient**, and $\varepsilon_i$ is the **error term**.
+$$ Here, $Y_i$ represents the **housing value**, $X_i$ is the **percentage of socioeconomic disadvantage**, $\alpha$ is the **intercept**, $\beta$ is the **slope coefficient**, and $\varepsilon_i$ is the **error term**.
 
 After estimating the parameters of this model—denoted as $\hat{\alpha}$ and $\hat{\beta}$—the predicted housing values are given by the **Ordinary Least Squares (OLS)** estimation formula:
 
@@ -74,9 +73,9 @@ text(20,yhat_lm25,paste(round(yhat_lm25,digits = 2)),pos=3, cex=1,col="maroon")
 
 When using *OLS* for prediction, we make several key assumptions about the form of the relationship between $X$ and $Y$, denoted as $Y = f(X)$. These assumptions include linearity, homoscedasticity, independence of errors, and normality of residuals. The same applies to other parametric models, such as *Logit* and *Probit*, which assume specific functional forms for modeling binary outcomes.
 
-However, *non-parametric approaches* impose fewer assumptions on the functional form of $f(X)$. This flexibility allows them to model complex, non-linear relationships without requiring a predetermined structure. One of the most commonly used non-parametric algorithms is the *$K$-Nearest Neighbors ($K$-NN)* algorithm.
+However, *non-parametric approaches* impose fewer assumptions on the functional form of $f(X)$. This flexibility allows them to model complex, non-linear relationships without requiring a predetermined structure. One of the most commonly used non-parametric algorithms is the $K$-Nearest Neighbors ($K$-NN) algorithm.
 
-Before diving into the details of this method, let’s first explore how *$K$-NN fits the function $f(\cdot)$* to the data, relying on the proximity of data points rather than predefined functional forms.
+Before diving into the details of this method, let’s first explore how $K$-NN fits the function $f(\cdot)$ to the data, relying on the proximity of data points rather than predefined functional forms.
 
 ```{r, echo=TRUE, warning=FALSE}
 #library(MASS) ## a library of example datasets
@@ -113,7 +112,7 @@ text(20,kf15_20$fitted,paste(round(kf15_20$fitted,digits = 2)),pos=3, cex=1,col=
 
 ## How Does $K$-NN Estimate $f(\cdot)$?
 
-To estimate $f(\cdot)$ using *$K$-Nearest Neighbors ($K$-NN)*, we first need to define a *training dataset* based on our main sample. The training set for a $K$-NN algorithm consists of $N$ pairs of *features* ($x$) and *outcomes* ($y$) as follows:
+To estimate $f(\cdot)$ using $K$-Nearest Neighbors ($K$-NN), we first need to define a *training dataset* based on our main sample. The training set for a $K$-NN algorithm consists of $N$ pairs of *features* ($x$) and *outcomes* ($y$) as follows:
 
 $$
 \{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n) \}
@@ -121,7 +120,7 @@ $$
 
 We begin with a *single-feature model* for simplicity. Later in this handout, we will extend the $K$-NN algorithm to handle cases with *multiple features*, where $j > 1$.
 
-The $K$-NN algorithm estimates $f(x_i)$ by calculating the *average of the outcome values* for the *$K$ nearest neighbors* to $x_i$. This approach relies on the idea that observations with similar feature values tend to have similar outcomes, allowing $K$-NN to make predictions without assuming a specific functional form for the data.
+The $K$-NN algorithm estimates $f(x_i)$ by calculating the *average of the outcome values* for the $K$ nearest neighbors to $x_i$. This approach relies on the idea that observations with similar feature values tend to have similar outcomes, allowing $K$-NN to make predictions without assuming a specific functional form for the data.
 
 ```{r, echo=FALSE}
 library(devtools)
