@@ -69,7 +69,7 @@ Suppose that we are interested in modeling the type of contentious politics,$\{0
 \center
 
 | $S$                 | $P(S=s\|C=boom)$ |         $S$         | $P(S=s\|C=bust)$ |
-|---------------------|:----------------:|:-------------------:|:----------------:|
+|------------------|:----------------:|:----------------:|:----------------:|
 | Peace               |      $.80$       |        Peace        |      $.50$       |
 | Nonviolent Protests |      $.15$       | Nonviolent Protests |      $.25$       |
 | Violent Protests    |      $.03$       |  Violent Protests   |      $.20$       |
@@ -118,7 +118,23 @@ P(Y=y)=\sum_x Pr(X=x,Y=y)
 
 Here is the two-way probability table of above example.
 
-![Two-Way probability table](https://www.dropbox.com/s/qrdpoen40jnzbmw/Two_way_1.jpg?dl=1){width="500px"}
+```{r, echo=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+
+data <- data.frame(
+  Category = c("Bust", "Boom", "Total"),
+  Peace = c(0.4, 0.16, 0.56),
+  Non_violent = c(0.2, 0.03, 0.23),
+  Violent = c(0.16, 0.006, 0.166),
+  Civil_War = c(0.04, 0.004, 0.044),
+  Total = c(0.8, 0.2, 1.0)
+)
+
+# Display the table
+kable(data, caption = "Probability Distribution of Economic and Conflict Scenarios") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
 
 -   What is the *probability of civil war outcome*?
 -   What is the *probability of civil war outcome knowing that the economy* is busting?
@@ -136,7 +152,25 @@ P(S=Civil~War) = \sum_{e \in E} P(S=Civil~War,E=e) \\
 
 To find $P(S=Civil~War|E=Bust)$, we can use $P(Y=y,X=x)=P(X=x)P(Y=y|X=x)$:
 
-![Two-Way probability table](https://www.dropbox.com/s/8b7dpy2mvopfrhj/Two_way_2.jpg?dl=1){width="500px"}
+```{r, echo=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+
+data <- data.frame(
+  Category = c("Bust", "Boom", "Total"),
+  Peace = c(0.4, 0.16, 0.56),
+  Non_violent = c(0.2, 0.03, 0.23),
+  Violent = c(0.16, 0.006, 0.166),
+  Civil_War = c("\textcolor{red}{0.04}", 0.004, 0.044),
+  Total = c(0.8, 0.2, 1.0)
+)
+
+# Display the table with formatting
+kable(data, caption = "Probability Distribution of Economic and Conflict Scenarios", escape = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  row_spec(1, background = "#D3D3D3")
+
+```
 
 \begin{align}
 P(S=Civil~War|E=Bust) = \frac{P(S=Civil~War,E=Bust)}{p(E=Bust)}\\
@@ -246,11 +280,11 @@ What is the interpretation of the above formula?
 
 ## An example: Spam or Ham?
 
-Content and sentiment analysis are a process of understanding the communicated messages in a text using computational methods. Every word in a piece of text can add information about the expressed opinion in it.
+Content and sentiment analysis involve understanding the communicated messages in a text using computational methods. Indeed, the plan is to use a statistical model to train an algorithm to read, process, and analyze the text. Every word in a piece of text can add information about its intended message, tone, and sentiment.
 
-Here, we do a simple analysis of short message texts to categorize them to *Spam* and *Ham*. In this example, we use the *Bag of Words* which does not consider the order of words, which contain information as well. However, surprisingly, it still a powerful too, as you see below.
+Here, we do a simple analysis of short message texts to categorize them to *Spam* and *Ham*. In this example, we use the *Bag of Words* method which does not consider the order of words, which contain information as well. However, surprisingly, this *naive* method is still a powerful too, as you see below.
 
-In the *Bag of Words* method, these below texts are considered identical:
+In the *Bag of Words*, also known as *BoW*, method, these below texts are considered identical:
 
 -   Sentence 1: There will be a presentation on Machine Learning in the school of management
 
@@ -404,11 +438,11 @@ dim(smsTrain)
 
 is.matrix(smsTrain)
 
-smsTrain[10:10,1:10]
+smsTrain[10:12,1:10]
 
 ```
 
-# Naive Bayes and Missclassification
+## Naive Bayes and Missclassification
 
 Now, we are finally ready to do Naive Bayes classification using ${\tt e1071}$ $\mathcal{R}$ package.
 
@@ -424,4 +458,157 @@ missClass=1-(sum(ctab)-sum(diag(ctab)))/sum(ctab)
 perSpam=ctab[2,2]/sum(ctab[,2])
 
 cat("Missclassification and Spam classification rate",round(missClass,2),"% and ",round(perSpam,2),"%, respectively \n")
+```
+
+## **The caret Package: A Streamlined Approach to Training Algorithms**
+
+The **caret** (*Classification and Regression Training*) package is one of the most widely used R packages for training machine learning algorithms. It simplifies the process by providing a unified framework for exploring, training, and validating predictive models across a wide range of algorithms.
+
+In the previous section, our trained algorithm was **not cross-validated**, meaning its parameters were not optimized for the highest out-of-sample prediction power. By using **caret**, we can systematically tune our model to improve its generalization performance.
+
+### **Instructions**
+
+1. Carefully review the complete code below to get an overall understanding of its workflow.
+2. Run the code **line by line** in R.
+3. For the **in-class assignment**, submit an **annotated R script** where you explain what each line of code does.
+   - Use **inline comments** (preceded by `#`) to provide explanations. 
+   - Example:
+
+```{r}
+print('Hello, students!')  # This line prints a text message to the console.
+```
+
+Now, here is the code for training a **cross-validated Naïve Bayes algorithm** using the same Ham/Spam data set.
+
+
+```{r, echo=FALSE, results=FALSE}
+
+## Load required libraries
+library(tm)
+library(SnowballC)
+library(e1071)
+library(caret)
+library(pander) # to get nice looking tables
+
+# a function for % freq tables
+frqtab <- function(x, caption) {
+  round(100*prop.table(table(x)), 1)
+}
+
+## Load dataset
+smsData <- read.csv("https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/DataSets/sms_spam.csv", 
+                    stringsAsFactors = FALSE, encoding="UTF-8")
+dim(smsData)
+smsData <- smsData[1:999, ]
+
+## Convert label column to factor
+smsData$type <- factor(smsData$type)
+
+## Text Preprocessing
+smsCorpus <- VCorpus(VectorSource(smsData$text))
+
+smsCl <- tm_map(smsCorpus, content_transformer(tolower)) # Convert to lowercase
+smsCl <- tm_map(smsCl, removeNumbers)  # Remove numbers
+smsCl <- tm_map(smsCl, removeWords, stopwords()) # Remove stopwords
+smsCl <- tm_map(smsCl, removePunctuation) # Remove punctuation
+smsCl <- tm_map(smsCl, stemDocument) # Stemming
+smsCl <- tm_map(smsCl, stripWhitespace) # Remove extra whitespace
+smsCl <- tm_map(smsCl, content_transformer(function(x) iconv(x, from = "UTF-8", to = "ASCII", sub="")))
+
+
+## Create Document-Term Matrix (DTM)
+smsDTM <- DocumentTermMatrix(smsCl)
+
+## Split data into Training (80%) and Testing (20%)
+set.seed(7)  # For reproducibility
+train_index <- createDataPartition(smsData$type, p=0.8, list=FALSE)
+
+smsData_train <- smsData[train_index,]
+smsData_test <- smsData[-train_index,]
+smsCl_train <- smsCl[train_index]
+smsCl_test <- smsCl[-train_index]
+smsDTM_train <- smsDTM[train_index,]
+smsDTM_test <- smsDTM[-train_index,]
+
+ft_orig <- frqtab(smsData$type)
+ft_train <- frqtab(smsData_train$type)
+ft_test <- frqtab(smsData_test$type)
+ft_df <- as.data.frame(cbind(ft_orig, ft_train, ft_test))
+colnames(ft_df) <- c("Original", "Training set", "Test set")
+pander(ft_df, style="rmarkdown",
+       caption=paste0("Comparison of SMS type frequencies among datasets"))
+
+
+# now let's do the final cleanings
+
+sms_dict <- findFreqTerms(smsDTM_train, lowfreq=10)
+sms_train <- DocumentTermMatrix(smsCl_train, list(dictionary=sms_dict))
+sms_test <- DocumentTermMatrix(smsCl_test, list(dictionary=sms_dict))
+
+# modified sligtly fron the code in the book
+convert_counts <- function(x) {
+  x <- ifelse(x > 0, 1, 0)
+  x <- factor(x, levels = c(0, 1), labels = c("No", "Yes"))
+}
+
+
+sms_train=apply(sms_train, MARGIN = 2, convert_counts)
+sms_test=apply(sms_test,MARGIN = 2, convert_counts)
+
+
+## Train Naïve Bayes Model with Cross-Validation (5-fold)
+train_control <- trainControl(method = "repeatedcv",
+                              number = 5,
+                              repeats = 1,
+                              verboseIter = TRUE  # Show training progress
+                              )
+set.seed(7)
+smsNB_1 <- train(sms_train, smsData_train$type, method="nb",
+                    trControl=train_control)
+
+print(smsNB_1)
+
+yhat <- predict(smsNB_1, sms_test)
+
+## Confusion Matrix
+ctab <- table(yhat, smsData_test$type)
+print(ctab)
+
+## Calculate Misclassification Rate & Spam Detection Rate
+missClass <- 1 - sum(diag(ctab)) / sum(ctab)
+perSpam <- ctab["spam", "spam"] / sum(ctab[, "spam"])
+
+cat("Missclassification rate:", round(missClass, 2) * 100, "%\n")
+cat("Spam classification rate:", round(perSpam, 2) * 100, "%\n")
+
+###
+
+tune_grid <- expand.grid(
+  fL = 1,  # Different Laplace smoothing values
+  usekernel = FALSE,
+  adjust = 1
+)
+
+set.seed(7)
+smsNB_2 <- train(sms_train, smsData_train$type, method="nb", 
+                    tuneGrid=tune_grid,
+                    trControl=train_control)
+print(smsNB_2)
+
+
+yhat <- predict(smsNB_2, sms_test)
+
+## Confusion Matrix
+ctab <- table(yhat, smsData_test$type)
+print(ctab)
+
+## Calculate Misclassification Rate & Spam Detection Rate
+missClass <- 1 - sum(diag(ctab)) / sum(ctab)
+perSpam <- ctab["spam", "spam"] / sum(ctab[, "spam"])
+
+cat("Missclassification rate:", round(missClass, 2) * 100, "%\n")
+cat("Spam classification rate:", round(perSpam, 2) * 100, "%\n")
+
+
+
 ```
