@@ -468,18 +468,17 @@ In the previous section, our trained algorithm was **not cross-validated**, mean
 
 ### **Instructions**
 
-1. Carefully review the complete code below to get an overall understanding of its workflow.
-2. Run the code **line by line** in R.
-3. For the **in-class assignment**, submit an **annotated R script** where you explain what each line of code does.
-   - Use **inline comments** (preceded by `#`) to provide explanations. 
-   - Example:
+1.  Carefully review the complete code below to get an overall understanding of its workflow.
+2.  Run the code **line by line** in R.
+3.  For the **in-class assignment**, submit an **annotated R script** where you explain what each line of code does.
+    -   Use **inline comments** (preceded by `#`) to provide explanations.
+    -   Example:
 
 ```{r}
 print('Hello, students!')  # This line prints a text message to the console.
 ```
 
 Now, here is the code for training a **cross-validated Naïve Bayes algorithm** using the same Ham/Spam data set.
-
 
 ```{r, echo=FALSE, results=FALSE}
 
