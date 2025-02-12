@@ -480,7 +480,7 @@ print('Hello, students!')  # This line prints a text message to the console.
 
 Now, here is the code for training a **cross-validated Naïve Bayes algorithm** using the same Ham/Spam data set.
 
-```{r, echo=FALSE, results=FALSE}
+```{r, echo=TRUE, results=FALSE}
 
 ## Load required libraries
 library(tm)
