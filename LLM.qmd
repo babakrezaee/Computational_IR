@@ -70,7 +70,7 @@ send_to_gpt <- function(text, api_key, model = "gpt-4o-mini") {
   # Parse API response
   parsed_response <- content(response)
 
-  # ✅ Extract message safely
+  # Extract message safely
   if (!is.null(parsed_response$choices) && length(parsed_response$choices) > 0) {
     return(parsed_response$choices[[1]]$message$content)
   } else {
@@ -280,3 +280,21 @@ head(nato_tweets)
 
 
 ```
+
+
+---
+title: "📌 In-Class Assignment: Spam Detection Using ChatGPT API"
+author: "Computational International Relations"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+### In-class assignment
+
+In the *Naive Bayes session*, you worked with the *Spam/Ham SMS dataset*, where you built a classifier to detect spam messages. Today, you will *use ChatGPT API* to classify a *subset of this dataset (30 observations)* and evaluate its effectiveness.  
+Your assignment is to:  
+
+1. *Limit the dataset to 30 observations.*
+2. *Send each SMS message to ChatGPT* and ask it to classify it as *"Spam" or "Ham"*. 
+3. *Compare ChatGPT’s classifications* with the actual dataset labels.  
+4. *Analyze ChatGPT’s accuracy* and discuss its performance.  

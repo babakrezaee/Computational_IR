@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Computational International Relations">
+<meta name="dcterms.date" content="2025-02-18">
 
-<title>4&nbsp; Large Language Model (LLM) – Computational International Relations</title>
+<title>📌 In-Class Assignment: Spam Detection Using ChatGPT API – Computational International Relations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./LLM.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Large Language Model (LLM)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./LLM.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">📌 In-Class Assignment: Spam Detection Using ChatGPT API</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./LLM.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Large Language Model (LLM)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">📌 In-Class Assignment: Spam Detection Using ChatGPT API</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -209,14 +211,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Large Language Model (LLM)</span></h1>
+<h1 class="title">📌 In-Class Assignment: Spam Detection Using ChatGPT API</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Computational International Relations </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2025-02-18</p>
+    </div>
+  </div>
   
     
   </div>
@@ -284,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Parse API response</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  parsed_response <span class="ot">&lt;-</span> <span class="fu">content</span>(response)</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ✅ Extract message safely</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract message safely</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(parsed_response<span class="sc">$</span>choices) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(parsed_response<span class="sc">$</span>choices) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(parsed_response<span class="sc">$</span>choices[[<span class="dv">1</span>]]<span class="sc">$</span>message<span class="sc">$</span>content)</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
@@ -302,7 +316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>response_text <span class="ot">&lt;-</span> <span class="fu">send_to_gpt</span>(text_input, api_key)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(response_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Leiden University, founded in 1575, is the oldest university in the Netherlands and is located in the city of Leiden. Known for its strong emphasis on research and a diverse array of academic disciplines, it consistently ranks among the top universities in Europe and globally. The university boasts a rich history and has produced many notable alumni, including several Nobel laureates. Leiden University offers a vibrant international community with a variety of programs taught in English, attracting students from around the world."</code></pre>
+<pre><code>[1] "Leiden University, founded in 1575, is the oldest university in the Netherlands and one of the oldest in Europe. Located in Leiden, it is renowned for its rich history, strong emphasis on research, and diverse range of academic programs. The university is particularly well-regarded in fields such as the humanities, social sciences, and natural sciences, and has a vibrant international community, attracting students and researchers from around the world."</code></pre>
 </div>
 </div>
 <p>As you can see, the API returns a variety of information, including metadata about the request and the model’s response.</p>
@@ -315,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>response_text <span class="ot">&lt;-</span> <span class="fu">send_to_gpt</span>(text_input, api_key)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(response_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Sentiment: positive ; Tone: optimistic"</code></pre>
+<pre><code>[1] "Sentiment: Positive ; Tone: Optimistic"</code></pre>
 </div>
 </div>
 </section>
@@ -470,7 +484,8 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setTxtProgressBar</span>(pb, i)  <span class="co"># Update progress bar</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
+<pre><code>[1] "Error: No valid response from API."
+
   |                                                                            
   |===                                                                   |   5%
   |                                                                            
@@ -478,41 +493,55 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
   |                                                                            
   |==========                                                            |  14%
   |                                                                            
-  |=============                                                         |  18%
+  |=============                                                         |  18%[1] "Error: No valid response from API."
+
   |                                                                            
   |================                                                      |  23%
   |                                                                            
-  |===================                                                   |  27%
+  |===================                                                   |  27%[1] "Error: No valid response from API."
+
   |                                                                            
-  |======================                                                |  32%
+  |======================                                                |  32%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=========================                                             |  36%
+  |=========================                                             |  36%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=============================                                         |  41%
+  |=============================                                         |  41%[1] "Error: No valid response from API."
+
   |                                                                            
   |================================                                      |  45%
   |                                                                            
-  |===================================                                   |  50%
+  |===================================                                   |  50%[1] "Error: No valid response from API."
+
   |                                                                            
   |======================================                                |  55%
   |                                                                            
-  |=========================================                             |  59%
+  |=========================================                             |  59%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=============================================                         |  64%
+  |=============================================                         |  64%[1] "Error: No valid response from API."
+
   |                                                                            
-  |================================================                      |  68%
+  |================================================                      |  68%[1] "Error: No valid response from API."
+
   |                                                                            
   |===================================================                   |  73%
   |                                                                            
-  |======================================================                |  77%
+  |======================================================                |  77%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=========================================================             |  82%
+  |=========================================================             |  82%[1] "Error: No valid response from API."
+
   |                                                                            
-  |============================================================          |  86%
+  |============================================================          |  86%[1] "Error: No valid response from API."
+
   |                                                                            
-  |================================================================      |  91%
+  |================================================================      |  91%[1] "Error: No valid response from API."
+
   |                                                                            
-  |===================================================================   |  95%
+  |===================================================================   |  95%[1] "Error: No valid response from API."
+
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -556,14 +585,26 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 5                                                        Today, \n@SecGenNATO\n Mark Rutte welcomed \n@SPE_Kellogg\n, United States Special Envoy for Ukraine and Russia, to the North Atlantic Council for a discussion with Allies on ending the war against Ukraine\n\nTap for more info on the meeting ↓
 6                                         So good to host \n@SPE_Kellogg\n in Brussels. Today he consulted with Allies at NATO on working together to ensure just and lasting peace in Ukraine. We have a lot to do and will cooperate closely to pursue an end to the war and enduring security for us all.
   sentiment       tone
-1   neutral     formal
+1      &lt;NA&gt;       &lt;NA&gt;
 2  Positive Diplomatic
-3  Positive     Formal
-4  Positive     Formal
-5   Neutral     Formal
+3  positive     formal
+4  positive     formal
+5      &lt;NA&gt;       &lt;NA&gt;
 6  Positive Diplomatic</code></pre>
 </div>
 </div>
+</section>
+<section id="in-class-assignment" class="level3" data-number="4.3.6">
+<h3 data-number="4.3.6" class="anchored" data-anchor-id="in-class-assignment"><span class="header-section-number">4.3.6</span> In-class assignment</h3>
+<p>In the <em>Naive Bayes session</em>, you worked with the <em>Spam/Ham SMS dataset</em>, where you built a classifier to detect spam messages. Today, you will <em>use ChatGPT API</em> to classify a <em>subset of this dataset (30 observations)</em> and evaluate its effectiveness.<br>
+Your assignment is to:</p>
+<ol type="1">
+<li><em>Limit the dataset to 30 observations.</em></li>
+<li><em>Send each SMS message to ChatGPT</em> and ask it to classify it as <em>“Spam” or “Ham”</em>.</li>
+<li><em>Compare ChatGPT’s classifications</em> with the actual dataset labels.<br>
+</li>
+<li><em>Analyze ChatGPT’s accuracy</em> and discuss its performance.</li>
+</ol>
 
 
 </section>
