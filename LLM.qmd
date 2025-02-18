@@ -1,0 +1,280 @@
+---
+title: "Large Language Model (LLM)"
+format: html
+---
+
+```{r setup, include=FALSE}
+library(latex2exp)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+#suppressPackageStartupMessages(library(KKNN))
+#suppressPackageStartupMessages(library(MASS))
+
+```
+
+The emergence of Large Language Models (LLMs), such as ChatGPT, has transformed the way researchers engage with text-based data. While these models were initially designed for conversational AI, their applications in social science research extend far beyond that. When used effectively, LLMs can serve as a research assistant for tasks like data preprocessing, content classification, and even hypothesis generation.
+
+## Applications in Social Science Research
+
+-   Text Analysis and Content Classification
+
+    -   LLMs can assist in automated text coding, reducing the time needed for manual classification of large-scale datasets.
+    -   Example: Instead of manually labeling social media data, an LLM can be fine-tuned or prompted to identify incivility or political polarization in tweets.
+
+-   Expanding Computational Approaches
+
+    -   Traditional text analysis methods, such as *Naïve Bayes* or *LDA*, rely on structured word counts and frequency distributions.
+    -   LLMs, in contrast, can provide context-aware embeddings, improving sentiment analysis and discourse analysis in complex, nuanced datasets.
+
+-   Studying Digital Political Behavior
+
+    -   LLMs are particularly useful for analyzing how political actors engage online—whether through social movements, state repression, or digital incivility.
+    -   Example: A model can be used to detect gendered harassment or anti-government discourse in protest-related conversations, helping map how activists and political elites interact online.
+
+-   Enhancing Research Replicability
+
+    -   By integrating LLMs into computational workflows, researchers can ensure that their data coding and text classification processes remain consistent and replicable.
+    -   Example: Instead of subjective manual annotation, LLMs can be used to create structured, reproducible content analysis pipelines.
+
+-   Ethical Considerations and Limitations
+
+    -   While LLMs offer efficiency, researchers must be critical of biases embedded in these models, especially when analyzing political discourse, misinformation, or contentious movements.
+    -   Transparency in LLM-assisted research is crucial—documenting AI's role in research workflows is now an essential part of academic integrity.
+    
+    
+Rather than replacing established computational social science methods, LLMs serve as a complementary tool that can enhance efficiency, scalability, and analytical depth. Their power lies in assisting with complex text-based tasks, but researchers must remain critical users, ensuring methodological rigor and ethical responsibility in their application.
+
+Below, you see how LLM can be used for processing the data using Chat gpt API, but you can use the similar structure with some modfications for using other LLM models.
+
+## An example of text analysis using LLM
+
+
+We need to send our request(s) to chat gpt and receive a response. Let's first send a simple request via and then we see how it can be applied for analyzing text.
+
+```{r}
+library(httr)
+library(stringr)
+
+send_to_gpt <- function(text, api_key, model = "gpt-4o-mini") {
+ 
+   url <- "https://api.openai.com/v1/chat/completions"
+
+  # Send API request
+  response <- POST(
+    url = url,
+    add_headers(Authorization = paste("Bearer", api_key)),
+    content_type_json(),
+    encode = "json",
+    body = list(
+      model = model,  # Use "gpt-4o-mini" (or change to "gpt-4o")
+      messages = list(list(role = "user", content = text))
+    )
+  )
+}
+
+```
+Now that we wrote the function for sending and reciving message from chat gpt API, now we can communicate with it
+
+```{r}
+
+##Set your api_key (you just need to do it once per session)
+
+api_key <- "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"
+
+text_input <- "In a few short sentences tell us about Leiden Univeristy."
+response_text <- send_to_gpt(text_input, api_key)
+print(response_text)
+
+```
+
+As you can see, the API returns a variety of information, including metadata about the request and the model's response.
+
+Now, let’s use the API for text analysis. We will ask ChatGPT to analyze the latest tweet by NATO’s Secretary General, Mark Rutte. Specifically, we want to extract:
+
+Sentiment (positive, neutral, or negative)
+Tone (e.g., formal, urgent, diplomatic, critical)
+To keep the output focused, we will limit the printed response to only the relevant content—the model’s analysis of the tweet.
+
+Can you see how this is done? Let’s try it! 
+
+```{r}
+
+text_input <- "Read the below tweet by a politician. Please analyze the tweet and return the sentiment (positive, negative, or neutral), and tone of the message. Make sure that the output Format is: \n 'Sentiment: [sentiment] ; Tone: [tone]'. Here is the tweet: Ready and willing. That’s my take from today’s meeting in Paris. Europe is ready and willing to step up. To lead in providing security guarantees for Ukraine. Ready and willing to invest a lot more in our security. The details will need  to be decided but the commitment is clear. "
+
+response_text <- send_to_gpt(text_input, api_key)
+print(response_text$choices[[1]]$message$content)
+
+```
+
+
+## Analyzing the Sentiment of Posts by NATO Twitter Account
+
+In this section, we will apply *ChatGPT's API* to analyze the *sentiment and tone* of NATO’s latest tweets. The objective is to *process multiple observations* from a dataset, classify their sentiment and tone, and *store the results* in a CSV file for further analysis.
+
+We will proceed with the following steps:
+
+1. *Define an API function* to communicate with ChatGPT.
+2. *Load the dataset of NATO tweets*.
+3. *Create a function* to extract sentiment and tone from each tweet.
+4. *Iterate through the dataset*, apply the function, and store results.
+5. *Save the enriched dataset* with sentiment and tone classifications.
+
+---
+
+### Step 1: Defining a Function to Connect to ChatGPT API
+
+First, we need to define a function to send a *text prompt* to ChatGPT and retrieve a response.  
+This function will act as an interface between our dataset and the *OpenAI API*.
+
+```{r}
+library(httr)
+library(stringr)
+library(readr)
+library(progress) 
+
+send_to_gpt <- function(text, api_key, model = "gpt-4o-mini") {
+  
+  url <- "https://api.openai.com/v1/chat/completions"
+  
+  # Send API request
+  response <- POST(
+    url = url,
+    add_headers(Authorization = paste("Bearer", api_key)),
+    content_type_json(),
+    encode = "json",
+    body = list(
+      model = model,  # Use "gpt-4o-mini" (or change to "gpt-4o")
+      messages = list(list(role = "user", content = text))
+    )
+  )
+  
+  # Parse API response
+  parsed_response <- content(response, as = "parsed")
+  
+  # Extract message safely
+  if (!is.null(parsed_response$choices) && length(parsed_response$choices) > 0) {
+    return(parsed_response$choices[[1]]$message$content)
+  } else {
+    print("Error: No valid response from API.")
+    return(NULL)
+  }
+}
+
+```
+
+### Step 2: Load the NATO Tweets Dataset
+
+Next, we will import a dataset of NATO’s tweets from a CSV file.
+This dataset contains recent tweets from NATO’s official Twitter/X account.
+
+```{r}
+
+# Load CSV file containing NATO tweets
+nato_tweets <- read_csv("https://raw.githubusercontent.com/babakrezaee/MethodsCourses/refs/heads/master/DataSets/nato_tweets.csv")
+
+# Check structure of dataset
+head(nato_tweets)
+
+# Display column names
+colnames(nato_tweets)
+
+# Count number of tweets
+nrow(nato_tweets)
+
+```
+
+### Step 3: Writing a Function for Tweet Analysis
+
+Now, we define a function that:
+
+1. Sends each tweet to ChatGPT.
+2. Extracts the sentiment and tone from the response.
+
+```{r}
+
+# Define API Key (Ensure you use your API key, as this one will be disabled soon!)
+api_key <- "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"
+
+# Function to get sentiment & tone from GPT
+analyze_tweet <- function(tweet) {
+  prompt <- paste(
+    "Analyze the following tweet's sentiment and tone.",
+    "Classify the sentiment as positive, neutral, or negative.",
+    "Classify the tone as formal, urgent, diplomatic, critical, or neutral.",
+    "Provide the response in the following format:",
+    "'Sentiment: [sentiment]; Tone: [tone]'",
+    "\n\nTweet:", tweet
+  )
+  
+  response <- send_to_gpt(prompt, api_key)
+  
+  if (!is.null(response)) {
+    # Extract sentiment and tone using regex
+    sentiment_match <- str_extract(response, "Sentiment:\\s*(\\w+)")
+    tone_match <- str_extract(response, "Tone:\\s*(\\w+)")
+    
+    sentiment <- ifelse(!is.na(sentiment_match), gsub("Sentiment:\\s*", "", sentiment_match), NA)
+    tone <- ifelse(!is.na(tone_match), gsub("Tone:\\s*", "", tone_match), NA)
+    
+    return(c(sentiment, tone))
+  } else {
+    return(c(NA, NA))
+  }
+}
+
+```
+
+
+### Step 4: Analyzing the Dataset & Storing Results
+
+Now, we iterate over the dataset and:
+
+1. Send each tweet to ChatGPT for analysis.
+2. Store the extracted sentiment and tone in a new dataframe.
+3. Use a progress bar to monitor the API request process.
+
+
+```{r}
+# Define an empty matrix to store results
+results <- matrix(NA, nrow = nrow(nato_tweets), ncol = 2)
+
+# Set column names
+colnames(results) <- c("sentiment", "tone")
+
+# Initialize progress bar
+pb <- txtProgressBar(min = 0, max = nrow(nato_tweets), style = 3)
+
+# Loop through each tweet
+for (i in 1:nrow(nato_tweets)) {
+  results[i, ] <- analyze_tweet(nato_tweets$tweet_text[i])  # Analyze tweet and store result
+  
+  setTxtProgressBar(pb, i)  # Update progress bar
+}
+
+close(pb)  # Close progress bar
+
+```
+
+### Step 5: Saving the Final Results
+Once the analysis is complete, we:
+
+* Convert results into a dataframe.
+* Merge them with the original dataset.
+* Save everything as a new CSV file.
+
+```{r}
+
+# Convert results to a dataframe
+results_df <- as.data.frame(results, stringsAsFactors = FALSE)
+colnames(results_df) <- c("sentiment", "tone")
+
+# Merge results with original dataset
+nato_tweets <- cbind(nato_tweets, results_df)
+
+# Save to CSV
+write_csv(nato_tweets, "nato_tweets_with_sentiment.csv")
+
+# View results
+head(nato_tweets)
+
+
+```

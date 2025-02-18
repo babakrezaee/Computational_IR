@@ -11,6 +11,7 @@ book:
     - intro.qmd
     - knn.qmd
     - NaiveBayes.qmd
+    - LLM.qmd
     - TreeModels.qmd
     - HW1.qmd
     - references.qmd
