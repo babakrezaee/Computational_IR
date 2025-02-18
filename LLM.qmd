@@ -187,7 +187,6 @@ Now, we define a function that:
 ```{r}
 
 # Define API Key (Ensure you use your API key, as this one will be disabled soon!)
-api_key <- "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"
 
 # Function to get sentiment & tone from GPT
 analyze_tweet <- function(tweet) {
