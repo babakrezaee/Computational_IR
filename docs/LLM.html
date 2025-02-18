@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Large Language Model (LLM)</title>
+<title>4&nbsp; Large Language Model (LLM) – Computational International Relations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,29 +57,159 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="LLM_files/libs/clipboard/clipboard.min.js"></script>
-<script src="LLM_files/libs/quarto-html/quarto.js"></script>
-<script src="LLM_files/libs/quarto-html/popper.min.js"></script>
-<script src="LLM_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="LLM_files/libs/quarto-html/anchor.min.js"></script>
-<link href="LLM_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="LLM_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="LLM_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="LLM_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="LLM_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./TreeModels.html" rel="next">
+<link href="./NaiveBayes.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar floating">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./LLM.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Large Language Model (LLM)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computational International Relations</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./knn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">K-Nearest Neighbors (KNN)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./NaiveBayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Naive Bayes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./LLM.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Large Language Model (LLM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TreeModels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./HW1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Homework 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#applications-in-social-science-research" id="toc-applications-in-social-science-research" class="nav-link active" data-scroll-target="#applications-in-social-science-research"><span class="header-section-number">4.1</span> Applications in Social Science Research</a></li>
+  <li><a href="#an-example-of-text-analysis-using-llm" id="toc-an-example-of-text-analysis-using-llm" class="nav-link" data-scroll-target="#an-example-of-text-analysis-using-llm"><span class="header-section-number">4.2</span> An example of text analysis using LLM</a></li>
+  <li><a href="#analyzing-the-sentiment-of-posts-by-nato-twitter-account" id="toc-analyzing-the-sentiment-of-posts-by-nato-twitter-account" class="nav-link" data-scroll-target="#analyzing-the-sentiment-of-posts-by-nato-twitter-account"><span class="header-section-number">4.3</span> Analyzing the Sentiment of Posts by NATO Twitter Account</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Large Language Model (LLM)</h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Large Language Model (LLM)</span></h1>
 </div>
 
 
@@ -97,8 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>The emergence of Large Language Models (LLMs), such as ChatGPT, has transformed the way researchers engage with text-based data. While these models were initially designed for conversational AI, their applications in social science research extend far beyond that. When used effectively, LLMs can serve as a research assistant for tasks like data preprocessing, content classification, and even hypothesis generation.</p>
-<section id="applications-in-social-science-research" class="level2">
-<h2 class="anchored" data-anchor-id="applications-in-social-science-research">Applications in Social Science Research</h2>
+<section id="applications-in-social-science-research" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="applications-in-social-science-research"><span class="header-section-number">4.1</span> Applications in Social Science Research</h2>
 <ul>
 <li><p>Text Analysis and Content Classification</p>
 <ul>
@@ -129,8 +259,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Rather than replacing established computational social science methods, LLMs serve as a complementary tool that can enhance efficiency, scalability, and analytical depth. Their power lies in assisting with complex text-based tasks, but researchers must remain critical users, ensuring methodological rigor and ethical responsibility in their application.</p>
 <p>Below, you see how LLM can be used for processing the data using Chat gpt API, but you can use the similar structure with some modfications for using other LLM models.</p>
 </section>
-<section id="an-example-of-text-analysis-using-llm" class="level2">
-<h2 class="anchored" data-anchor-id="an-example-of-text-analysis-using-llm">An example of text analysis using LLM</h2>
+<section id="an-example-of-text-analysis-using-llm" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="an-example-of-text-analysis-using-llm"><span class="header-section-number">4.2</span> An example of text analysis using LLM</h2>
 <p>We need to send our request(s) to chat gpt and receive a response. Let’s first send a simple request via and then we see how it can be applied for analyzing text.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr)</span>
@@ -164,14 +294,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(response_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Response [https://api.openai.com/v1/chat/completions]
-  Date: 2025-02-18 21:53
+  Date: 2025-02-18 22:01
   Status: 200
   Content-Type: application/json
-  Size: 1.3 kB
+  Size: 1.35 kB
 {
-  "id": "chatcmpl-B2Poxq83aunnEzEw3wtEHBRIumUhm",
+  "id": "chatcmpl-B2PwCL94nJzVMEndkSpLaLsL6aYLr",
   "object": "chat.completion",
-  "created": 1739915611,
+  "created": 1739916060,
   "model": "gpt-4o-mini-2024-07-18",
   "choices": [
     {
@@ -195,8 +325,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="analyzing-the-sentiment-of-posts-by-nato-twitter-account" class="level2">
-<h2 class="anchored" data-anchor-id="analyzing-the-sentiment-of-posts-by-nato-twitter-account">Analyzing the Sentiment of Posts by NATO Twitter Account</h2>
+<section id="analyzing-the-sentiment-of-posts-by-nato-twitter-account" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="analyzing-the-sentiment-of-posts-by-nato-twitter-account"><span class="header-section-number">4.3</span> Analyzing the Sentiment of Posts by NATO Twitter Account</h2>
 <p>In this section, we will apply <em>ChatGPT’s API</em> to analyze the <em>sentiment and tone</em> of NATO’s latest tweets. The objective is to <em>process multiple observations</em> from a dataset, classify their sentiment and tone, and <em>store the results</em> in a CSV file for further analysis.</p>
 <p>We will proceed with the following steps:</p>
 <ol type="1">
@@ -207,8 +337,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><em>Save the enriched dataset</em> with sentiment and tone classifications.</li>
 </ol>
 <hr>
-<section id="step-1-defining-a-function-to-connect-to-chatgpt-api" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-defining-a-function-to-connect-to-chatgpt-api">Step 1: Defining a Function to Connect to ChatGPT API</h3>
+<section id="step-1-defining-a-function-to-connect-to-chatgpt-api" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="step-1-defining-a-function-to-connect-to-chatgpt-api"><span class="header-section-number">4.3.1</span> Step 1: Defining a Function to Connect to ChatGPT API</h3>
 <p>First, we need to define a function to send a <em>text prompt</em> to ChatGPT and retrieve a response.<br>
 This function will act as an interface between our dataset and the <em>OpenAI API</em>.</p>
 <div class="cell">
@@ -246,8 +376,8 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-2-load-the-nato-tweets-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-load-the-nato-tweets-dataset">Step 2: Load the NATO Tweets Dataset</h3>
+<section id="step-2-load-the-nato-tweets-dataset" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="step-2-load-the-nato-tweets-dataset"><span class="header-section-number">4.3.2</span> Step 2: Load the NATO Tweets Dataset</h3>
 <p>Next, we will import a dataset of NATO’s tweets from a CSV file. This dataset contains recent tweets from NATO’s official Twitter/X account.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load CSV file containing NATO tweets</span></span>
@@ -278,8 +408,8 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 </div>
 </div>
 </section>
-<section id="step-3-writing-a-function-for-tweet-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="step-3-writing-a-function-for-tweet-analysis">Step 3: Writing a Function for Tweet Analysis</h3>
+<section id="step-3-writing-a-function-for-tweet-analysis" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="step-3-writing-a-function-for-tweet-analysis"><span class="header-section-number">4.3.3</span> Step 3: Writing a Function for Tweet Analysis</h3>
 <p>Now, we define a function that:</p>
 <ol type="1">
 <li>Sends each tweet to ChatGPT.</li>
@@ -317,8 +447,8 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-4-analyzing-the-dataset-storing-results" class="level3">
-<h3 class="anchored" data-anchor-id="step-4-analyzing-the-dataset-storing-results">Step 4: Analyzing the Dataset &amp; Storing Results</h3>
+<section id="step-4-analyzing-the-dataset-storing-results" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="step-4-analyzing-the-dataset-storing-results"><span class="header-section-number">4.3.4</span> Step 4: Analyzing the Dataset &amp; Storing Results</h3>
 <p>Now, we iterate over the dataset and:</p>
 <ol type="1">
 <li>Send each tweet to ChatGPT for analysis.</li>
@@ -395,8 +525,8 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">close</span>(pb)  <span class="co"># Close progress bar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-5-saving-the-final-results" class="level3">
-<h3 class="anchored" data-anchor-id="step-5-saving-the-final-results">Step 5: Saving the Final Results</h3>
+<section id="step-5-saving-the-final-results" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="step-5-saving-the-final-results"><span class="header-section-number">4.3.5</span> Step 5: Saving the Final Results</h3>
 <p>Once the analysis is complete, we:</p>
 <ul>
 <li>Convert results into a dataframe.</li>
@@ -436,15 +566,16 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 2  Positive Diplomatic
 3  Positive     Formal
 4  positive     formal
-5   Neutral     Formal
+5   neutral     formal
 6  Positive Diplomatic</code></pre>
 </div>
 </div>
+
+
 </section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -865,6 +996,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./NaiveBayes.html" class="pagination-link" aria-label="Naive Bayes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Naive Bayes</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./TreeModels.html" class="pagination-link" aria-label="Tree Models: Random Forest">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
