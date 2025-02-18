@@ -294,14 +294,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(response_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Response [https://api.openai.com/v1/chat/completions]
-  Date: 2025-02-18 22:05
+  Date: 2025-02-18 22:08
   Status: 200
   Content-Type: application/json
-  Size: 1.3 kB
+  Size: 1.39 kB
 {
-  "id": "chatcmpl-B2Q0ZkXl5kX2v2i1cKlNKp7JciIXv",
+  "id": "chatcmpl-B2Q3577xaccCK5lHsC9XhfN5iAvkO",
   "object": "chat.completion",
-  "created": 1739916331,
+  "created": 1739916487,
   "model": "gpt-4o-mini-2024-07-18",
   "choices": [
     {
@@ -417,33 +417,34 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define API Key (Ensure you use your API key, as this one will be disabled soon!)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to get sentiment &amp; tone from GPT</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>analyze_tweet <span class="ot">&lt;-</span> <span class="cf">function</span>(tweet) {</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  prompt <span class="ot">&lt;-</span> <span class="fu">paste</span>(</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Analyze the following tweet's sentiment and tone."</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Classify the sentiment as positive, neutral, or negative."</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Classify the tone as formal, urgent, diplomatic, critical, or neutral."</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Provide the response in the following format:"</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"'Sentiment: [sentiment]; Tone: [tone]'"</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="sc">\n\n</span><span class="st">Tweet:"</span>, tweet</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">send_to_gpt</span>(prompt, api_key)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(response)) {</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract sentiment and tone using regex</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    sentiment_match <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(response, <span class="st">"Sentiment:</span><span class="sc">\\</span><span class="st">s*(</span><span class="sc">\\</span><span class="st">w+)"</span>)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    tone_match <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(response, <span class="st">"Tone:</span><span class="sc">\\</span><span class="st">s*(</span><span class="sc">\\</span><span class="st">w+)"</span>)</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    sentiment <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(sentiment_match), <span class="fu">gsub</span>(<span class="st">"Sentiment:</span><span class="sc">\\</span><span class="st">s*"</span>, <span class="st">""</span>, sentiment_match), <span class="cn">NA</span>)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    tone <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(tone_match), <span class="fu">gsub</span>(<span class="st">"Tone:</span><span class="sc">\\</span><span class="st">s*"</span>, <span class="st">""</span>, tone_match), <span class="cn">NA</span>)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(sentiment, tone))</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>))</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>api_key <span class="ot">&lt;-</span> <span class="st">"your API"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to get sentiment &amp; tone from GPT</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>analyze_tweet <span class="ot">&lt;-</span> <span class="cf">function</span>(tweet) {</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  prompt <span class="ot">&lt;-</span> <span class="fu">paste</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Analyze the following tweet's sentiment and tone."</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Classify the sentiment as positive, neutral, or negative."</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Classify the tone as formal, urgent, diplomatic, critical, or neutral."</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Provide the response in the following format:"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"'Sentiment: [sentiment]; Tone: [tone]'"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="sc">\n\n</span><span class="st">Tweet:"</span>, tweet</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">send_to_gpt</span>(prompt, api_key)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(response)) {</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract sentiment and tone using regex</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    sentiment_match <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(response, <span class="st">"Sentiment:</span><span class="sc">\\</span><span class="st">s*(</span><span class="sc">\\</span><span class="st">w+)"</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    tone_match <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(response, <span class="st">"Tone:</span><span class="sc">\\</span><span class="st">s*(</span><span class="sc">\\</span><span class="st">w+)"</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    sentiment <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(sentiment_match), <span class="fu">gsub</span>(<span class="st">"Sentiment:</span><span class="sc">\\</span><span class="st">s*"</span>, <span class="st">""</span>, sentiment_match), <span class="cn">NA</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    tone <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(tone_match), <span class="fu">gsub</span>(<span class="st">"Tone:</span><span class="sc">\\</span><span class="st">s*"</span>, <span class="st">""</span>, tone_match), <span class="cn">NA</span>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(sentiment, tone))</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>))</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step-4-analyzing-the-dataset-storing-results" class="level3" data-number="4.3.4">
@@ -475,49 +476,71 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setTxtProgressBar</span>(pb, i)  <span class="co"># Update progress bar</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
+<pre><code>[1] "Error: No valid response from API."
+
   |                                                                            
-  |===                                                                   |   5%
+  |===                                                                   |   5%[1] "Error: No valid response from API."
+
   |                                                                            
-  |======                                                                |   9%
+  |======                                                                |   9%[1] "Error: No valid response from API."
+
   |                                                                            
-  |==========                                                            |  14%
+  |==========                                                            |  14%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=============                                                         |  18%
+  |=============                                                         |  18%[1] "Error: No valid response from API."
+
   |                                                                            
-  |================                                                      |  23%
+  |================                                                      |  23%[1] "Error: No valid response from API."
+
   |                                                                            
-  |===================                                                   |  27%
+  |===================                                                   |  27%[1] "Error: No valid response from API."
+
   |                                                                            
-  |======================                                                |  32%
+  |======================                                                |  32%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=========================                                             |  36%
+  |=========================                                             |  36%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=============================                                         |  41%
+  |=============================                                         |  41%[1] "Error: No valid response from API."
+
   |                                                                            
-  |================================                                      |  45%
+  |================================                                      |  45%[1] "Error: No valid response from API."
+
   |                                                                            
-  |===================================                                   |  50%
+  |===================================                                   |  50%[1] "Error: No valid response from API."
+
   |                                                                            
-  |======================================                                |  55%
+  |======================================                                |  55%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=========================================                             |  59%
+  |=========================================                             |  59%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=============================================                         |  64%
+  |=============================================                         |  64%[1] "Error: No valid response from API."
+
   |                                                                            
-  |================================================                      |  68%
+  |================================================                      |  68%[1] "Error: No valid response from API."
+
   |                                                                            
-  |===================================================                   |  73%
+  |===================================================                   |  73%[1] "Error: No valid response from API."
+
   |                                                                            
-  |======================================================                |  77%
+  |======================================================                |  77%[1] "Error: No valid response from API."
+
   |                                                                            
-  |=========================================================             |  82%
+  |=========================================================             |  82%[1] "Error: No valid response from API."
+
   |                                                                            
-  |============================================================          |  86%
+  |============================================================          |  86%[1] "Error: No valid response from API."
+
   |                                                                            
-  |================================================================      |  91%
+  |================================================================      |  91%[1] "Error: No valid response from API."
+
   |                                                                            
-  |===================================================================   |  95%
+  |===================================================================   |  95%[1] "Error: No valid response from API."
+
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -560,13 +583,13 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 4                    "@DepSecGenNATO\n travelled to 🇵🇱 Poland to participate in the opening ceremony of the NATO Joint Analysis, Training and Education Centre. \n\nSpeaking in the ceremony, the Deputy Secretary General said that the Centre’s work “will help the Alliance and Ukraine become stronger.”
 5                                                        Today, \n@SecGenNATO\n Mark Rutte welcomed \n@SPE_Kellogg\n, United States Special Envoy for Ukraine and Russia, to the North Atlantic Council for a discussion with Allies on ending the war against Ukraine\n\nTap for more info on the meeting ↓
 6                                         So good to host \n@SPE_Kellogg\n in Brussels. Today he consulted with Allies at NATO on working together to ensure just and lasting peace in Ukraine. We have a lot to do and will cooperate closely to pursue an end to the war and enduring security for us all.
-  sentiment       tone
-1   neutral     formal
-2  Positive Diplomatic
-3  Positive     Formal
-4  positive     formal
-5   Neutral     Formal
-6  Positive Diplomatic</code></pre>
+  sentiment tone
+1        NA   NA
+2        NA   NA
+3        NA   NA
+4        NA   NA
+5        NA   NA
+6        NA   NA</code></pre>
 </div>
 </div>
 

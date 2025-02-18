@@ -187,6 +187,7 @@ Now, we define a function that:
 ```{r}
 
 # Define API Key (Ensure you use your API key, as this one will be disabled soon!)
+api_key <- "your API"
 
 # Function to get sentiment & tone from GPT
 analyze_tweet <- function(tweet) {
