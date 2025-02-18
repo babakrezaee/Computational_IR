@@ -267,48 +267,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>send_to_gpt <span class="ot">&lt;-</span> <span class="cf">function</span>(text, api_key, <span class="at">model =</span> <span class="st">"gpt-4o-mini"</span>) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   url <span class="ot">&lt;-</span> <span class="st">"https://api.openai.com/v1/chat/completions"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Send API request</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">POST</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> url,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_headers</span>(<span class="at">Authorization =</span> <span class="fu">paste</span>(<span class="st">"Bearer"</span>, api_key)),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">content_type_json</span>(),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">encode =</span> <span class="st">"json"</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">body =</span> <span class="fu">list</span>(</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">model =</span> model,  <span class="co"># Use "gpt-4o-mini" (or change to "gpt-4o")</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">messages =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">role =</span> <span class="st">"user"</span>, <span class="at">content =</span> text))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">&lt;-</span> <span class="st">"https://api.openai.com/v1/chat/completions"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Send API request</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  response <span class="ot">&lt;-</span> <span class="fu">POST</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> url,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_headers</span>(<span class="at">Authorization =</span> <span class="fu">paste</span>(<span class="st">"Bearer"</span>, api_key)),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">content_type_json</span>(),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">encode =</span> <span class="st">"json"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">body =</span> <span class="fu">list</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">model =</span> model,  <span class="co"># Use "gpt-4o-mini" (or change to "gpt-4o")</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">messages =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">role =</span> <span class="st">"user"</span>, <span class="at">content =</span> text))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Parse API response</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  parsed_response <span class="ot">&lt;-</span> <span class="fu">content</span>(response)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ✅ Extract message safely</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(parsed_response<span class="sc">$</span>choices) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(parsed_response<span class="sc">$</span>choices) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(parsed_response<span class="sc">$</span>choices[[<span class="dv">1</span>]]<span class="sc">$</span>message<span class="sc">$</span>content)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"Error: No valid response from API."</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that we wrote the function for sending and reciving message from chat gpt API, now we can communicate with it</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Set your api_key (you just need to do it once per session)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>api_key <span class="ot">&lt;-</span> <span class="st">"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"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>text_input <span class="ot">&lt;-</span> <span class="st">"In a few short sentences tell us about Leiden Univeristy."</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>response_text <span class="ot">&lt;-</span> <span class="fu">send_to_gpt</span>(text_input, api_key)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(response_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>api_key <span class="ot">&lt;-</span> <span class="st">"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"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>text_input <span class="ot">&lt;-</span> <span class="st">"In a few short sentences tell me about Leiden Univeristy."</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>response_text <span class="ot">&lt;-</span> <span class="fu">send_to_gpt</span>(text_input, api_key)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(response_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Response [https://api.openai.com/v1/chat/completions]
-  Date: 2025-02-18 22:08
-  Status: 200
-  Content-Type: application/json
-  Size: 1.39 kB
-{
-  "id": "chatcmpl-B2Q3577xaccCK5lHsC9XhfN5iAvkO",
-  "object": "chat.completion",
-  "created": 1739916487,
-  "model": "gpt-4o-mini-2024-07-18",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-...</code></pre>
+<pre><code>[1] "Leiden University, founded in 1575, is the oldest university in the Netherlands and is located in the city of Leiden. Known for its strong emphasis on research and a diverse array of academic disciplines, it consistently ranks among the top universities in Europe and globally. The university boasts a rich history and has produced many notable alumni, including several Nobel laureates. Leiden University offers a vibrant international community with a variety of programs taught in English, attracting students from around the world."</code></pre>
 </div>
 </div>
 <p>As you can see, the API returns a variety of information, including metadata about the request and the model’s response.</p>
@@ -319,9 +313,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>text_input <span class="ot">&lt;-</span> <span class="st">"Read the below tweet by a politician. Please analyze the tweet and return the sentiment (positive, negative, or neutral), and tone of the message. Make sure that the output Format is: </span><span class="sc">\n</span><span class="st"> 'Sentiment: [sentiment] ; Tone: [tone]'. Here is the tweet: Ready and willing. That’s my take from today’s meeting in Paris. Europe is ready and willing to step up. To lead in providing security guarantees for Ukraine. Ready and willing to invest a lot more in our security. The details will need  to be decided but the commitment is clear. "</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>response_text <span class="ot">&lt;-</span> <span class="fu">send_to_gpt</span>(text_input, api_key)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(response_text<span class="sc">$</span>choices[[<span class="dv">1</span>]]<span class="sc">$</span>message<span class="sc">$</span>content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(response_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
+<pre><code>[1] "Sentiment: positive ; Tone: optimistic"</code></pre>
 </div>
 </div>
 </section>
@@ -417,7 +411,7 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define API Key (Ensure you use your API key, as this one will be disabled soon!)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>api_key <span class="ot">&lt;-</span> <span class="st">"your API"</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>api_key <span class="ot">&lt;-</span> <span class="st">"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"</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to get sentiment &amp; tone from GPT</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>analyze_tweet <span class="ot">&lt;-</span> <span class="cf">function</span>(tweet) {</span>
@@ -476,71 +470,49 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setTxtProgressBar</span>(pb, i)  <span class="co"># Update progress bar</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Error: No valid response from API."
-
+<pre><code>
   |                                                                            
-  |===                                                                   |   5%[1] "Error: No valid response from API."
-
+  |===                                                                   |   5%
   |                                                                            
-  |======                                                                |   9%[1] "Error: No valid response from API."
-
+  |======                                                                |   9%
   |                                                                            
-  |==========                                                            |  14%[1] "Error: No valid response from API."
-
+  |==========                                                            |  14%
   |                                                                            
-  |=============                                                         |  18%[1] "Error: No valid response from API."
-
+  |=============                                                         |  18%
   |                                                                            
-  |================                                                      |  23%[1] "Error: No valid response from API."
-
+  |================                                                      |  23%
   |                                                                            
-  |===================                                                   |  27%[1] "Error: No valid response from API."
-
+  |===================                                                   |  27%
   |                                                                            
-  |======================                                                |  32%[1] "Error: No valid response from API."
-
+  |======================                                                |  32%
   |                                                                            
-  |=========================                                             |  36%[1] "Error: No valid response from API."
-
+  |=========================                                             |  36%
   |                                                                            
-  |=============================                                         |  41%[1] "Error: No valid response from API."
-
+  |=============================                                         |  41%
   |                                                                            
-  |================================                                      |  45%[1] "Error: No valid response from API."
-
+  |================================                                      |  45%
   |                                                                            
-  |===================================                                   |  50%[1] "Error: No valid response from API."
-
+  |===================================                                   |  50%
   |                                                                            
-  |======================================                                |  55%[1] "Error: No valid response from API."
-
+  |======================================                                |  55%
   |                                                                            
-  |=========================================                             |  59%[1] "Error: No valid response from API."
-
+  |=========================================                             |  59%
   |                                                                            
-  |=============================================                         |  64%[1] "Error: No valid response from API."
-
+  |=============================================                         |  64%
   |                                                                            
-  |================================================                      |  68%[1] "Error: No valid response from API."
-
+  |================================================                      |  68%
   |                                                                            
-  |===================================================                   |  73%[1] "Error: No valid response from API."
-
+  |===================================================                   |  73%
   |                                                                            
-  |======================================================                |  77%[1] "Error: No valid response from API."
-
+  |======================================================                |  77%
   |                                                                            
-  |=========================================================             |  82%[1] "Error: No valid response from API."
-
+  |=========================================================             |  82%
   |                                                                            
-  |============================================================          |  86%[1] "Error: No valid response from API."
-
+  |============================================================          |  86%
   |                                                                            
-  |================================================================      |  91%[1] "Error: No valid response from API."
-
+  |================================================================      |  91%
   |                                                                            
-  |===================================================================   |  95%[1] "Error: No valid response from API."
-
+  |===================================================================   |  95%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -583,13 +555,13 @@ This function will act as an interface between our dataset and the <em>OpenAI AP
 4                    "@DepSecGenNATO\n travelled to 🇵🇱 Poland to participate in the opening ceremony of the NATO Joint Analysis, Training and Education Centre. \n\nSpeaking in the ceremony, the Deputy Secretary General said that the Centre’s work “will help the Alliance and Ukraine become stronger.”
 5                                                        Today, \n@SecGenNATO\n Mark Rutte welcomed \n@SPE_Kellogg\n, United States Special Envoy for Ukraine and Russia, to the North Atlantic Council for a discussion with Allies on ending the war against Ukraine\n\nTap for more info on the meeting ↓
 6                                         So good to host \n@SPE_Kellogg\n in Brussels. Today he consulted with Allies at NATO on working together to ensure just and lasting peace in Ukraine. We have a lot to do and will cooperate closely to pursue an end to the war and enduring security for us all.
-  sentiment tone
-1        NA   NA
-2        NA   NA
-3        NA   NA
-4        NA   NA
-5        NA   NA
-6        NA   NA</code></pre>
+  sentiment       tone
+1   neutral     formal
+2  Positive Diplomatic
+3  Positive     Formal
+4  Positive     Formal
+5   Neutral     Formal
+6  Positive Diplomatic</code></pre>
 </div>
 </div>
 

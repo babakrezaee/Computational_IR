@@ -53,8 +53,7 @@ library(httr)
 library(stringr)
 
 send_to_gpt <- function(text, api_key, model = "gpt-4o-mini") {
- 
-   url <- "https://api.openai.com/v1/chat/completions"
+  url <- "https://api.openai.com/v1/chat/completions"
 
   # Send API request
   response <- POST(
@@ -67,6 +66,17 @@ send_to_gpt <- function(text, api_key, model = "gpt-4o-mini") {
       messages = list(list(role = "user", content = text))
     )
   )
+
+  # Parse API response
+  parsed_response <- content(response)
+
+  # ✅ Extract message safely
+  if (!is.null(parsed_response$choices) && length(parsed_response$choices) > 0) {
+    return(parsed_response$choices[[1]]$message$content)
+  } else {
+    print("Error: No valid response from API.")
+    return(NULL)
+  }
 }
 
 ```
@@ -77,9 +87,8 @@ Now that we wrote the function for sending and reciving message from chat gpt AP
 
 ##Set your api_key (you just need to do it once per session)
 
-api_key <- "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"
-
-text_input <- "In a few short sentences tell us about Leiden Univeristy."
+api_key <- "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"
+text_input <- "In a few short sentences tell me about Leiden Univeristy."
 response_text <- send_to_gpt(text_input, api_key)
 print(response_text)
 
@@ -94,11 +103,10 @@ Sentiment (positive, neutral, or negative) Tone (e.g., formal, urgent, diplomati
 Can you see how this is done? Let’s try it!
 
 ```{r}
-
 text_input <- "Read the below tweet by a politician. Please analyze the tweet and return the sentiment (positive, negative, or neutral), and tone of the message. Make sure that the output Format is: \n 'Sentiment: [sentiment] ; Tone: [tone]'. Here is the tweet: Ready and willing. That’s my take from today’s meeting in Paris. Europe is ready and willing to step up. To lead in providing security guarantees for Ukraine. Ready and willing to invest a lot more in our security. The details will need  to be decided but the commitment is clear. "
 
 response_text <- send_to_gpt(text_input, api_key)
-print(response_text$choices[[1]]$message$content)
+print(response_text)
 
 ```
 
@@ -187,7 +195,7 @@ Now, we define a function that:
 ```{r}
 
 # Define API Key (Ensure you use your API key, as this one will be disabled soon!)
-api_key <- "your API"
+api_key <- "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"
 
 # Function to get sentiment & tone from GPT
 analyze_tweet <- function(tweet) {
