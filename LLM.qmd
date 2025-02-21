@@ -83,11 +83,11 @@ send_to_gpt <- function(text, api_key, model = "gpt-4o-mini") {
 
 Now that we wrote the function for sending and reciving message from chat gpt API, now we can communicate with it
 
-```{r, results=FALSE}
+```{r, echo=FALSE, results=FALSE}
 
-##Set your api_key (you just need to do it once per session)
+##Set your api_key(Ensure you use your API key, as this one will be disabled soon!)
 
-api_key <- "your API"
+api_key <- "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"
 text_input <- "In a few short sentences tell me about Leiden Univeristy."
 response_text <- send_to_gpt(text_input, api_key)
 print(response_text)
@@ -192,10 +192,10 @@ Now, we define a function that:
 1.  Sends each tweet to ChatGPT.
 2.  Extracts the sentiment and tone from the response.
 
-```{r, results=FALSE}
+```{r}
 
 # Define API Key (Ensure you use your API key, as this one will be disabled soon!)
-api_key <- "your api key here"
+api_key <- "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"
 
 # Function to get sentiment & tone from GPT
 analyze_tweet <- function(tweet) {
