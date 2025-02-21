@@ -1,0 +1,31 @@
+type,text,spam,ham,code_word,spam_ham_label
+spam,"Loan for any purpose £500 - £75,000. Homeowners + Tenants welcome. Have you been previously refused? We can still help. Call Free 0800 1956669 or text back 'help'",1,0,Spam: 1 ; Ham: 0 ; Code word: (loan),S
+ham,How do friends help us in problems? They give the most stupid suggestion that Lands us into another problem and helps us forgt the previous problem,0,1,Spam: 0 ; Ham: 1 ; Code word: (opinion),H
+ham,Your gonna be the death if me. I'm gonna leave a note that says its all robs fault. Avenge me.,0,1,Spam: 0 ; Ham: 1 ; Code word: (context),H
+ham,Yes. that will be fine. Love you. Be safe.,0,1,Spam: 0 ; Ham: 1 ; Code word: (genuine),H
+ham,"Sorry, I'll call later",0,1,Spam: 0 ; Ham: 1 ; Code word: (context),H
+ham,Then u ask darren go n pick u lor... But i oso sian tmr haf 2 meet lect...,0,1,casual,H
+ham,"Friendship is not a game to play, It is not a word to say, It doesn\'t start on March and ends on May, It is tomorrow, yesterday, today and e",0,1,Spam: 0 ; Ham: 1 ; Code word: (meaningful),H
+ham,LOL that would be awesome payback.,0,1,Spam: 0 ; Ham: 1 ; Code word: (context),H
+spam,You won't believe it but it's true. It's Incredible Txts! Reply G now to learn truly amazing things that will blow your mind. From O2FWD only 18p/txt,1,0,"Spam: 1 ; Ham: 0 ; Code word: ""incredible""",S
+ham,I'm still pretty weak today .. Bad day ?,0,1,Spam: 0 ; Ham: 1 ; Code word: (genuine),H
+ham,I wont do anything de.,0,1,Spam: 0 ; Ham: 1 ; Code word: (relevant),H
+ham,Hey we can go jazz power yoga hip hop kb and yogasana ,0,1,Spam: 0 ; Ham: 1 ; Code word: (fitness),H
+ham,Can u get pic msgs to your phone?,0,1,Spam: 0 ; Ham: 1 ; Code word: (genuine inquiry),H
+ham,K..k..i'm also fine:)when will you complete the course?,0,1,Spam: 0 ; Ham: 1 ; Code word: (genuine),H
+ham,Just do what ever is easier for you,0,1,genuine,H
+ham,"Sorry, I'll call later",0,1,Spam: 0 ; Ham: 1 ; Code word: (personal),H
+ham,Do you like shaking your booty on the dance floor?,0,1,dance,H
+ham,What * u wearing?,1,0,Spam: 1 ; Ham: 0 ; Code word: (unprofessional),S
+ham,"Chinatown got porridge, claypot rice, yam cake, fishhead beehoon... Either we eat cheap den go cafe n tok or go nydc or somethin...",0,1,Spam: 0 ; Ham: 1 ; Code word: (food),H
+ham,dont make ne plans for nxt wknd coz she wants us to come down then ok,0,1,Spam: 0 ; Ham: 1 ; Code word: (personal),H
+ham,Ok... Ur typical reply...,0,1,typical,H
+ham,Your daily text from me €“ a favour this time,1,0,"Spam: 1 ; Ham: 0 ; Code word: ""favour""",S
+ham,Still chance there. If you search hard you will get it..let have a try :),0,1,Spam: 0 ; Ham: 1 ; Code word: (encouragement),H
+spam,RGENT! This is the 2nd attempt to contact U!U have WON £1250 CALL 09071512433 b4 050703 T&CsBCM4235WC1N3XX. callcost 150ppm mobilesvary. max£7. 50,1,0,Spam: 1 ; Ham: 0 ; Code word: (winner),S
+ham,But your brother transfered only  #  +  # . Pa.,0,1,Spam: 0 ; Ham: 1 ; Code word: (context),H
+ham,How much is torch in 9ja.,0,1,inquiry,H
+ham,Gr8. So how do you handle the victoria island traffic. Plus when's the album due,0,1,Spam: 0 ; Ham: 1 ; Code word: (context),H
+ham,Shopping lor. Them raining mah hard 2 leave orchard.,0,1,Spam: 0 ; Ham: 1 ; Code word: (relevant),H
+ham,"Awesome, I'll see you in a bit",0,1,Spam: 0 ; Ham: 1 ; Code word: (genuine),H
+ham,Oh god..taken the teeth?is it paining,0,1,Spam: 0 ; Ham: 1 ; Code word: (authentic),H
