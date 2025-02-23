@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Tree Models: Random Forest – Computational International Relations</title>
+<title>5&nbsp; Tree Models: Random Forest – Computational International Relations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
-<link href="./NaiveBayes.html" rel="prev">
+<link href="./HW1.html" rel="next">
+<link href="./LLM.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -144,7 +144,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./TreeModels.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./TreeModels.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -195,14 +195,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./TreeModels.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></span></a>
+  <a href="./LLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Large Language Model (LLM)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./TreeModels.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./HW1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Homework 1</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -221,14 +227,14 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#regression-trees" id="toc-regression-trees" class="nav-link active" data-scroll-target="#regression-trees"><span class="header-section-number">4.1</span> Regression Trees</a></li>
-  <li><a href="#a-tree-with-two-explanatory-variables" id="toc-a-tree-with-two-explanatory-variables" class="nav-link" data-scroll-target="#a-tree-with-two-explanatory-variables"><span class="header-section-number">4.2</span> A Tree with Two Explanatory Variables</a></li>
-  <li><a href="#what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" id="toc-what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" class="nav-link" data-scroll-target="#what-is-the-loss-problem-and-optimization-question-in-tree-algorithm"><span class="header-section-number">4.3</span> What is the loss problem and optimization question in tree algorithm?</a></li>
-  <li><a href="#how-to-fit-the-data-to-a-tree-model" id="toc-how-to-fit-the-data-to-a-tree-model" class="nav-link" data-scroll-target="#how-to-fit-the-data-to-a-tree-model"><span class="header-section-number">4.4</span> How to fit the data to a tree model?</a></li>
-  <li><a href="#pruning-trees" id="toc-pruning-trees" class="nav-link" data-scroll-target="#pruning-trees"><span class="header-section-number">4.5</span> Pruning trees</a></li>
-  <li><a href="#a-cross-validated-problem" id="toc-a-cross-validated-problem" class="nav-link" data-scroll-target="#a-cross-validated-problem"><span class="header-section-number">4.6</span> A cross-validated problem</a></li>
-  <li><a href="#bagging-and-random-forest" id="toc-bagging-and-random-forest" class="nav-link" data-scroll-target="#bagging-and-random-forest"><span class="header-section-number">4.7</span> Bagging and Random Forest</a></li>
-  <li><a href="#california-housing-data" id="toc-california-housing-data" class="nav-link" data-scroll-target="#california-housing-data"><span class="header-section-number">4.8</span> California Housing Data</a></li>
+  <li><a href="#regression-trees" id="toc-regression-trees" class="nav-link active" data-scroll-target="#regression-trees"><span class="header-section-number">5.1</span> Regression Trees</a></li>
+  <li><a href="#a-tree-with-two-explanatory-variables" id="toc-a-tree-with-two-explanatory-variables" class="nav-link" data-scroll-target="#a-tree-with-two-explanatory-variables"><span class="header-section-number">5.2</span> A Tree with Two Explanatory Variables</a></li>
+  <li><a href="#what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" id="toc-what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" class="nav-link" data-scroll-target="#what-is-the-loss-problem-and-optimization-question-in-tree-algorithm"><span class="header-section-number">5.3</span> What is the loss problem and optimization question in tree algorithm?</a></li>
+  <li><a href="#how-to-fit-the-data-to-a-tree-model" id="toc-how-to-fit-the-data-to-a-tree-model" class="nav-link" data-scroll-target="#how-to-fit-the-data-to-a-tree-model"><span class="header-section-number">5.4</span> How to fit the data to a tree model?</a></li>
+  <li><a href="#pruning-trees" id="toc-pruning-trees" class="nav-link" data-scroll-target="#pruning-trees"><span class="header-section-number">5.5</span> Pruning trees</a></li>
+  <li><a href="#a-cross-validated-problem" id="toc-a-cross-validated-problem" class="nav-link" data-scroll-target="#a-cross-validated-problem"><span class="header-section-number">5.6</span> A cross-validated problem</a></li>
+  <li><a href="#bagging-and-random-forest" id="toc-bagging-and-random-forest" class="nav-link" data-scroll-target="#bagging-and-random-forest"><span class="header-section-number">5.7</span> Bagging and Random Forest</a></li>
+  <li><a href="#california-housing-data" id="toc-california-housing-data" class="nav-link" data-scroll-target="#california-housing-data"><span class="header-section-number">5.8</span> California Housing Data</a></li>
   </ul>
 </nav>
     </div>
@@ -237,7 +243,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tree Models: Random Forest</span></h1>
 </div>
 
 
@@ -267,8 +273,8 @@ window.Quarto = {
 <li>Simple tree models do not lead to the best out-of-sample predictive.</li>
 </ul>
 <p>However, if we grow a good forest and bag/boost the models to combine the fits from different tree models, we can improve the prediction power.</p>
-<section id="regression-trees" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="regression-trees"><span class="header-section-number">4.1</span> Regression Trees</h2>
+<section id="regression-trees" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="regression-trees"><span class="header-section-number">5.1</span> Regression Trees</h2>
 <p>It is much easier to explain the tree models using an example. Let’s start with the Boston housing data that we used before in <span class="math inline">\(kNN\)</span> section. Similarly, I want to predict median housing price in a neighborhood, <span class="math inline">\({\tt medv}\)</span>, using the ratio of low state households, <span class="math inline">\({\tt lstat}\)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS) </span>
@@ -296,13 +302,13 @@ rpart(formula = medv ~ lstat, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.44236500      0 1.0000000 1.0019518 0.08305987
-2 0.15283400      1 0.5576350 0.5937544 0.04887727
-3 0.06275014      2 0.4048010 0.4328859 0.03963475
-4 0.01374053      3 0.3420509 0.3935850 0.03952768
-5 0.01200979      4 0.3283103 0.3814673 0.03843902
-6 0.01159492      5 0.3163005 0.3757149 0.03743713
-7 0.01000000      6 0.3047056 0.3747370 0.03775155
+1 0.44236500      0 1.0000000 1.0071140 0.08317811
+2 0.15283400      1 0.5576350 0.6123908 0.05304519
+3 0.06275014      2 0.4048010 0.4651539 0.04475715
+4 0.01374053      3 0.3420509 0.4024612 0.04172301
+5 0.01200979      4 0.3283103 0.3959032 0.04182107
+6 0.01159492      5 0.3163005 0.3843834 0.04022799
+7 0.01000000      6 0.3047056 0.3730449 0.03972424
 
 Variable importance
 lstat 
@@ -415,8 +421,8 @@ Node number 15: 18 observations
 <p>The set of bottom nodes gives us a partition of the predictor <span class="math inline">\(x\)</span> space into disjoint regions. At right, the vertical lines display the partition. With just one x, this is just a set of intervals.</p>
 <p>Within each region (interval) we compute the average of the <span class="math inline">\(y\)</span> values for the subset of training data in the region. This gives us the step function which is our <span class="math inline">\(\hat{f}\)</span>. The <span class="math inline">\(\bar{y}\)</span> values are also printed at the bottom nodes. To predict, we just use the above step function estimation of f(x).</p>
 </section>
-<section id="a-tree-with-two-explanatory-variables" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="a-tree-with-two-explanatory-variables"><span class="header-section-number">4.2</span> A Tree with Two Explanatory Variables</h2>
+<section id="a-tree-with-two-explanatory-variables" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="a-tree-with-two-explanatory-variables"><span class="header-section-number">5.2</span> A Tree with Two Explanatory Variables</h2>
 <p>Now, let’s estimate a tree model using two features: <span class="math inline">\(x=(lstat, dis)\)</span> and <span class="math inline">\(y=medx\)</span>.</p>
 <p>First, let’s take a look at scatter plot of these variables:</p>
 <div class="cell">
@@ -484,15 +490,15 @@ rpart(formula = medv ~ lstat + dis, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.44236500      0 1.0000000 1.0010651 0.08279637
-2 0.15283400      1 0.5576350 0.6158927 0.05218432
-3 0.06275014      2 0.4048010 0.4567523 0.04201186
-4 0.02833720      3 0.3420509 0.4167670 0.04165252
-5 0.02722395      4 0.3137137 0.4164386 0.04073631
-6 0.01925703      5 0.2864897 0.4005999 0.04043000
-7 0.01418570      6 0.2672327 0.3734997 0.03940346
-8 0.01131786      7 0.2530470 0.3593048 0.03914959
-9 0.01000000      8 0.2417291 0.3416455 0.03531836
+1 0.44236500      0 1.0000000 1.0023464 0.08303037
+2 0.15283400      1 0.5576350 0.5968427 0.04779118
+3 0.06275014      2 0.4048010 0.4359092 0.03885973
+4 0.02833720      3 0.3420509 0.3946320 0.03855030
+5 0.02722395      4 0.3137137 0.4105631 0.03880440
+6 0.01925703      5 0.2864897 0.3789536 0.03712697
+7 0.01418570      6 0.2672327 0.3616514 0.03603373
+8 0.01131786      7 0.2530470 0.3555104 0.03714676
+9 0.01000000      8 0.2417291 0.3410964 0.03542618
 
 Variable importance
 lstat   dis 
@@ -638,14 +644,14 @@ rpart(formula = medv ~ lstat + rm + dis, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.45274420      0 1.0000000 1.0104108 0.08357045
-2 0.17117244      1 0.5472558 0.6556225 0.05903245
-3 0.07165784      2 0.3760834 0.4356052 0.04821239
-4 0.03616428      3 0.3044255 0.3413502 0.04259462
-5 0.03336923      4 0.2682612 0.3370692 0.04369192
-6 0.02311607      5 0.2348920 0.3232198 0.04264504
-7 0.01585116      6 0.2117759 0.3129324 0.04029676
-8 0.01000000      7 0.1959248 0.2951398 0.04120684
+1 0.45274420      0 1.0000000 1.0044234 0.08312411
+2 0.17117244      1 0.5472558 0.5952040 0.05513094
+3 0.07165784      2 0.3760834 0.4071569 0.04438101
+4 0.03616428      3 0.3044255 0.3223471 0.04161245
+5 0.03336923      4 0.2682612 0.3218634 0.04343504
+6 0.02311607      5 0.2348920 0.2988583 0.04311367
+7 0.01585116      6 0.2117759 0.2815695 0.04298167
+8 0.01000000      7 0.1959248 0.2752675 0.04304233
 
 Variable importance
    rm lstat   dis 
@@ -769,8 +775,8 @@ Node number 21: 55 observations
 </div>
 </div>
 </section>
-<section id="what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="what-is-the-loss-problem-and-optimization-question-in-tree-algorithm"><span class="header-section-number">4.3</span> What is the loss problem and optimization question in tree algorithm?</h2>
+<section id="what-is-the-loss-problem-and-optimization-question-in-tree-algorithm" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="what-is-the-loss-problem-and-optimization-question-in-tree-algorithm"><span class="header-section-number">5.3</span> What is the loss problem and optimization question in tree algorithm?</h2>
 <p>As shown above, we want to split the feature space, i.e.&nbsp;<span class="math inline">\(X=\{x_1, x_2, \dots, x_k\}\)</span>, to smaller rectangular, or boxes. If we find a splitting pattern which has the lowest prediction error for the training data, then we can predict the associated outcome with the prediction feature set <span class="math inline">\(X_p\)</span> by finding to which box this set belongs. Roughly, we can think about about tree algorithm like a <span class="math inline">\(kNN\)</span> algorithm in which <span class="math inline">\(k\)</span> is dynamic and can change according to the changes in the data.</p>
 <p><span class="math display">\[\begin{align}
 
@@ -785,8 +791,8 @@ min_{R_1,R_2,\dots,R_J} \sum_{j=1}^J \sum_{i \in R_j} (y_i-\hat{y}_{R_j})^2
 </ul>
 <p>This is a <em>greedy</em> approach since the splitting process only focus on each step and pick the split that is associated with the best fit at the current step, rather than looking ahead and picking the split which lead to a better prediction tree in the following steps.</p>
 </section>
-<section id="how-to-fit-the-data-to-a-tree-model" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="how-to-fit-the-data-to-a-tree-model"><span class="header-section-number">4.4</span> How to fit the data to a tree model?</h2>
+<section id="how-to-fit-the-data-to-a-tree-model" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="how-to-fit-the-data-to-a-tree-model"><span class="header-section-number">5.4</span> How to fit the data to a tree model?</h2>
 <p>To execute the above algorithm, statistical algorithms re-write the above problem as follow:</p>
 <p><span class="math display">\[\begin{align}
 
@@ -797,8 +803,8 @@ C(T,y)=L(T,y)+\alpha |T|
 <p>However, we do not want to make the model/tree too complex. A complex model might be good in capturing all variances in the training data, but would lead to a biased prediction of in the test data. Thus, we add the number of nodes in tree T, i.e.&nbsp;<span class="math inline">\(|T|\)</span>, with a penalty parameter <span class="math inline">\(\alpha\)</span> to the cost function <span class="math inline">\(C(T,y)\)</span>. For the continuous <span class="math inline">\(y\)</span>, we can use <em>RMSE</em>, and for categorical <span class="math inline">\(y\)</span>, we can use any of the classification measures that are discussed in the previous section.</p>
 <p>What is the best <span class="math inline">\(\alpha\)</span>? if we pick a big <span class="math inline">\(\alpha\)</span>, then the penalty for having a big and complex tree is large. Thus, the optimization problem return a small tree which can lead to a large <span class="math inline">\(L\)</span> on the training data. On the other hand, for a small <span class="math inline">\(\alpha\)</span>, we allow the model pick a big tree. Here, <span class="math inline">\(\alpha\)</span> is analogous to <span class="math inline">\(k\)</span> in <span class="math inline">\(kNN\)</span>. How do we pick <span class="math inline">\(\alpha\)</span>? The answer similar to most of the similar cases in this course is <em>cross-validation</em>.</p>
 </section>
-<section id="pruning-trees" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="pruning-trees"><span class="header-section-number">4.5</span> Pruning trees</h2>
+<section id="pruning-trees" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="pruning-trees"><span class="header-section-number">5.5</span> Pruning trees</h2>
 <p>The idea here is first allow a tree grows as much as possible without being worried about its complexity size. Then, considering the complexity parameter, CP value, we prune/cut the tree with the optimal CP value.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
@@ -920,8 +926,8 @@ tree7 0.8560183 0.9830393 1.0000000</code></pre>
 </div>
 </div>
 </section>
-<section id="a-cross-validated-problem" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="a-cross-validated-problem"><span class="header-section-number">4.6</span> A cross-validated problem</h2>
+<section id="a-cross-validated-problem" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="a-cross-validated-problem"><span class="header-section-number">5.6</span> A cross-validated problem</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
@@ -973,15 +979,15 @@ tree7 0.8560183 0.9830393 1.0000000</code></pre>
 </div>
 </div>
 </section>
-<section id="bagging-and-random-forest" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="bagging-and-random-forest"><span class="header-section-number">4.7</span> Bagging and Random Forest</h2>
+<section id="bagging-and-random-forest" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="bagging-and-random-forest"><span class="header-section-number">5.7</span> Bagging and Random Forest</h2>
 <p>The idea behind <em>Bagging</em> is bootstrapping the data adequately enough to make sure that trees with good explanatory power are captured. This approach is computationally intensive and time-consuming.</p>
 <p>Random Forests starts from <em>Bagging</em> and adds another kind of randomization. In this method, instead of going over all features when we do the greedy approach, this method randomly samples a subset of <span class="math inline">\(m\)</span> variables to search over each time we make a split.</p>
 <p>In this method, more types of trees will be evaluated. Since this method is Bootstraped, the important variables will be identified in average more than others; and thus can be used for prediction.</p>
 <p>How to choose parameters for a Random Forest model? <span class="math inline">\(B\)</span> is the number of Bootstrapped samples, and <span class="math inline">\(m\)</span> is the number of variables to sample. A common choice for <span class="math inline">\(m\)</span> is <span class="math inline">\(\sqrt p\)</span>, where <span class="math inline">\(p\)</span> is the number of features in the model. When we set <span class="math inline">\(m=p\)</span>, then Random Forest is Bagging.</p>
 </section>
-<section id="california-housing-data" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="california-housing-data"><span class="header-section-number">4.8</span> California Housing Data</h2>
+<section id="california-housing-data" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="california-housing-data"><span class="header-section-number">5.8</span> California Housing Data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1503,13 +1509,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./NaiveBayes.html" class="pagination-link" aria-label="Naive Bayes">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Naive Bayes</span></span>
+      <a href="./LLM.html" class="pagination-link" aria-label="Large Language Model (LLM)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Large Language Model (LLM)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link" aria-label="Summary">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./HW1.html" class="pagination-link" aria-label="Homework 1">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Homework 1</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

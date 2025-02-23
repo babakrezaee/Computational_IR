@@ -12,26 +12,23 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
 ```
 
-
 The idea of trees in statistical learning has similarity with decision trees models. Trees and its extensions have been used widely for modeling the prediction of outcome variables. Let's start with reviewing the advantages and disadvantages of this method:
 
 *Benefits:*
 
-* Very good in capturing the interactions between the features of a models and non-linearity associations
+-   Very good in capturing the interactions between the features of a models and non-linearity associations
 
-* performs very well in handling categorical variables, with nice interpretation of the results
+-   performs very well in handling categorical variables, with nice interpretation of the results
 
-* relatively faster than other machine learning algorithms
+-   relatively faster than other machine learning algorithms
 
-* does not require scaling x variables/features.
-
+-   does not require scaling x variables/features.
 
 *Disadvantage:*
 
+-   Simple tree models do not lead to the best out-of-sample predictive.
 
-* Simple tree models do not lead to the best out-of-sample predictive. 
-
-However, if we grow a good forest and bag/boost the models to combine the fits from different tree models, we can improve the prediction power. 
+However, if we grow a good forest and bag/boost the models to combine the fits from different tree models, we can improve the prediction power.
 
 ## Regression Trees
 
@@ -67,7 +64,6 @@ text(m_tree)
 
 But, this plot does not often look good. Indeed, it usually is a mess! To plot a nice tree, I suggest using ${\tt rpart.plot}$ package.
 
-
 ```{r}
 
 library(rpart.plot)
@@ -92,15 +88,11 @@ abline(v=i, col="orange",lty=2)
 
 ```
 
-
-The set of bottom nodes gives us a partition of the predictor $x$ space into disjoint regions. At right, the vertical lines display the
-partition. With just one x, this is just a set of intervals.
+The set of bottom nodes gives us a partition of the predictor $x$ space into disjoint regions. At right, the vertical lines display the partition. With just one x, this is just a set of intervals.
 
 Within each region (interval) we compute the average of the $y$ values for the subset of training data in the region. This gives us the step function which is our $\hat{f}$. The $\bar{y}$ values are also printed at the bottom nodes. To predict, we just use the above step function estimation of f(x).
 
-
 ## A Tree with Two Explanatory Variables
-
 
 Now, let's estimate a tree model using two features: $x=(lstat, dis)$ and $y=medx$.
 
@@ -122,7 +114,6 @@ library(ggplot2)
 ggplot(ddf, aes(lstat, dis, colour = medv)) + geom_point()
 
 ```
-
 
 ```{r}
 
@@ -151,8 +142,6 @@ partition.tree(m_tree2)
 
 
 ```
-
-
 
 ```{r}
 
@@ -191,13 +180,13 @@ min_{R_1,R_2,\dots,R_J} \sum_{j=1}^J \sum_{i \in R_j} (y_i-\hat{y}_{R_j})^2
 
 \end{align}
 
-This loss has a straightforward intuition: we want to find $R_j$s to minimize the sum of the squared deviation of observations from the mean response within each box. In theory, we can define infinite number of boxes, and we need to evaluate the squared errors of each set of boxes to see which one is minimized. This is computationally very intensive and almost impossible. 
+This loss has a straightforward intuition: we want to find $R_j$s to minimize the sum of the squared deviation of observations from the mean response within each box. In theory, we can define infinite number of boxes, and we need to evaluate the squared errors of each set of boxes to see which one is minimized. This is computationally very intensive and almost impossible.
 
 To solve this problem, a *recursive partitioning* top-down approach is used to find the *optimal* boxes:
 
-* Scan each feature/predictor in the data to find the one for which splitting gives the best performance/prediction power, i.e. lowest error.
+-   Scan each feature/predictor in the data to find the one for which splitting gives the best performance/prediction power, i.e. lowest error.
 
-* Now, for each split repeat the previous step, and continue this until splitting is too costly (we will discuss later what "costly" means, but just as a tip: *think about bias-variance tradeoff*), or reach a pre-defined tree size.
+-   Now, for each split repeat the previous step, and continue this until splitting is too costly (we will discuss later what "costly" means, but just as a tip: *think about bias-variance tradeoff*), or reach a pre-defined tree size.
 
 This is a *greedy* approach since the splitting process only focus on each step and pick the split that is associated with the best fit at the current step, rather than looking ahead and picking the split which lead to a better prediction tree in the following steps.
 
@@ -211,18 +200,15 @@ C(T,y)=L(T,y)+\alpha |T|
 
 \end{align}
 
-where L(T,y) is the loss of fitting outcome $y$ with tree $T$. Our goal always is minimizing the loss, that is small $L$ is preferred. 
+where L(T,y) is the loss of fitting outcome $y$ with tree $T$. Our goal always is minimizing the loss, that is small $L$ is preferred.
 
 However, we do not want to make the model/tree too complex. A complex model might be good in capturing all variances in the training data, but would lead to a biased prediction of in the test data. Thus, we add the number of nodes in tree T, i.e. $|T|$, with a penalty parameter $\alpha$ to the cost function $C(T,y)$. For the continuous $y$, we can use *RMSE*, and for categorical $y$, we can use any of the classification measures that are discussed in the previous section.
 
 What is the best $\alpha$? if we pick a big $\alpha$, then the penalty for having a big and complex tree is large. Thus, the optimization problem return a small tree which can lead to a large $L$ on the training data. On the other hand, for a small $\alpha$, we allow the model pick a big tree. Here, $\alpha$ is analogous to $k$ in $kNN$. How do we pick $\alpha$? The answer similar to most of the similar cases in this course is *cross-validation*.
 
-
 ## Pruning trees
 
-
-The idea here is first allow a tree grows as much as possible without being worried about its complexity size. Then, considering the complexity parameter, CP value, we prune/cut the tree with the optimal CP value. 
-
+The idea here is first allow a tree grows as much as possible without being worried about its complexity size. Then, considering the complexity parameter, CP value, we prune/cut the tree with the optimal CP value.
 
 ```{r}
 attach(Boston)
@@ -331,8 +317,7 @@ In this method, more types of trees will be evaluated. Since this method is Boot
 
 How to choose parameters for a Random Forest model? $B$ is the number of Bootstrapped samples, and $m$ is the number of variables to sample. A common choice for $m$ is $\sqrt p$, where $p$ is the number of features in the model. When we set $m=p$, then Random Forest is Bagging.
 
-## California Housing Data 
-
+## California Housing Data
 
 ```{r}
 library(randomForest)
@@ -382,4 +367,3 @@ varImpPlot(RF)
 
 
 ```
-
