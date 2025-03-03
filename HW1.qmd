@@ -4,11 +4,8 @@ format: html
 ---
 
 ```{r setup, include=FALSE}
-install.packages("latex2exp")  # Only needed once
 library(latex2exp)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
-#suppressPackageStartupMessages(library(KKNN))
-#suppressPackageStartupMessages(library(MASS))
 
 ```
 
