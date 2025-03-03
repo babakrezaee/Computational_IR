@@ -10,7 +10,10 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
 ```
 
-**Submission Instructions** Submit the R Markdown (.Rmd) file with code and answers on Brightspace.
+**Submission Instructions** 
+
+Submit the R Markdown (.Rmd) file with code and answers on Brightspace.
+Due date: March 11, 2025 by 17:00 CET.
 
 ## **Question 1: Large Language Model (LLM) for Text Analysis**
 
