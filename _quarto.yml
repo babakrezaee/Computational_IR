@@ -13,6 +13,7 @@ book:
     - NaiveBayes.qmd
     - LLM.qmd
     - TreeModels.qmd
+    - NetworkAnalysis.qmd
     - HW1.qmd
     - HW2.qmd
     - references.qmd

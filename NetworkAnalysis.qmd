@@ -1,0 +1,11 @@
+---
+title: "Network Analysis"
+format: html
+---
+
+```{r setup, include=FALSE}
+library(latex2exp)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+Guest lecture by Pouria Mirelmi (Coming soon...)

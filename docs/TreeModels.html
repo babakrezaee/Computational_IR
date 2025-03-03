@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./HW1.html" rel="next">
+<link href="./NetworkAnalysis.html" rel="next">
 <link href="./LLM.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -207,8 +207,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./NetworkAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Network Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./HW1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Homework 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Homework 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./HW2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Homework 2</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -302,13 +314,13 @@ rpart(formula = medv ~ lstat, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.44236500      0 1.0000000 1.0032163 0.08307058
-2 0.15283400      1 0.5576350 0.6176813 0.05295459
-3 0.06275014      2 0.4048010 0.4589917 0.04460663
-4 0.01374053      3 0.3420509 0.4027141 0.04204435
-5 0.01200979      4 0.3283103 0.3933751 0.04088310
-6 0.01159492      5 0.3163005 0.3885349 0.04088391
-7 0.01000000      6 0.3047056 0.3823150 0.04098829
+1 0.44236500      0 1.0000000 1.0039181 0.08305220
+2 0.15283400      1 0.5576350 0.5973316 0.05238544
+3 0.06275014      2 0.4048010 0.4421396 0.04395568
+4 0.01374053      3 0.3420509 0.3947080 0.04137455
+5 0.01200979      4 0.3283103 0.3810984 0.04077176
+6 0.01159492      5 0.3163005 0.3763524 0.03962160
+7 0.01000000      6 0.3047056 0.3719473 0.03959767
 
 Variable importance
 lstat 
@@ -490,15 +502,15 @@ rpart(formula = medv ~ lstat + dis, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.44236500      0 1.0000000 1.0054668 0.08318283
-2 0.15283400      1 0.5576350 0.6223409 0.05008953
-3 0.06275014      2 0.4048010 0.4597699 0.04089941
-4 0.02833720      3 0.3420509 0.4230489 0.04049512
-5 0.02722395      4 0.3137137 0.4258006 0.04066010
-6 0.01925703      5 0.2864897 0.4127407 0.03981422
-7 0.01418570      6 0.2672327 0.3518259 0.03450709
-8 0.01131786      7 0.2530470 0.3363448 0.03487452
-9 0.01000000      8 0.2417291 0.3292080 0.03334916
+1 0.44236500      0 1.0000000 1.0018711 0.08295707
+2 0.15283400      1 0.5576350 0.6004766 0.05155493
+3 0.06275014      2 0.4048010 0.4398185 0.04134508
+4 0.02833720      3 0.3420509 0.4007954 0.04098180
+5 0.02722395      4 0.3137137 0.4159664 0.04266595
+6 0.01925703      5 0.2864897 0.3877346 0.03890024
+7 0.01418570      6 0.2672327 0.3581315 0.03870040
+8 0.01131786      7 0.2530470 0.3530301 0.03881346
+9 0.01000000      8 0.2417291 0.3399729 0.03629141
 
 Variable importance
 lstat   dis 
@@ -644,14 +656,14 @@ rpart(formula = medv ~ lstat + rm + dis, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.45274420      0 1.0000000 1.0048956 0.08303782
-2 0.17117244      1 0.5472558 0.6464139 0.05797184
-3 0.07165784      2 0.3760834 0.4177925 0.04498306
-4 0.03616428      3 0.3044255 0.3304384 0.04098136
-5 0.03336923      4 0.2682612 0.3145039 0.04204864
-6 0.02311607      5 0.2348920 0.3037815 0.04110406
-7 0.01585116      6 0.2117759 0.3062113 0.04247762
-8 0.01000000      7 0.1959248 0.2846706 0.04098910
+1 0.45274420      0 1.0000000 1.0025014 0.08304321
+2 0.17117244      1 0.5472558 0.6187634 0.05731793
+3 0.07165784      2 0.3760834 0.4288170 0.04605842
+4 0.03616428      3 0.3044255 0.3454690 0.04186982
+5 0.03336923      4 0.2682612 0.3334360 0.04212732
+6 0.02311607      5 0.2348920 0.3150462 0.04196738
+7 0.01585116      6 0.2117759 0.2930648 0.04175549
+8 0.01000000      7 0.1959248 0.2811165 0.04106018
 
 Variable importance
    rm lstat   dis 
@@ -1521,8 +1533,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./HW1.html" class="pagination-link" aria-label="Homework 1">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Homework 1</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./NetworkAnalysis.html" class="pagination-link" aria-label="Network Analysis">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Network Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
