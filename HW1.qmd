@@ -87,14 +87,10 @@ ggplot(data_cl, aes(x = Violent_method)) +
 
 -   *Analysis:* Discuss your *findings* in detail. Reflect on the performance of your model, the influence of different features on predictions, and any challenges you encountered during the analysis.
 
-
 ## **Question 3: Training a Naive Bayes Algorithm**
 
-For this assignment, you will use the annotated data from the article by Antypas, Preece , and Camacho-Collados, pubished in Online Social Networks and Media journal: [*Link to the article*](https://www.sciencedirect.com/science/article/pii/S2468696423000010). The replication materials of this study is available via its GitHub repository:   [*Here*](https://github.com/cardiffnlp/politics-and-virality-twitter).
+For this assignment, you will use the annotated data from the article by Antypas, Preece , and Camacho-Collados, pubished in Online Social Networks and Media journal: [*Link to the article*](https://www.sciencedirect.com/science/article/pii/S2468696423000010). The replication materials of this study is available via its GitHub repository: [*Here*](https://github.com/cardiffnlp/politics-and-virality-twitter).
 
-Use the method that you learned in class to train a Naive Bayes algorithm that can classify the data to positive sentiment and others. The original data annotated the Tweets to *Positive*, *Negative*, *Neutral*, and *Indeterminate*. For the sake of simplicity, transform/re-code the annotated tweets to *positive* if *+1* and *others* if other values, such as 0, -1. We do this for the sake of simolicity, and we get back to this later in the class. You can access the raw data via the below link:
-[https://raw.githubusercontent.com/cardiffnlp/politics-and-virality-twitter/refs/heads/main/data/annotation/en/en_900.csv](https://raw.githubusercontent.com/cardiffnlp/politics-and-virality-twitter/refs/heads/main/data/annotation/en/en_900.csv).
+Use the method that you learned in class to train a Naive Bayes algorithm that can classify the data to positive sentiment and others. The original data annotated the Tweets to *Positive*, *Negative*, *Neutral*, and *Indeterminate*. For the sake of simplicity, transform/re-code the annotated tweets to *positive* if *+1* and *others* if other values, such as 0, -1. We do this for the sake of simolicity, and we get back to this later in the class. You can access the raw data via the below link: <https://raw.githubusercontent.com/cardiffnlp/politics-and-virality-twitter/refs/heads/main/data/annotation/en/en_900.csv>.
 
 Make sure that your trained Naive Bayes is cross-validated and also report the confusion matrix and (mis)classification rate. Conclude your answer with a brief discussion of the results and the performance of the model.
-
-

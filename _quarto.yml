@@ -5,7 +5,7 @@ project:
 book:
   title: "Computational International Relations"
   author: "Babak RezaeeDaryakenari"
-  date: "18-Feb-2025"
+  date: "3-Mar-2025"
   chapters:
     - index.qmd
     - intro.qmd
@@ -14,6 +14,7 @@ book:
     - LLM.qmd
     - TreeModels.qmd
     - HW1.qmd
+    - HW2.qmd
     - references.qmd
   page-navigation: true  # Enables Next/Previous navigation
 

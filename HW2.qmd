@@ -1,0 +1,138 @@
+---
+title: "Homework 2"
+format: html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+#suppressPackageStartupMessages(library(KKNN))
+#suppressPackageStartupMessages(library(MASS))
+
+```
+
+__Submission Instructions__
+Submit the R Markdown (.Rmd) file with code and answers on Brightspace.
+
+## **Question 1: Large Language Model (LLM) for Text Analysis**
+
+Kaggle website has an archive of Donal Trump's Tweets during his first presidency, until 8-Jan-2021. The data contains information on number of retweets, deletion of tweets, device through which tweeted, flagged tweets, favorite tweets, etc. For this question, you will work with this data set. 
+
+```{r}
+
+DTtweets=read.csv("https://raw.githubusercontent.com/babakrezaee/MethodsCourses/refs/heads/master/DataSets/trump_tweets.csv")
+
+# Let's first see the dimension of the dataset
+dim(DTtweets)
+
+```
+You will use ChatGPT API to analyze the sentiment of Donald Trump’s tweets related to NATO and the European Union (EU).
+
+```{r}
+library(dplyr)
+
+# Convert text to lowercase for case-insensitive filtering
+DTtweets <- DTtweets %>%
+  mutate(text = tolower(text))
+
+# Filter tweets mentioning NATO, EU, and China
+nato_tweets <- filter(DTtweets, grepl("nato", text))
+eu_tweets <- filter(DTtweets, grepl("eu|european union|europeanunion",text))
+
+# Display counts
+nrow(nato_tweets)
+nrow(eu_tweets)
+
+```
+Your main tasks are:
+
+1. Use ChatGPT API to analyze the sentiment of each tweet, as a categorical (Positive, Neutral, and Negtaive) and continuous variable (from -1 to +1).
+
+2. Compare and interpret the sentiment trends across topics over time. 
+
+3. Analyze whether the popularity of these tweets are associated with their sentiment. Use a regression analysis. tip: first think about your unit of analysis.
+
+
+## Question 2: Random Forest Regression Using _caret_ package
+
+In class, you learned to use _randomForest_ package to develop a random forest algorithm. In this assignment, you are asked to develop a 5-fold cross-validated random forest model using _caret_ package, which you learned about in [Naive Bayes](https://babakrezaee.github.io/Computational_IR/NaiveBayes.html) session.
+
+Load the dataset:
+
+```{r}
+
+library(readr)
+
+# Load dataset
+CHdata <- read_csv("https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/DataSets/calhouse.csv")
+
+# Check structure of dataset
+head(CHdata)
+colnames(CHdata)
+dim(CHdata)
+```
+
+Now, partition the data into train (80%) and test (20%).
+
+```{r}
+library(caret)
+
+# Set seed for reproducibility
+set.seed(7)
+
+# Shuffle the data
+CHdata <- CHdata[sample(nrow(CHdata)), ]
+
+# Create a partition (80% train, 20% test)
+trainIndex <- createDataPartition(CHdata$logMedVal, p = 0.8, list = FALSE)
+
+# Split the dataset
+CAtrain <- CHdata[trainIndex, ]
+CAtest <- CHdata[-trainIndex, ]
+
+# Check dimensions
+dim(CAtrain)
+dim(CAtest)
+
+```
+
+For _caret_ package, you first need to declare the traincontrol() function, where you specify cross-validation and the number of folds. 
+
+```{r}
+
+# Train Random Forest model using `caret`
+control <- trainControl(method = "cv", number = 5, verboseIter = TRUE)  # 5-fold cross-validation
+
+RF_model <- train(
+  logMedVal ~ ., 
+  data = CAtrain, 
+  method = "rf", 
+  trControl = control, 
+  tuneGrid = expand.grid(mtry = 3),  # Using mtry=3
+  ntree = 100  # Number of trees
+)
+
+# Print model summary
+print(RF_model)
+
+```
+Now that you trained your model, we can make Predictions and Evaluate Performance.
+
+```{r}
+# Predict on the test set
+RFpred <- predict(RF_model, newdata = CAtest)
+
+# Compute RMSE
+RMSE <- sqrt(mean((CAtest$logMedVal - RFpred)^2))
+
+cat("RMSE on the test data for Random Forest using caret is:", RMSE, "\n")
+
+```
+
+Here are your tasks for this question:
+
+1. What is the purpose of _verboseIter = TRUE_ in the above code?
+2. What does mtry=3 and ntree=100 mean in the Random Forest model?
+3. How does increasing ntree (number of trees) impact model performance?
+4. Explain how we can find the best mtry here? Discuss your tuning strategy. tip: you can set expand.grid(mtry = (3:5))! IMPORTANT: This is a computationally intensive process!
+
+
