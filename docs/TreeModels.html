@@ -302,13 +302,13 @@ rpart(formula = medv ~ lstat, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.44236500      0 1.0000000 1.0062848 0.08334383
-2 0.15283400      1 0.5576350 0.6396071 0.05185244
-3 0.06275014      2 0.4048010 0.4414855 0.04064083
-4 0.01374053      3 0.3420509 0.3924966 0.03860730
-5 0.01200979      4 0.3283103 0.3888741 0.03900029
-6 0.01159492      5 0.3163005 0.3789098 0.03774015
-7 0.01000000      6 0.3047056 0.3715093 0.03764596
+1 0.44236500      0 1.0000000 1.0032163 0.08307058
+2 0.15283400      1 0.5576350 0.6176813 0.05295459
+3 0.06275014      2 0.4048010 0.4589917 0.04460663
+4 0.01374053      3 0.3420509 0.4027141 0.04204435
+5 0.01200979      4 0.3283103 0.3933751 0.04088310
+6 0.01159492      5 0.3163005 0.3885349 0.04088391
+7 0.01000000      6 0.3047056 0.3823150 0.04098829
 
 Variable importance
 lstat 
@@ -490,15 +490,15 @@ rpart(formula = medv ~ lstat + dis, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.44236500      0 1.0000000 1.0029975 0.08319571
-2 0.15283400      1 0.5576350 0.6103783 0.05262894
-3 0.06275014      2 0.4048010 0.4494723 0.04393568
-4 0.02833720      3 0.3420509 0.4197516 0.04223254
-5 0.02722395      4 0.3137137 0.4200109 0.04152058
-6 0.01925703      5 0.2864897 0.4040360 0.04114605
-7 0.01418570      6 0.2672327 0.3751905 0.04083852
-8 0.01131786      7 0.2530470 0.3661671 0.04034936
-9 0.01000000      8 0.2417291 0.3362906 0.03568988
+1 0.44236500      0 1.0000000 1.0054668 0.08318283
+2 0.15283400      1 0.5576350 0.6223409 0.05008953
+3 0.06275014      2 0.4048010 0.4597699 0.04089941
+4 0.02833720      3 0.3420509 0.4230489 0.04049512
+5 0.02722395      4 0.3137137 0.4258006 0.04066010
+6 0.01925703      5 0.2864897 0.4127407 0.03981422
+7 0.01418570      6 0.2672327 0.3518259 0.03450709
+8 0.01131786      7 0.2530470 0.3363448 0.03487452
+9 0.01000000      8 0.2417291 0.3292080 0.03334916
 
 Variable importance
 lstat   dis 
@@ -644,14 +644,14 @@ rpart(formula = medv ~ lstat + rm + dis, data = ddf)
   n= 506 
 
           CP nsplit rel error    xerror       xstd
-1 0.45274420      0 1.0000000 1.0082161 0.08330896
-2 0.17117244      1 0.5472558 0.6351619 0.05694341
-3 0.07165784      2 0.3760834 0.4467486 0.04676053
-4 0.03616428      3 0.3044255 0.3412738 0.04298242
-5 0.03336923      4 0.2682612 0.3177366 0.04250506
-6 0.02311607      5 0.2348920 0.3062575 0.04289377
-7 0.01585116      6 0.2117759 0.2939062 0.04286772
-8 0.01000000      7 0.1959248 0.2928098 0.04207919
+1 0.45274420      0 1.0000000 1.0048956 0.08303782
+2 0.17117244      1 0.5472558 0.6464139 0.05797184
+3 0.07165784      2 0.3760834 0.4177925 0.04498306
+4 0.03616428      3 0.3044255 0.3304384 0.04098136
+5 0.03336923      4 0.2682612 0.3145039 0.04204864
+6 0.02311607      5 0.2348920 0.3037815 0.04110406
+7 0.01585116      6 0.2117759 0.3062113 0.04247762
+8 0.01000000      7 0.1959248 0.2846706 0.04098910
 
 Variable importance
    rm lstat   dis 
@@ -914,12 +914,19 @@ tree7 0.8560183 0.9830393 1.0000000</code></pre>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>Pred_point<span class="ot">=</span><span class="fu">data.frame</span>(<span class="at">lstat=</span><span class="dv">15</span>,<span class="at">dis=</span><span class="dv">2</span>)</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>yhat<span class="ot">=</span><span class="fu">predict</span>(tree_ml,Pred_point)</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'prediction is: </span><span class="sc">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>yhat_7<span class="ot">=</span><span class="fu">predict</span>(tree_ml_7,Pred_point)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'prediction is: </span><span class="sc">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>prediction is: </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(yhat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     1 
+20.302 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(yhat_7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     1 
 20.302 </code></pre>
@@ -929,30 +936,30 @@ tree7 0.8560183 0.9830393 1.0000000</code></pre>
 <section id="a-cross-validated-problem" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="a-cross-validated-problem"><span class="header-section-number">5.6</span> A cross-validated problem</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>df<span class="ot">=</span>Boston[,<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">13</span>,<span class="dv">14</span>)]</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>df<span class="ot">=</span>Boston[,<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">13</span>,<span class="dv">14</span>)]</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "dis"   "lstat" "medv" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's fit a single tree and plot the importance of the variables</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>tree<span class="ot">=</span><span class="fu">rpart</span>(medv<span class="sc">~</span>., <span class="at">method=</span><span class="st">"anova"</span>,<span class="at">data=</span>df,</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">control=</span><span class="fu">rpart.control</span>(<span class="at">minsplit =</span> <span class="dv">5</span>,<span class="at">cp=</span>.<span class="dv">0005</span>))</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>Ntree<span class="ot">=</span><span class="fu">length</span>(<span class="fu">unique</span>(tree<span class="sc">$</span>where))</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Size of big tree is:"</span>,Ntree,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's fit a single tree and plot the importance of the variables</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>tree<span class="ot">=</span><span class="fu">rpart</span>(medv<span class="sc">~</span>., <span class="at">method=</span><span class="st">"anova"</span>,<span class="at">data=</span>df,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">control=</span><span class="fu">rpart.control</span>(<span class="at">minsplit =</span> <span class="dv">5</span>,<span class="at">cp=</span>.<span class="dv">0005</span>))</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>Ntree<span class="ot">=</span><span class="fu">length</span>(<span class="fu">unique</span>(tree<span class="sc">$</span>where))</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Size of big tree is:"</span>,Ntree,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Size of big tree is: 90 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check the CV results</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's check the CV results</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -960,16 +967,16 @@ tree7 0.8560183 0.9830393 1.0000000</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>best_a<span class="ot">=</span><span class="fu">which.min</span>(tree<span class="sc">$</span>cptable[,<span class="st">"xerror"</span>])</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>bestCP<span class="ot">=</span>tree<span class="sc">$</span>cptable[best_a,<span class="st">"CP"</span>]</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>bestSize<span class="ot">=</span>tree<span class="sc">$</span>cptable[best_a,<span class="st">"nsplit"</span>]<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>best_tree<span class="ot">=</span><span class="fu">prune</span>(tree,<span class="at">cp=</span>bestCP)</span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(best_tree,<span class="at">uniform=</span><span class="cn">TRUE</span>)</span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(best_tree,<span class="at">digits=</span><span class="dv">2</span>, <span class="at">use.n =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>best_a<span class="ot">=</span><span class="fu">which.min</span>(tree<span class="sc">$</span>cptable[,<span class="st">"xerror"</span>])</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>bestCP<span class="ot">=</span>tree<span class="sc">$</span>cptable[best_a,<span class="st">"CP"</span>]</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>bestSize<span class="ot">=</span>tree<span class="sc">$</span>cptable[best_a,<span class="st">"nsplit"</span>]<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>best_tree<span class="ot">=</span><span class="fu">prune</span>(tree,<span class="at">cp=</span>bestCP)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(best_tree,<span class="at">uniform=</span><span class="cn">TRUE</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(best_tree,<span class="at">digits=</span><span class="dv">2</span>, <span class="at">use.n =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -989,43 +996,43 @@ tree7 0.8560183 0.9830393 1.0000000</code></pre>
 <section id="california-housing-data" class="level2" data-number="5.8">
 <h2 data-number="5.8" class="anchored" data-anchor-id="california-housing-data"><span class="header-section-number">5.8</span> California Housing Data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>rawData<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/DataSets/calhouse.csv"</span>)</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co"># First divide the sample to train, validation, and test samples</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">nrow</span>(rawData)</span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>n1<span class="ot">=</span><span class="fu">floor</span>(n<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>n2<span class="ot">=</span><span class="fu">floor</span>(n<span class="sc">/</span><span class="dv">4</span>)</span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>n3<span class="ot">=</span>n<span class="sc">-</span>n1<span class="sc">-</span>n2</span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Shuffle the data</span></span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>ii<span class="ot">=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n,n)</span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>CAtrain<span class="ot">=</span>rawData[ii[<span class="dv">1</span><span class="sc">:</span>n1],]</span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>CAval<span class="ot">=</span>rawData[ii[n1<span class="sc">+</span><span class="dv">1</span><span class="sc">:</span>n2],]</span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>CAtest<span class="ot">=</span>rawData[ii[n1<span class="sc">+</span>n2<span class="sc">+</span><span class="dv">1</span><span class="sc">:</span>n3],]</span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Fitting using the RF on train and evaluate on the tes, and predict on val</span></span>
-<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>RF<span class="ot">=</span><span class="fu">randomForest</span>(logMedVal<span class="sc">~</span>.,<span class="at">data=</span>CAtrain,<span class="at">mtry=</span><span class="dv">3</span>,<span class="at">ntree=</span><span class="dv">500</span>)</span>
-<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>RFpred<span class="ot">=</span><span class="fu">predict</span>(RF,<span class="at">newdata=</span>CAval)</span>
-<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>RMSE<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">mean</span>(CAval<span class="sc">$</span>logMedVal<span class="sc">-</span>RFpred)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'RMSE on the train data for Random Forest is'</span>,RMSE,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>rawData<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/DataSets/calhouse.csv"</span>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co"># First divide the sample to train, validation, and test samples</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">nrow</span>(rawData)</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>n1<span class="ot">=</span><span class="fu">floor</span>(n<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>n2<span class="ot">=</span><span class="fu">floor</span>(n<span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>n3<span class="ot">=</span>n<span class="sc">-</span>n1<span class="sc">-</span>n2</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Shuffle the data</span></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>ii<span class="ot">=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n,n)</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>CAtrain<span class="ot">=</span>rawData[ii[<span class="dv">1</span><span class="sc">:</span>n1],]</span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>CAval<span class="ot">=</span>rawData[ii[n1<span class="sc">+</span><span class="dv">1</span><span class="sc">:</span>n2],]</span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>CAtest<span class="ot">=</span>rawData[ii[n1<span class="sc">+</span>n2<span class="sc">+</span><span class="dv">1</span><span class="sc">:</span>n3],]</span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Fitting using the RF on train and evaluate on the tes, and predict on val</span></span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>RF<span class="ot">=</span><span class="fu">randomForest</span>(logMedVal<span class="sc">~</span>.,<span class="at">data=</span>CAtrain,<span class="at">mtry=</span><span class="dv">3</span>,<span class="at">ntree=</span><span class="dv">500</span>)</span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>RFpred<span class="ot">=</span><span class="fu">predict</span>(RF,<span class="at">newdata=</span>CAval)</span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>RMSE<span class="ot">=</span><span class="fu">sqrt</span>(<span class="fu">mean</span>(CAval<span class="sc">$</span>logMedVal<span class="sc">-</span>RFpred)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'RMSE on the train data for Random Forest is'</span>,RMSE,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>RMSE on the train data for Random Forest is 0.00363087 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTree</span>(RF, <span class="dv">1</span>, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getTree</span>(RF, <span class="dv">1</span>, <span class="at">labelVar=</span><span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   left daughter right daughter        split var split point status prediction
 1              2              3     medianIncome    3.574250     -3  12.086736
@@ -1059,7 +1066,7 @@ tree7 0.8560183 0.9830393 1.0000000</code></pre>
 29            56             57        longitude -122.225000     -3  12.252785
 30            58             59         AveRooms    7.908003     -3  12.648332</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="fu">cbind</span>(CAval<span class="sc">$</span>logMedVal,RFpred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="fu">cbind</span>(CAval<span class="sc">$</span>logMedVal,RFpred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1067,13 +1074,13 @@ tree7 0.8560183 0.9830393 1.0000000</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(<span class="fu">cbind</span>(CAval<span class="sc">$</span>logMedVal,RFpred)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(<span class="fu">cbind</span>(CAval<span class="sc">$</span>logMedVal,RFpred)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    RFpred
        1.0000000 0.9056696
 RFpred 0.9056696 1.0000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(RF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(RF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

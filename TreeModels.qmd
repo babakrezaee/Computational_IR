@@ -263,9 +263,12 @@ print(cor(ResultsMat))
 Pred_point=data.frame(lstat=15,dis=2)
 
 yhat=predict(tree_ml,Pred_point)
+yhat_7=predict(tree_ml_7,Pred_point)
+
 
 cat('prediction is: \n')
 print(yhat)
+print(yhat_7)
 
 ```
 
