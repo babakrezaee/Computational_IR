@@ -10,7 +10,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
 Guest lecture by Pouria Mirelmi. Below are slides and R scripts you need for this session.
 
-[slides](...)
+[slides](https://github.com/babakrezaee/Computational_IR/blob/master/Network%20Analysis%20-%20March%205.pdf)
 
 [R scripts 1](http://raw.githubusercontent.com/babakrezaee/Computational_IR/refs/heads/master/train1.R)
 
