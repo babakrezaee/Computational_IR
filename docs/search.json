@@ -582,5 +582,15 @@
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Homework 2</span>"
     ]
+  },
+  {
+    "objectID": "NetworkAnalysis.html",
+    "href": "NetworkAnalysis.html",
+    "title": "6  Network Analysis",
+    "section": "",
+    "text": "Guest lecture by Pouria Mirelmi. Below are slides and R scripts you need for this session.\n\nslides R scripts 1 R scripts 2",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Network Analysis</span>"
+    ]
   }
 ]
