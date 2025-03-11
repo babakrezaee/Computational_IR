@@ -1,0 +1,280 @@
+---
+title: "Classification Metrics"
+format: html
+---
+
+```{r setup, include=FALSE}
+library(latex2exp)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+
+```
+
+
+We use *RMSE* (Root Mean Squared Error) for evaluating the performance of a prediction model with continuous outcome. However, *RMSE* is not used commonly for categorical outcomes. Instead, we use a few other metrics are driven from the confusion matrix, which is introduced in the Naive Bayes handouts. Therefore, the first step of discussing the prediction power of a statistical model with a categorical outcome is forming a confusion matrix.
+
+
+## Confusion matrix and Miss-Classification
+
+"Ethnicity, Insurgency, and Civil War" by Fearn and Laitin (2003) published in American Political Science Review is one the most cited studies in conflict literature. We will use this data for this session.
+
+
+```{r}
+
+rawData=read.csv("https://raw.githubusercontent.com/babakrezaee/MethodsCourses/master/DataSets/FearonLaitin2003.csv")
+
+head(rawData, n=2)
+
+
+Data=na.omit(cbind(rawData$onset,rawData$warl,rawData$gdpenl,rawData$lpopl1,
+               rawData$lmtnest,rawData$ncontig,rawData$Oil,rawData$nwstate,rawData$instab,rawData$polity2l,rawData$ethfrac,rawData$relfrac)) 
+
+scf = function(x) {return((x-min(x))/(max(x)-min(x)))}
+
+x=Data[,-1]
+
+
+x = apply(x,2,scf)
+
+y=Data[,1]
+
+Data=cbind(y,x)
+
+Data=data.frame(Data)
+
+colnames(Data)<- c("onset","warL","gdpenL","populationL","mountainous",
+                   "contiguous", "oil", "newStata", "instability","polityL",
+                   "ELF", "RelELF")
+
+is.factor(Data$onset)
+
+table(Data$onset)
+
+# It seems there is a mistake in data entry. We need to fix it:
+
+Data$onset[Data$onset>1] <- 1
+
+table(Data$onset)
+
+Data$onset=factor(Data$onset)
+
+
+
+library(glmnet)
+
+fm_binomial=glm(onset~warL+gdpenL+populationL+mountainous+contiguous+oil+newStata+instability+ polityL+ELF+RelELF, data = Data, family = "binomial")
+
+fm_binomial$fitted.values[1:10]
+
+library(dplyr)
+Yhat_logit = if_else(fm_binomial$fitted.values>.5, 1, 0)
+
+table(Yhat_logit)
+```
+
+In the above example, we first estimated the *probability* of civil war onset, and the used a threshold, *i.e.* $.5$, to categorize the predicted outcomes to zero, i.e. *no civil, *and 1, i.e. *civil war*. Indeed, in classification problems, we often estimate the *probability* of each category, then we pick a threshold to find the predicted categorical outcome. 
+
+```{r, fig.height = 8, fig.width = 8}
+Yhat_logit = if_else(fm_binomial$fitted.values>.1, 1, 0)
+
+table(Yhat_logit)
+
+Y=Data$onset
+
+ctab=table(Y,Yhat_logit)
+
+ctab
+
+missClass=(sum(ctab)-sum(diag(ctab)))/sum(ctab)
+
+perCW=ctab[2,2]/sum(ctab[,2])
+
+cat("Missclassification and Civil War classification rate using Logit model are",round(missClass,2),"% and ",round(perCW,2),"%, respectively \n")
+
+```
+
+```{r, fig.height = 8, fig.width = 8}
+
+logitProbFit = data.frame(CivilWar=Data$onset,1-fm_binomial$fitted.values,fm_binomial$fitted.values)
+
+names(logitProbFit)[2:3] = c("No", "Yes")
+
+par(mfrow=c(1,2))
+par(mai=c(1,1,.5,.5))
+plot(No~CivilWar,logitProbFit,col=c(grey(.5),2:3),cex.lab=2.4,cex.axis=2.4)
+plot(Yes~CivilWar,logitProbFit,col=c(grey(.5),2:3),cex.lab=2.4,cex.axis=2.4)
+
+```
+
+
+```{r}
+library(kknn)
+fm_knn = kknn(onset~warL+gdpenL+populationL+mountainous+contiguous+oil+newStata+instability+ polityL+ELF+RelELF,Data,Data,k=10,kernel = "rectangular")
+
+table(fm_knn$fitted.values)
+
+
+fm_knn$fitted.values[545:615]
+
+rawData$onset[545:615]
+
+
+ctab=table(Data$onset,fm_knn$fitted.values)
+
+ctab
+
+
+Yhat_kNN <- if_else( fm_knn$prob[,2]>.1, 1, 0)
+
+ctab=table(Y,Yhat_kNN)
+ 
+ctab
+
+missClass=(sum(ctab)-sum(diag(ctab)))/sum(ctab)
+
+perCW=ctab[2,2]/sum(ctab[,2])
+
+cat("Missclassification and Civil War classification rate using KNN model are",round(missClass,2),"% and ",round(perCW,2),"%, respectively \n")
+
+
+```
+
+```{r}
+
+kNNProbFit = data.frame(CivilWar=Data$onset,fm_knn$prob)
+
+names(kNNProbFit)[2:3] = c("No", "Yes")
+
+par(mfrow=c(1,2))
+par(mai=c(1,1,.5,.5))
+plot(No~CivilWar,kNNProbFit,col=c(grey(.5),2:3),cex.lab=2.4,cex.axis=2.4)
+plot(Yes~CivilWar,kNNProbFit,col=c(grey(.5),2:3),cex.lab=2.4,cex.axis=2.4)
+
+```
+
+These plots presents an important issue about the quantitative models of Civil War onset. Similar to Fearon and Laitin (2003), these models are good in predicting peace, but not civil war/conflict onset!
+
+## Lift, ROC, and AUC
+
+Below graph shows the different terms that are usually used for labeling different elements of a confusion matrix. Most of the classification measures are defined using these terms/labels.
+
+![Confusion matrix](https://www.dropbox.com/s/euja6ky6rjb8d91/ConfusionMatrix.jpg?dl=1){ width=25% }
+
+### Lift Curve
+
+The *lift curve* is one of the commonly used measures of model classification performance. This measure shows how much model, that is $\hat{p}=P(Y=1|x)$, is successful in capturing correct outcome, $Y$.
+
+To plot this curve, we first sort the fitting data based on $\hat{p}$. In other words, we expect that the $\hat{p}$ with the largest value be the one most likely to predict the correct realization of the outcome, i.e. *True Positive*. Then, we plot the percent observations taken vs the cumulative number of 
+
+
+```{r}
+
+library(devtools)
+source_url('https://raw.githubusercontent.com/babakrezaee/DataWrangling/master/Functions/lfitPlot_fun.R')
+
+
+
+olift = liftf(Data$onset,fm_binomial$fitted.values,dopl=FALSE)
+olift2 = liftf(Data$onset,fm_knn$prob[,2] ,dopl=FALSE)
+
+ii = (1:length(olift))/length(olift)
+
+plot(ii,olift,type='n',lwd=2,xlab='% tried',ylab='% of successes',cex.lab=2)
+lines(ii,olift,col='red')
+lines(ii,olift2,col='blue')
+abline(0,1,lty=2)
+
+legend('bottomright',legend=c('logit','kNN'),col=c('red','blue'),lwd=3)
+
+
+```
+
+### Sensitivity, Specificity, and Precision
+
+\begin{align}
+
+Recall/Sensitivity/True~Positive~Rate=\frac{TP}{TP+FN}
+
+\end{align}
+
+
+\begin{align}
+
+Specificity/Selectivity/True~Negative~Rate=\frac{TN}{TN+FP}
+
+\end{align}
+
+
+
+```{r}
+library(caret)
+confusionMatrix(data = as.factor(Yhat_kNN), reference = as.factor(Y))
+
+confusionMatrix(data = as.factor(Yhat_logit), reference = as.factor(Y))
+
+```
+
+
+\begin{align}
+
+F=2\frac{Recall \times Precision}{Recall+Precision}
+
+\end{align}
+
+
+
+```{r}
+
+confusionMatrix(data = as.factor(Yhat_kNN), reference = as.factor(Y), mode = "prec_recall")
+
+confusionMatrix(data = as.factor(Yhat_logit), reference = as.factor(Y), mode = "prec_recall")
+
+
+```
+
+```{r}
+library(pROC)
+
+par(mfrow=c(1,2))
+par(mai=c(1,1,.5,.5))
+
+
+
+rocR = roc(response=Y,predictor=fm_binomial$fitted.values)
+AUC = auc(rocR)
+plot(rocR, col='maroon')
+title(main=paste("logit model AUC= ",round(AUC,2)))
+
+rocR = roc(response=Y,predictor=fm_knn$prob[,2])
+AUC = auc(rocR)
+plot(rocR,  col='blue')
+title(main=paste("kNN model AUC= ",round(AUC,2)))
+
+
+
+```
+
+
+## How to decide about the threshold?
+
+
+To answer this question, we can use ${\tt ROCR}$ package.
+
+```{r}
+
+library(ROCR)
+
+ROCR_logit=prediction(fm_binomial$fitted.values, Y)
+
+ROCRperf_logit = performance(ROCR_logit, "tpr", "fpr")
+
+ROCR_kNN=prediction(fm_knn$prob[,2], Y)
+
+ROCRperf_kNN = performance(ROCR_kNN, "tpr", "fpr")
+
+
+
+plot(ROCRperf_logit, colorize=TRUE, print.cutoffs.at=seq(0,1,by=0.1), text.adj=c(-0.2,1.7))
+
+plot(ROCRperf_kNN, colorize=TRUE, print.cutoffs.at=seq(0,1,by=0.1), text.adj=c(-0.2,1.7))
+```
+

@@ -4,8 +4,6 @@ format: html
 ---
 
 ```{r setup, include=FALSE}
-install.packages("latex2exp")  # Only needed once
-library(latex2exp)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 #suppressPackageStartupMessages(library(KKNN))
 #suppressPackageStartupMessages(library(MASS))
@@ -69,7 +67,7 @@ Suppose that we are interested in modeling the type of contentious politics,$\{0
 \center
 
 | $S$                 | $P(S=s\|C=boom)$ |         $S$         | $P(S=s\|C=bust)$ |
-|---------------------|:----------------:|:-------------------:|:----------------:|
+|-------------------|:----------------:|:-----------------:|:----------------:|
 | Peace               |      $.80$       |        Peace        |      $.50$       |
 | Nonviolent Protests |      $.15$       | Nonviolent Protests |      $.25$       |
 | Violent Protests    |      $.03$       |  Violent Protests   |      $.20$       |
