@@ -1,0 +1,185 @@
+---
+title: "Introduction to R Markdown in RStudio"
+format: html
+---
+
+# Purpose
+This handout introduces **R Markdown** for writing reproducible homework and reports. Students will learn how to combine text, code, and results in one file and how to knit to **HTML/PDF/Word**.
+
+::: callout-note
+#### What you’ll be able to do
+- Create and knit an R Markdown document
+- Mix text, code, tables, and plots
+- Control how code and output are displayed
+- Produce a clean, fully reproducible homework submission
+:::
+
+## 1. What is R Markdown?
+**R Markdown** lets you write narrative text (using Markdown) and run **R code chunks** whose output (tables/plots) appears in the same document. This is perfect for homework, replication, and project reports.
+
+**Mini example**:
+
+```{r}
+sum(1:10)
+```
+
+The result appears *inline* below the code when you knit.
+
+## 2. Document Structure
+Every `.Rmd`/`.qmd` has three parts:
+
+1. **YAML header** (between `---` at the top): metadata & output format.
+2. **Markdown text**: headings, lists, emphasis, links.
+3. **Code chunks**: executable R code blocks.
+
+### 2.1 YAML Header (example)
+```yaml
+---
+title: "Homework 1"
+author: "Student Name (s1234567)"
+date: "`r Sys.Date()`"
+format: html
+---
+```
+
+### 2.2 Markdown essentials
+- `#` H1, `##` H2, `###` H3
+- `*italics*`, `**bold**`, `` `code` ``
+- Lists: `-` bullets; `1.` numbered
+- Links: `[text](https://example.com)`
+
+### 2.3 Code chunks
+Use triple backticks and `{r}`:
+
+````
+```{r}
+summary(mtcars)
+```
+````
+
+You can run chunks with the green play button or knit the whole document.
+
+## 3. Start a New R Markdown in RStudio
+1. **File → New File → R Markdown…** (or Quarto Document)
+2. Enter a title/author; choose **HTML** output.
+3. Click **OK** → Replace the template with this handout or your own content.
+4. Click **Knit** (or **Render** in Quarto). RStudio creates an **HTML** file next to your source.
+
+::: callout-tip
+If you want to knit to **PDF**, install TinyTeX once:
+```r
+install.packages("tinytex"); tinytex::install_tinytex()
+```
+:::
+
+## 4. Chunk Options You’ll Actually Use
+You can control what shows in the final document using chunk options.
+
+| Option | Example | What it does |
+|---|---|---|
+| `echo` | `{r, echo=FALSE}` | Hide code, show results |
+| `eval` | `{r, eval=FALSE}` | Show code, don’t run it |
+| `message` | `{r, message=FALSE}` | Hide package messages |
+| `warning` | `{r, warning=FALSE}` | Hide warnings |
+| `include` | `{r, include=FALSE}` | Run but hide code *and* output |
+
+**Example:**
+```{r, echo=FALSE, warning=FALSE}
+plot(cars)
+```
+
+## 5. Plots, Tables, and Inline Code
+### 5.1 Plots
+```{r}
+plot(mtcars$mpg, mtcars$hp,
+     xlab = "Miles per gallon",
+     ylab = "Horsepower",
+     main = "MPG vs HP")
+```
+
+### 5.2 Simple tables
+```{r}
+library(knitr)
+kable(head(mtcars), caption = "First rows of mtcars")
+```
+
+### 5.3 Inline code in text
+You can insert values directly in sentences:
+
+The dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
+
+## 6. Multiple Output Formats
+Choose formats in the YAML header:
+
+```yaml
+format:
+  html: default
+  pdf: default
+  docx: default
+```
+
+Knit will produce the selected formats (you can pick one or many).
+
+## 7. Good Practices for Homework
+- Put **your name & student number** in the YAML.
+- Explain each step briefly in text *before* the code.
+- Prefer **relative paths** (e.g., `data/survey.csv`), not `C:/…`.
+- Keep code tidy; comment with `#` when needed.
+- Knit before submitting to ensure it runs cleanly.
+
+::: callout-important
+**Submission policy** (suggested): Upload both the source (`.Rmd`/`.qmd`) **and** the knitted output (`.html` or `.pdf`). Name them clearly, e.g. `HW1_YourName.qmd` and `HW1_YourName.html`.
+:::
+
+## 8. Practice Exercise (Gapminder)
+> **Question:** Using the `gapminder` dataset, what is the relationship between GDP per capita and life expectancy across continents in 2007?
+
+1. Load packages and filter to 2007.
+2. Make a scatter plot (log-scale x-axis) colored by continent.
+3. Write 2–4 sentences interpreting the pattern.
+
+```{r}
+library(ggplot2)
+library(gapminder)
+
+gapminder_2007 <- subset(gapminder, year == 2007)
+
+ggplot(gapminder_2007, aes(gdpPercap, lifeExp, color = continent)) +
+  geom_point() +
+  scale_x_log10() +
+  labs(x = "GDP per capita (log scale)", y = "Life expectancy", title = "Life expectancy vs. GDP per capita (2007)")
+```
+
+**Tip:** You can also add `theme_minimal()` if you like cleaner styling.
+
+## 9. Common Knit Errors (and Fixes)
+- **Package not found** → Run `install.packages("packagename")` in the Console, then knit again.
+- **Cannot find file** → Check the path; use `here::here("data","file.csv")` or put data in a `data/` folder next to the `.qmd`.
+- **Unicode/encoding issues** → Save the file in UTF-8 (RStudio: File → Save with Encoding → UTF-8).
+
+## 10. Appendix: Quick Markdown Cheatsheet
+- `**bold**`, `*italics*`, `` `inline code` ``
+- Lists:
+  - `- item` or `1. item`
+- Code block:
+
+````
+```{r}
+# your code
+```
+````
+
+- Image: `![](figs/plot.png)`
+- Link: `[Quarto](https://quarto.org)` / `[R Markdown book](https://bookdown.org/yihui/rmarkdown/)`
+
+## 11. References & Further Reading
+- Xie, Yihui, Allaire, JJ, & Grolemund, G. *R Markdown: The Definitive Guide*. https://bookdown.org/yihui/rmarkdown/
+- Quarto Docs: https://quarto.org/docs/
+- RStudio Cheatsheets: https://posit.co/resources/cheatsheets/
+
+---
+
+### Instructor Notes (remove before sharing)
+- This file is a **.qmd** and can be opened/edited in RStudio (or VS Code with Quarto).
+- Consider pre-installing: `tidyverse`, `gapminder`, `knitr`, `tinytex` (optional).
+- Suggested assignment: ask students to knit to **HTML**, submit both `.qmd` + `.html` to LMS.

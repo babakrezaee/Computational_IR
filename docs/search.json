@@ -632,5 +632,125 @@
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Classification Metrics</span>"
     ]
+  },
+  {
+    "objectID": "Rmarkdown.html",
+    "href": "Rmarkdown.html",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "",
+    "text": "9 Purpose\nThis handout introduces R Markdown for writing reproducible homework and reports. Students will learn how to combine text, code, and results in one file and how to knit to HTML/PDF/Word.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#what-is-r-markdown",
+    "href": "Rmarkdown.html#what-is-r-markdown",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.1 1. What is R Markdown?",
+    "text": "9.1 1. What is R Markdown?\nR Markdown lets you write narrative text (using Markdown) and run R code chunks whose output (tables/plots) appears in the same document. This is perfect for homework, replication, and project reports.\nMini example:\n\nsum(1:10)\n\n[1] 55\n\n\nThe result appears inline below the code when you knit.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#document-structure",
+    "href": "Rmarkdown.html#document-structure",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.2 2. Document Structure",
+    "text": "9.2 2. Document Structure\nEvery .Rmd/.qmd has three parts:\n\nYAML header (between --- at the top): metadata & output format.\nMarkdown text: headings, lists, emphasis, links.\nCode chunks: executable R code blocks.\n\n\n9.2.1 2.1 YAML Header (example)\n---\ntitle: \"Homework 1\"\nauthor: \"Student Name (s1234567)\"\ndate: \"2025-11-12\"\nformat: html\n---\n\n\n9.2.2 2.2 Markdown essentials\n\n# H1, ## H2, ### H3\n*italics*, **bold**, `code`\nLists: - bullets; 1. numbered\nLinks: [text](https://example.com)\n\n\n\n9.2.3 2.3 Code chunks\nUse triple backticks and {r}:\n::: {.cell}\n\n```{.r .cell-code}\nsummary(mtcars)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n      mpg             cyl             disp             hp       \n Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  \n 1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5  \n Median :19.20   Median :6.000   Median :196.3   Median :123.0  \n Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7  \n 3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0  \n Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0  \n      drat             wt             qsec             vs        \n Min.   :2.760   Min.   :1.513   Min.   :14.50   Min.   :0.0000  \n 1st Qu.:3.080   1st Qu.:2.581   1st Qu.:16.89   1st Qu.:0.0000  \n Median :3.695   Median :3.325   Median :17.71   Median :0.0000  \n Mean   :3.597   Mean   :3.217   Mean   :17.85   Mean   :0.4375  \n 3rd Qu.:3.920   3rd Qu.:3.610   3rd Qu.:18.90   3rd Qu.:1.0000  \n Max.   :4.930   Max.   :5.424   Max.   :22.90   Max.   :1.0000  \n       am              gear            carb      \n Min.   :0.0000   Min.   :3.000   Min.   :1.000  \n 1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:2.000  \n Median :0.0000   Median :4.000   Median :2.000  \n Mean   :0.4062   Mean   :3.688   Mean   :2.812  \n 3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  \n Max.   :1.0000   Max.   :5.000   Max.   :8.000  \n```\n\n\n:::\n:::\nYou can run chunks with the green play button or knit the whole document.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#start-a-new-r-markdown-in-rstudio",
+    "href": "Rmarkdown.html#start-a-new-r-markdown-in-rstudio",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.3 3. Start a New R Markdown in RStudio",
+    "text": "9.3 3. Start a New R Markdown in RStudio\n\nFile → New File → R Markdown… (or Quarto Document)\nEnter a title/author; choose HTML output.\nClick OK → Replace the template with this handout or your own content.\nClick Knit (or Render in Quarto). RStudio creates an HTML file next to your source.\n\n\n\n\n\n\n\nTip\n\n\n\nIf you want to knit to PDF, install TinyTeX once:\ninstall.packages(\"tinytex\"); tinytex::install_tinytex()",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#chunk-options-youll-actually-use",
+    "href": "Rmarkdown.html#chunk-options-youll-actually-use",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.4 4. Chunk Options You’ll Actually Use",
+    "text": "9.4 4. Chunk Options You’ll Actually Use\nYou can control what shows in the final document using chunk options.\n\n\n\nOption\nExample\nWhat it does\n\n\n\n\necho\n{r, echo=FALSE}\nHide code, show results\n\n\neval\n{r, eval=FALSE}\nShow code, don’t run it\n\n\nmessage\n{r, message=FALSE}\nHide package messages\n\n\nwarning\n{r, warning=FALSE}\nHide warnings\n\n\ninclude\n{r, include=FALSE}\nRun but hide code and output\n\n\n\nExample:",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#plots-tables-and-inline-code",
+    "href": "Rmarkdown.html#plots-tables-and-inline-code",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.5 5. Plots, Tables, and Inline Code",
+    "text": "9.5 5. Plots, Tables, and Inline Code\n\n9.5.1 5.1 Plots\n\nplot(mtcars$mpg, mtcars$hp,\n     xlab = \"Miles per gallon\",\n     ylab = \"Horsepower\",\n     main = \"MPG vs HP\")\n\n\n\n\n\n\n\n\n\n\n9.5.2 5.2 Simple tables\n\nlibrary(knitr)\nkable(head(mtcars), caption = \"First rows of mtcars\")\n\n\nFirst rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\nValiant\n18.1\n6\n225\n105\n2.76\n3.460\n20.22\n1\n0\n3\n1\n\n\n\n\n\n\n\n9.5.3 5.3 Inline code in text\nYou can insert values directly in sentences:\nThe dataset has 32 rows and 11 columns.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#multiple-output-formats",
+    "href": "Rmarkdown.html#multiple-output-formats",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.6 6. Multiple Output Formats",
+    "text": "9.6 6. Multiple Output Formats\nChoose formats in the YAML header:\nformat:\n  html: default\n  pdf: default\n  docx: default\nKnit will produce the selected formats (you can pick one or many).",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#good-practices-for-homework",
+    "href": "Rmarkdown.html#good-practices-for-homework",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.7 7. Good Practices for Homework",
+    "text": "9.7 7. Good Practices for Homework\n\nPut your name & student number in the YAML.\nExplain each step briefly in text before the code.\nPrefer relative paths (e.g., data/survey.csv), not C:/….\nKeep code tidy; comment with # when needed.\nKnit before submitting to ensure it runs cleanly.\n\n\n\n\n\n\n\nImportant\n\n\n\nSubmission policy (suggested): Upload both the source (.Rmd/.qmd) and the knitted output (.html or .pdf). Name them clearly, e.g. HW1_YourName.qmd and HW1_YourName.html.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#practice-exercise-gapminder",
+    "href": "Rmarkdown.html#practice-exercise-gapminder",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.8 8. Practice Exercise (Gapminder)",
+    "text": "9.8 8. Practice Exercise (Gapminder)\n\nQuestion: Using the gapminder dataset, what is the relationship between GDP per capita and life expectancy across continents in 2007?\n\n\nLoad packages and filter to 2007.\nMake a scatter plot (log-scale x-axis) colored by continent.\nWrite 2–4 sentences interpreting the pattern.\n\n\nlibrary(ggplot2)\nlibrary(gapminder)\n\ngapminder_2007 &lt;- subset(gapminder, year == 2007)\n\nggplot(gapminder_2007, aes(gdpPercap, lifeExp, color = continent)) +\n  geom_point() +\n  scale_x_log10() +\n  labs(x = \"GDP per capita (log scale)\", y = \"Life expectancy\", title = \"Life expectancy vs. GDP per capita (2007)\")\n\n\n\n\n\n\n\n\nTip: You can also add theme_minimal() if you like cleaner styling.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#common-knit-errors-and-fixes",
+    "href": "Rmarkdown.html#common-knit-errors-and-fixes",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.9 9. Common Knit Errors (and Fixes)",
+    "text": "9.9 9. Common Knit Errors (and Fixes)\n\nPackage not found → Run install.packages(\"packagename\") in the Console, then knit again.\nCannot find file → Check the path; use here::here(\"data\",\"file.csv\") or put data in a data/ folder next to the .qmd.\nUnicode/encoding issues → Save the file in UTF-8 (RStudio: File → Save with Encoding → UTF-8).",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#appendix-quick-markdown-cheatsheet",
+    "href": "Rmarkdown.html#appendix-quick-markdown-cheatsheet",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.10 10. Appendix: Quick Markdown Cheatsheet",
+    "text": "9.10 10. Appendix: Quick Markdown Cheatsheet\n\n**bold**, *italics*, `inline code`\nLists:\n\n- item or 1. item\n\nCode block:\n\n::: {.cell}\n\n```{.r .cell-code}\n# your code\n```\n:::\n\nImage: ![](figs/plot.png)\nLink: [Quarto](https://quarto.org) / [R Markdown book](https://bookdown.org/yihui/rmarkdown/)",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "Rmarkdown.html#references-further-reading",
+    "href": "Rmarkdown.html#references-further-reading",
+    "title": "8  Introduction to R Markdown in RStudio",
+    "section": "9.11 11. References & Further Reading",
+    "text": "9.11 11. References & Further Reading\n\nXie, Yihui, Allaire, JJ, & Grolemund, G. R Markdown: The Definitive Guide. https://bookdown.org/yihui/rmarkdown/\nQuarto Docs: https://quarto.org/docs/\nRStudio Cheatsheets: https://posit.co/resources/cheatsheets/\n\n\n\n9.11.1 Instructor Notes (remove before sharing)\n\nThis file is a .qmd and can be opened/edited in RStudio (or VS Code with Quarto).\nConsider pre-installing: tidyverse, gapminder, knitr, tinytex (optional).\nSuggested assignment: ask students to knit to HTML, submit both .qmd + .html to LMS.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Introduction to R Markdown in RStudio</span>"
+    ]
   }
 ]
