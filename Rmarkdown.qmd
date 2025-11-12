@@ -104,7 +104,7 @@ kable(head(mtcars), caption = "First rows of mtcars")
 ```
 
 ### 5.3 Inline code in text
-You can insert values directly in sentences:
+You can insert values directly in sentences using $`r\{var\}`$:
 
 The dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
 
