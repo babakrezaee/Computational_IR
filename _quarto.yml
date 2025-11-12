@@ -15,6 +15,7 @@ book:
     - TreeModels.qmd
     - NetworkAnalysis.qmd
     - ClassificationMetrics.qmd
+    - Rmarkdown.qmd
     - HW1.qmd
     - HW2.qmd
     - references.qmd
